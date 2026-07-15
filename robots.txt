@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aero3dp.de/sitemap.xml
