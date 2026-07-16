@@ -39,14 +39,14 @@
 
     if (priceEl) {
       const lwSurcharge = (cfg.materialSelectable && state.material === 'LW-PLA') ? 10 : 0;
-      if (cfg.priceKnown) {
-        const price = (state.antrieb && cfg.bundlePrice ? cfg.bundlePrice : cfg.basePrice) + lwSurcharge;
-        const notes = [state.antrieb ? 'inkl. Antriebsset' : 'ohne Antrieb — Set optional dazu wählbar'];
-        if (lwSurcharge) notes.push('inkl. LW-PLA-Aufpreis (+10 €)');
-        priceEl.innerHTML = fmtPrice(price) + `<small>${notes.join(' · ')}</small>`;
+      const relevantPrice = state.antrieb ? cfg.bundlePrice : cfg.basePrice;
+      const notes = [];
+      notes.push(state.antrieb ? 'inkl. Antriebsset' : 'ohne Antrieb — Set optional dazu wählbar');
+      if (lwSurcharge) notes.push(`inkl. LW-PLA-Aufpreis (+${lwSurcharge} €)`);
+
+      if (typeof relevantPrice === 'number') {
+        priceEl.innerHTML = fmtPrice(relevantPrice + lwSurcharge) + `<small>${notes.join(' · ')}</small>`;
       } else {
-        const notes = [state.antrieb ? 'inkl. gewünschtem Antriebsset' : 'Antriebsset optional dazu wählbar'];
-        if (lwSurcharge) notes.push('zzgl. 10 € LW-PLA-Aufpreis');
         priceEl.innerHTML = 'Auf Anfrage' + `<small>${notes.join(' · ')}</small>`;
       }
     }

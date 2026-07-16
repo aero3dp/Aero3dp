@@ -11,8 +11,8 @@
     :root { --bg:#0a0a0a; --bg-2:#111; --border:#272727; --gray:#7a7a7a; --white:#f0f0f0; --red:#b30b0b; --f:'Lexend',sans-serif; }
     body { font-family: var(--f); background: var(--bg); color: var(--white); -webkit-font-smoothing: antialiased; }
     nav { position: sticky; top: 0; z-index: 200; height: 60px; padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; background: rgba(10,10,10,.94); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
-    .logo { font-size: 1.15rem; font-weight: 900; color: var(--white); text-decoration: none; }
-    .logo b { color: var(--red); }
+    .logo { display: inline-flex; align-items: center; text-decoration: none; }
+    .logo-img { height: 34px; width: auto; display: block; }
     .back { font-size: .78rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--gray); text-decoration: none; transition: color .2s; }
     .back:hover { color: var(--white); }
     main { max-width: 760px; margin: 0 auto; padding: 5rem 2rem 6rem; }
@@ -25,10 +25,26 @@
     ul li { font-size: .875rem; font-weight: 300; color: #aaa; line-height: 1.85; margin-bottom: .3rem; }
     .stand { margin-top: 3rem; font-size: .75rem; color: var(--gray); }
   </style>
+  <link rel="canonical" href="https://aero3dp.de/agbs.html">
+  <link rel="icon" href="bilder/AERO3DP_downscaled.png" type="image/png">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aero3dp">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:title" content="AGB – Aero3dp">
+  <meta property="og:description" content="Allgemeine Geschäftsbedingungen von Aero3dp.">
+  <meta property="og:url" content="https://aero3dp.de/agbs.html">
+  <meta property="og:image" content="https://aero3dp.de/bilder/AERO3DP_downscaled.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AGB – Aero3dp">
+  <meta name="twitter:description" content="Allgemeine Geschäftsbedingungen von Aero3dp.">
+  <meta name="twitter:image" content="https://aero3dp.de/bilder/AERO3DP_downscaled.png">
 </head>
 <body>
 <nav>
-  <a href="index.html" class="logo">AERO<b>3DP</b></a>
+  <a href="index.html" class="logo"><img src="bilder/AERO3DP_light.png" alt="Aero3dp Logo" class="logo-img"></a>
   <a href="index.html" class="back">← Zurück</a>
 </nav>
 <main>
