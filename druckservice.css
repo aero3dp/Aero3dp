@@ -1,0 +1,131 @@
+/* ═══ Aero3dp – 3D-Druckservice ═══ */
+
+.druckkopf { padding-bottom: 1.5rem; }
+.druck-app {
+  max-width: calc(var(--max) + 2 * var(--rand)); margin: 0 auto; padding: .5rem var(--rand) clamp(3rem, 7vw, 5rem);
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: clamp(1.5rem, 3.5vw, 3rem); align-items: start;
+}
+
+/* ─── Vorschau ─── */
+.viewer-karte { position: sticky; top: calc(var(--nav-h) + 1rem); background: var(--graphit); border: 1px solid var(--linie); border-radius: 8px; overflow: hidden; }
+.viewer { position: relative; aspect-ratio: 4 / 3; background: #121212; }
+.viewer canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; touch-action: none; outline: none; }
+.viewer-leer {
+  position: absolute; inset: 0; z-index: 2; display: grid; place-content: center; justify-items: center; gap: 1.1rem; padding: 1.5rem;
+  background: radial-gradient(ellipse at 50% 110%, rgba(179,11,11,.16), transparent 60%), rgba(18,18,18,.82);
+}
+.dropzone {
+  display: grid; justify-items: center; gap: .55rem; text-align: center; padding: 2.25rem 2.5rem; cursor: pointer;
+  border: 1.5px dashed var(--linie-hell); border-radius: 12px; transition: border-color .2s, background .2s, transform .2s;
+  min-width: min(420px, 80vw);
+}
+.dropzone svg { width: 56px; height: 56px; stroke: var(--text-2); fill: none; stroke-width: 1.4; transition: transform .3s cubic-bezier(.3,1.5,.5,1); }
+.dropzone b { font-size: 1.1rem; font-weight: 600; }
+.dropzone span { font-size: .86rem; color: var(--text-3); }
+.dropzone u { color: var(--rot-text); text-underline-offset: 3px; }
+.dropzone:hover, .dropzone.drag { border-color: var(--rot-text); background: rgba(179,11,11,.06); }
+.dropzone.drag svg, .dropzone:hover svg { transform: translateY(-4px); }
+.dropzone.laedt { opacity: .6; pointer-events: none; }
+#stlInput:focus-visible + .viewer-fehler, .viewer-leer:focus-within .dropzone { border-color: var(--rot-text); }
+.viewer-fehler { position: absolute; left: 1rem; right: 1rem; bottom: 1rem; z-index: 3; padding: .75rem 1rem; border-radius: 6px; background: rgba(236,74,68,.12); border: 1px solid rgba(236,74,68,.45); color: #f6b2ae; font-size: .88rem; }
+.viewer-kein3d { display: none; }
+.viewer.kein-3d .viewer-kein3d { display: block; position: absolute; left: 1rem; right: 1rem; top: 1rem; z-index: 1; font-size: .86rem; color: var(--text-3); }
+
+.werkzeuge { padding: .9rem 1rem; border-top: 1px solid var(--linie); display: grid; gap: .8rem; }
+.schicht { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .9rem; }
+.schicht label { font-size: .84rem; color: var(--text-2); }
+.schicht span { font-size: .8rem; color: var(--text-3); min-width: 9.5em; text-align: right; }
+.werkzeug-knoepfe { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.einheit { border: 0; display: inline-flex; margin-right: auto; }
+
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; background: none; cursor: pointer; }
+input[type="range"]::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--rot) var(--p, 100%), var(--linie-hell) var(--p, 100%)); }
+input[type="range"]::-moz-range-track { height: 4px; border-radius: 2px; background: var(--linie-hell); }
+input[type="range"]::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--rot); }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; margin-top: -8px; border-radius: 50%; background: var(--text); border: 3px solid var(--rot); box-shadow: 0 2px 8px rgba(0,0,0,.5); }
+input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--text); border: 3px solid var(--rot); }
+
+.modell-info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--linie); border-top: 1px solid var(--linie); }
+.modell-info:empty { display: none; }
+.modell-info > div { background: var(--graphit); padding: .75rem .9rem; min-width: 0; }
+.modell-info dt { font-size: .74rem; color: var(--text-3); }
+.modell-info dd { font-size: .9rem; font-weight: 500; margin-top: .1rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.modell-info .status dd::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: .45rem; vertical-align: .08em; }
+.modell-info .status.gut dd::before { background: var(--gruen); }
+.modell-info .status.warn dd::before { background: #e8a33a; }
+.modell-info .status.warn dd { white-space: normal; }
+.info-hinweis { grid-column: 1 / -1; background: var(--graphit); padding: .7rem .9rem; font-size: .84rem; color: #f0c98a; }
+
+/* ─── Einstellungen ─── */
+.druck-einstellungen { display: grid; gap: 1.35rem; }
+.druck-einstellungen fieldset { border: 0; min-width: 0; }
+.druck-einstellungen legend { display: flex; justify-content: space-between; width: 100%; font-size: .95rem; font-weight: 600; margin-bottom: .6rem; }
+.druck-einstellungen legend span { font-size: .8rem; font-weight: 400; color: var(--text-3); }
+.druck-einstellungen legend output { font-weight: 600; color: var(--text); }
+.wahl-gruppe { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+.wahl { position: relative; cursor: pointer; }
+.wahl input, .segment input { position: absolute; opacity: 0; pointer-events: none; }
+.wahl span { display: grid; gap: .2rem; height: 100%; padding: .8rem .85rem; border: 1px solid var(--linie-hell); border-radius: 8px; background: var(--karte); transition: border-color .2s, background .2s; }
+.wahl b { font-weight: 650; font-size: .95rem; }
+.wahl small { font-size: .76rem; color: var(--text-3); line-height: 1.4; }
+.wahl input:checked + span { border-color: var(--rot-text); background: rgba(179,11,11,.08); }
+.wahl input:checked + span b { color: var(--rot-text); }
+.wahl input:focus-visible + span, .segment input:focus-visible + span { outline: 2px solid var(--rot-text); outline-offset: 2px; }
+.segmente { display: flex; background: var(--karte); border: 1px solid var(--linie-hell); border-radius: 8px; padding: 3px; }
+.segment { flex: 1; cursor: pointer; position: relative; }
+.segment span { display: grid; place-items: center; gap: 0; padding: .5rem .4rem; border-radius: 6px; font-size: .88rem; font-weight: 500; color: var(--text-2); text-align: center; transition: background .2s, color .2s; }
+.segment small { font-size: .72rem; font-weight: 400; color: var(--text-3); }
+.segment input:checked + span { background: var(--text); color: var(--schwarz); }
+.segment input:checked + span small { color: #555; }
+.segment.klein span { padding: .35rem .8rem; font-size: .8rem; }
+.einheit .segment { flex: none; }
+.einheit { background: var(--karte); border: 1px solid var(--linie-hell); border-radius: 999px; padding: 3px; }
+.einheit .segment span { border-radius: 999px; }
+.regler-skala { display: flex; justify-content: space-between; font-size: .76rem; color: var(--text-3); margin-top: .2rem; }
+.zwei { display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem; }
+.stepper { display: grid; grid-template-columns: 44px 1fr 44px; background: var(--karte); border: 1px solid var(--linie-hell); border-radius: 8px; overflow: hidden; }
+.stepper button { border: 0; background: none; font-size: 1.2rem; cursor: pointer; color: var(--text-2); transition: background .2s, color .2s; }
+.stepper button:hover { background: var(--karte-hell); color: var(--text); }
+.stepper input { width: 100%; min-width: 0; text-align: center; background: none; border: 0; font-size: 1rem; font-weight: 600; -moz-appearance: textfield; padding: .55rem 0; }
+.stepper input::-webkit-inner-spin-button, .stepper input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.stepper input:focus { outline: none; }
+.stepper:focus-within { border-color: var(--rot-text); }
+
+/* ─── Preis ─── */
+.preisbox { margin-top: 1.5rem; padding: 1.4rem; border: 1px solid var(--linie-hell); border-radius: 10px; background: linear-gradient(180deg, var(--karte), var(--graphit)); }
+.preis-kopf { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; font-size: .9rem; color: var(--text-2); }
+.preis-kopf small { font-size: .8rem; color: var(--text-3); }
+.preis-gross { display: block; font-size: clamp(2.2rem, 4vw, 2.9rem); font-weight: 780; letter-spacing: -.04em; line-height: 1.1; margin: .35rem 0 .6rem; }
+.preis-fakten { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; font-size: .86rem; color: var(--text-3); }
+.preis-fakten b { color: var(--text); font-weight: 500; }
+.aufschl { margin-top: 1rem; border-top: 1px solid var(--linie); padding-top: .8rem; }
+.aufschl summary { cursor: pointer; font-size: .86rem; color: var(--text-2); list-style: none; }
+.aufschl summary::-webkit-details-marker { display: none; }
+.aufschl summary::after { content: ' +'; color: var(--rot-text); }
+.aufschl[open] summary::after { content: ' −'; }
+.aufschl dl { display: grid; gap: .35rem; margin-top: .7rem; font-size: .86rem; }
+.aufschl dl div { display: flex; justify-content: space-between; gap: 1rem; color: var(--text-2); }
+.aufschl dd { font-variant-numeric: tabular-nums; color: var(--text); white-space: nowrap; }
+.preisbox .btn-block { margin-top: 1rem; }
+#preisHinweis { margin-top: .9rem; }
+.druck-form { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--linie); }
+.hinweis-box { font-size: .86rem; color: var(--text-2); padding: .75rem .9rem; border-left: 3px solid var(--rot); background: var(--schwarz); }
+.fortschritt { height: 6px; border-radius: 3px; background: var(--linie); overflow: hidden; }
+.fortschritt i { display: block; height: 100%; width: 0; background: var(--rot); transition: width .2s; }
+
+/* ─── Mobil ─── */
+@media (max-width: 960px) {
+  .druck-app { grid-template-columns: 1fr; }
+  .viewer-karte { position: static; }
+  .viewer { aspect-ratio: 1 / 1; max-height: 70vh; }
+  .modell-info { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .wahl-gruppe { grid-template-columns: 1fr; }
+  .wahl span { grid-template-columns: auto 1fr; align-items: baseline; gap: .6rem; }
+  .zwei { grid-template-columns: 1fr; }
+  .schicht { grid-template-columns: 1fr; gap: .3rem; }
+  .schicht span { text-align: left; }
+  .dropzone { padding: 1.75rem 1.25rem; }
+}
+

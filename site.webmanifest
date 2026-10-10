@@ -1,0 +1,29 @@
+{
+  "name": "Aero3dp – 3D-gedruckte RC-Flugmodelle",
+  "short_name": "Aero3dp",
+  "lang": "de",
+  "start_url": "/?quelle=app",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "description": "RC-Jets und FPV-Wings aus dem 3D-Drucker – konfigurieren oder eigene Dateien drucken lassen.",
+  "icons": [
+    {
+      "src": "bilder/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "bilder/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "bilder/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

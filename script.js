@@ -1,264 +1,255 @@
-// Sticky Nav
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 30);
-  }, { passive: true });
+/* Aero3dp – gemeinsames Verhalten aller Seiten */
+(function () {
+  'use strict';
+  document.documentElement.classList.remove('no-js');
+  var reduziert = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mitMaus = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var $ = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
-  // Magnetische Buttons
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    document.querySelectorAll('.btn-red, .btn-ghost, .nav-links .cta-link').forEach(btn => {
-      btn.addEventListener('mousemove', e => {
-        const r = btn.getBoundingClientRect();
-        const x = e.clientX - r.left - r.width / 2;
-        const y = e.clientY - r.top - r.height / 2;
-        btn.style.transform = `translate(${x * 0.25}px, ${y * 0.35}px)`;
-      });
-      btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0)'; });
+  /* ─── Navigation ─── */
+  var nav = $('#nav');
+  var burger = $('#burger'), links = $('#navLinks');
+  function menu(auf) {
+    if (!burger) return;
+    burger.setAttribute('aria-expanded', auf ? 'true' : 'false');
+    burger.setAttribute('aria-label', auf ? 'Menü schließen' : 'Menü öffnen');
+    links.classList.toggle('open', auf);
+  }
+  if (burger) {
+    burger.addEventListener('click', function () { menu(burger.getAttribute('aria-expanded') !== 'true'); });
+    $$('a', links).forEach(function (a) { a.addEventListener('click', function () { menu(false); }); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') menu(false); });
+  }
+
+  /* ─── Scroll: Nav, Höhenmesser, nach oben, Parallax ─── */
+  var alti = $('#altimeterFill'), hoch = $('#backToTop');
+  var parallax = reduziert ? [] : $$('[data-parallax]');
+  var tick = false;
+  function aufScroll() {
+    var y = window.scrollY, h = document.documentElement;
+    if (nav) nav.classList.toggle('scrolled', y > 20);
+    if (alti) { var max = h.scrollHeight - h.clientHeight; alti.style.width = (max > 0 ? y / max * 100 : 0) + '%'; }
+    if (hoch) hoch.classList.toggle('visible', y > 700);
+    var vh = window.innerHeight;
+    parallax.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      el.style.setProperty('--py', (((r.top + r.height / 2) - vh / 2) * -parseFloat(el.dataset.parallax)).toFixed(1) + 'px');
     });
+    tick = false;
   }
+  window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(aufScroll); } }, { passive: true });
+  aufScroll();
+  if (hoch) hoch.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduziert ? 'auto' : 'smooth' }); });
 
-  // Zurück-nach-oben Button
-  const backToTop = document.getElementById('backToTop');
-  window.addEventListener('scroll', () => {
-    backToTop.classList.toggle('visible', window.scrollY > 600);
-  }, { passive: true });
-  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  /* ─── Einblenden, Zähler, Balken ─── */
+  var io = new IntersectionObserver(function (eintraege) {
+    eintraege.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      if (el.classList.contains('reveal')) el.classList.add('on');
+      if (el.dataset.zaehler) zaehlen(el);
+      if (el.classList.contains('fill')) fuellen(el);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.15 });
+  $$('.reveal, [data-zaehler], .meter .fill').forEach(function (el) { io.observe(el); });
 
-  // Höhenmesser Scroll-Leiste
-  const altiFill = document.getElementById('altimeterFill');
-  function updateAltimeter() {
-    const h = document.documentElement;
-    const scrolled = h.scrollTop;
-    const max = h.scrollHeight - h.clientHeight;
-    const pct = max > 0 ? (scrolled / max) * 100 : 0;
-    altiFill.style.width = pct + '%';
+  function zaehlen(el) {
+    var ziel = parseFloat(el.dataset.zaehler), start = performance.now(), dauer = 1200;
+    if (reduziert) { el.textContent = ziel; return; }
+    (function schritt(t) {
+      var p = Math.min((t - start) / dauer, 1);
+      el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * ziel);
+      if (p < 1) requestAnimationFrame(schritt);
+    })(start);
   }
-  window.addEventListener('scroll', updateAltimeter, { passive: true });
-  updateAltimeter();
-
-  // Parallax-Scrolling-Effekte
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const parallaxEls = document.querySelectorAll('[data-parallax]');
-    let parallaxTicking = false;
-    function updateParallax() {
-      const vh = window.innerHeight;
-      parallaxEls.forEach(el => {
-        const factor = parseFloat(el.dataset.parallax);
-        const rect = el.getBoundingClientRect();
-        const centerOffset = (rect.top + rect.height / 2) - vh / 2;
-        const py = centerOffset * factor * -1;
-        el.style.setProperty('--py', py.toFixed(1) + 'px');
-      });
-      parallaxTicking = false;
+  function fuellen(el) {
+    var w = parseFloat(el.dataset.wert) || 0;
+    el.style.width = w + '%';
+    if (el.classList.contains('schwierigkeit')) {
+      var hue = 125 - w * 1.2; // grün → gelb → rot
+      el.style.background = 'hsl(' + hue + ', 62%, 46%)';
     }
-    window.addEventListener('scroll', () => {
-      if (!parallaxTicking) {
-        requestAnimationFrame(updateParallax);
-        parallaxTicking = true;
-      }
-    }, { passive: true });
-    updateParallax();
   }
+  window.AeroFuellen = fuellen;
 
-  // Tab-Titel-Wechsel beim Wegklicken
-  const originalTitle = document.title;
-  document.addEventListener('visibilitychange', () => {
-    document.title = document.hidden ? 'Komm zurück! ✈️' : originalTitle;
-  });
-
-  // Konsolen-Ostereier für Entwickler
-  console.log(
-    '%c✈ AERO3DP %c– gebaut von Schülern, gedruckt auf Bambu Lab.',
-    'color:#b30b0b;font-size:20px;font-weight:900;font-family:sans-serif;',
-    'color:#888;font-size:12px;font-family:sans-serif;'
-  );
-  console.log(
-    '%cSuchst du nach Bugs oder nach einem Job? Schreib uns: info@aero3dp.de 😉',
-    'color:#f0f0f0;font-size:12px;font-family:sans-serif;'
-  );
-
-  // Mobile Menu
-  function toggleNav() {
-    document.getElementById('navLinks').classList.toggle('open');
-  }
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
-  });
-
-  // Category Tabs
-  function switchCat(id, btn) {
-    document.querySelectorAll('.cat-section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
-    document.getElementById('cat-' + id).classList.add('active');
-    btn.classList.add('active');
-  }
-
-  // Scroll immer nach oben beim Laden
-  if (history.scrollRestoration) history.scrollRestoration = 'manual';
-  window.scrollTo(0, 0);
-
-  // Count-Up Animation für Stats
-  const countEls = document.querySelectorAll('.count-up');
-  const countObs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
-      const target = parseInt(el.dataset.target, 10);
-      const duration = 1200;
-      const start = performance.now();
-      function tick(now) {
-        const progress = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        el.textContent = Math.round(eased * target);
-        if (progress < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-      countObs.unobserve(el);
-    });
-  }, { threshold: 0.4 });
-  countEls.forEach(el => countObs.observe(el));
-
-  // Schwierigkeitsgrad- & Geschwindigkeits-Balken (füllen sich beim Reinscrollen)
-  const meterEls = document.querySelectorAll('.pmeter-fill');
-  const meterObs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
-      const target = parseInt(el.dataset.target, 10);
-      el.style.width = target + '%';
-      if (el.classList.contains('diff-fill')) {
-        // Grün (leicht) bis Rot (schwierig), über Gelb/Orange in der Mitte
-        const hue = 120 - (target / 100) * 120;
-        el.style.background = `hsl(${hue}, 70%, 45%)`;
-        el.style.boxShadow = `0 0 6px hsla(${hue}, 70%, 45%, .55)`;
-      }
-      meterObs.unobserve(el);
-    });
-  }, { threshold: 0.3 });
-  meterEls.forEach(el => meterObs.observe(el));
-
-  // 3D Tilt-Effekt auf Produktkarten (nur Desktop / Maus-Geräte)
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    document.querySelectorAll('.pcard').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = `perspective(900px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateZ(0)`;
+  /* ─── Tabs (Flugmodelle / Zubehör) ─── */
+  $$('[role="tablist"]').forEach(function (liste) {
+    var tabs = $$('[role="tab"]', liste);
+    function waehle(tab, fokus) {
+      tabs.forEach(function (t) {
+        var an = t === tab;
+        t.setAttribute('aria-selected', an ? 'true' : 'false');
+        t.tabIndex = an ? 0 : -1;
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !an;
+        if (an && panel) $$('.meter .fill', panel).forEach(fuellen);
       });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(900px) rotateY(0) rotateX(0)';
+      if (fokus) tab.focus();
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { waehle(t); });
+      t.addEventListener('keydown', function (e) {
+        var n = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (n) { e.preventDefault(); waehle(tabs[(i + n + tabs.length) % tabs.length], true); }
       });
     });
+  });
+
+  /* ─── Magnetische Buttons (nur große Aktionen, nur mit Maus) ─── */
+  if (mitMaus && !reduziert) {
+    $$('.magnet').forEach(function (b) {
+      b.addEventListener('mousemove', function (e) {
+        var r = b.getBoundingClientRect();
+        b.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) * .2) + 'px,' + ((e.clientY - r.top - r.height / 2) * .3) + 'px)';
+      });
+      b.addEventListener('mouseleave', function () { b.style.transform = ''; });
+    });
   }
 
-  // Konfetti-Papierflieger
-  function launchPaperPlanes() {
-    const planeSVG = '<svg viewBox="0 0 24 24" width="22" height="22"><path d="M2 12 L22 3 L14 12 L22 21 Z" fill="#b30b0b"/></svg>';
-    const count = 18;
-    for (let i = 0; i < count; i++) {
-      const el = document.createElement('div');
-      el.innerHTML = planeSVG;
-      el.style.position = 'fixed';
-      el.style.left = (45 + Math.random() * 10) + 'vw';
-      el.style.top = '55vh';
-      el.style.zIndex = '9999';
-      el.style.pointerEvents = 'none';
-      el.style.opacity = '1';
-      const angle = (Math.random() - 0.5) * 140;
-      const dist = 250 + Math.random() * 300;
-      const dx = Math.sin(angle * Math.PI / 180) * dist;
-      const dy = -Math.abs(Math.cos(angle * Math.PI / 180) * dist) - 100;
-      const rot = (Math.random() - 0.5) * 360;
-      const dur = 900 + Math.random() * 700;
-      el.style.transition = `transform ${dur}ms cubic-bezier(.15,.6,.4,1), opacity ${dur}ms ease-in`;
-      document.body.appendChild(el);
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          el.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg)`;
+  /* ─── Kleinigkeiten ─── */
+  var titel = document.title;
+  document.addEventListener('visibilitychange', function () { document.title = document.hidden ? 'Komm zurück! ✈' : titel; });
+  $$('[data-jahr]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
+  if (window.console && console.log) {
+    console.log('%cAero3dp%c – gedruckt in Neuss, geflogen auf dem Platz.', 'color:#ec4a44;font:800 20px Lexend,sans-serif', 'color:#999;font:12px sans-serif');
+    console.log('%cDu schaust dir den Code an? Schreib uns: info@aero3dp.de', 'color:#ddd;font:12px sans-serif');
+  }
+
+  /* ─── Toast ─── */
+  var toastEl;
+  function toast(text) {
+    if (!toastEl) { toastEl = document.createElement('div'); toastEl.className = 'toast'; toastEl.setAttribute('role', 'status'); document.body.appendChild(toastEl); }
+    toastEl.textContent = text;
+    toastEl.classList.add('zeigen');
+    clearTimeout(toast.t);
+    toast.t = setTimeout(function () { toastEl.classList.remove('zeigen'); }, 2600);
+  }
+  window.AeroToast = toast;
+
+  /* ─── Papierflieger nach erfolgreichem Absenden ─── */
+  function papierflieger(ursprung) {
+    if (reduziert) return;
+    var r = ursprung ? ursprung.getBoundingClientRect() : { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
+    var x0 = r.left + r.width / 2, y0 = r.top + r.height / 2;
+    for (var i = 0; i < 16; i++) {
+      (function () {
+        var el = document.createElement('div');
+        el.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22"><path d="M2 12 22 3 14 12 22 21Z" fill="#cc1212"/></svg>';
+        el.style.cssText = 'position:fixed;left:' + x0 + 'px;top:' + y0 + 'px;z-index:9999;pointer-events:none;';
+        var w = (Math.random() - .5) * 2.4, d = 220 + Math.random() * 320, dauer = 900 + Math.random() * 700;
+        el.style.transition = 'transform ' + dauer + 'ms cubic-bezier(.15,.6,.4,1), opacity ' + dauer + 'ms ease-in';
+        document.body.appendChild(el);
+        requestAnimationFrame(function () { requestAnimationFrame(function () {
+          el.style.transform = 'translate(' + Math.sin(w) * d + 'px,' + (-Math.abs(Math.cos(w)) * d - 80) + 'px) rotate(' + (Math.random() - .5) * 360 + 'deg)';
           el.style.opacity = '0';
-        });
-      });
-      setTimeout(() => el.remove(), dur + 100);
+        }); });
+        setTimeout(function () { el.remove(); }, dauer + 100);
+      })();
     }
   }
+  window.AeroPapierflieger = papierflieger;
 
-  // Kontaktformular per AJAX (Formspree) mit Erfolgs-Animation
-  const contactForm = document.getElementById('contactForm');
-  const formStatus = document.getElementById('formStatus');
-  const formBtn = document.getElementById('formSubmitBtn');
-
-  // Konfigurator-Auswahl aus der URL übernehmen (kommt von den Produktseiten)
-  if (contactForm) {
-    const params = new URLSearchParams(window.location.search);
-    const produkt = params.get('produkt');
-    if (produkt) {
-      const betreffSelect = document.getElementById('betreff');
-      const nachrichtField = document.getElementById('nachricht');
-      const produktToOption = {
-        'FJ-4 Fury': 'fj4-fury',
-        'Aero-33X': 'aero-33x',
-        'FPV Flitzer': 'fpv-flitzer'
-      };
-      if (betreffSelect && produktToOption[produkt]) {
-        betreffSelect.value = produktToOption[produkt];
-      }
-      if (nachrichtField) {
-        const farbe = params.get('farbe');
-        const material = params.get('material');
-        const antrieb = params.get('antrieb') === 'ja';
-        let lines = [`Ich interessiere mich für: ${produkt}`];
-        if (farbe) lines.push(`Farbe: ${farbe}`);
-        if (material) lines.push(`Material: ${material}`);
-        lines.push(`Mit Antriebsset: ${antrieb ? 'Ja' : 'Nein'}`);
-        nachrichtField.value = lines.join('\n') + '\n\n';
-      }
-    }
+  /* ─── Anfragen versenden: Supabase (falls eingerichtet) + E-Mail via Formspree ─── */
+  function anfrageSenden(a) {
+    var C = window.AERO_CONFIG || {}, B = window.AeroBackend;
+    var ergebnis = { db: false, mail: false, fehler: null };
+    var dbVersuch = (B && B.enabled) ? B.insert('anfragen', {
+      art: a.art, name: a.name, email: a.email, nachricht: a.nachricht || null,
+      details: a.details || null, datei_pfad: a.dateiPfad || null
+    }).then(function () { ergebnis.db = true; }).catch(function (e) { ergebnis.fehler = e.message; }) : Promise.resolve();
+    return dbVersuch.then(function () {
+      if (ergebnis.fehler && /Zu viele/.test(ergebnis.fehler)) throw new Error(ergebnis.fehler);
+      var felder = { name: a.name, email: a.email, _subject: a.betreff, nachricht: a.nachricht || '', _gotcha: a.honig || '' };
+      if (a.zusammenfassung) felder.zusammenfassung = a.zusammenfassung;
+      if (a.dateiPfad) felder.datei = ergebnis.db ? 'Liegt im Admin-Bereich: ' + a.dateiPfad : 'Upload fehlgeschlagen – bitte Datei anfordern';
+      return fetch(C.formspree, {
+        method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(felder)
+      }).then(function (res) { ergebnis.mail = res.ok; }).catch(function () {});
+    }).then(function () {
+      if (!ergebnis.db && !ergebnis.mail) throw new Error(ergebnis.fehler || 'Netzwerkfehler');
+      if (B) B.track('anfrage_gesendet', { art: a.art });
+      return ergebnis;
+    });
   }
+  window.AeroAnfrage = anfrageSenden;
 
-  if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
+  /* ─── Kontaktformular (Startseite) ─── */
+  var kf = $('#kontaktForm');
+  if (kf) {
+    var p = new URLSearchParams(location.search);
+    if (p.get('produkt')) {
+      var thema = $('#thema', kf); if (thema) thema.value = 'Produktanfrage';
+      var n = $('#nachricht', kf); if (n && !n.value) n.value = 'Ich interessiere mich für: ' + p.get('produkt') + '\n\n';
+    }
+    kf.addEventListener('submit', function (e) {
       e.preventDefault();
-      formBtn.disabled = true;
-      formBtn.textContent = 'Wird gesendet…';
-      formStatus.style.display = 'none';
-      try {
-        const res = await fetch(contactForm.action, {
-          method: 'POST',
-          body: new FormData(contactForm),
-          headers: { 'Accept': 'application/json' }
-        });
-        let data = null;
-        try { data = await res.json(); } catch (parseErr) { /* keine JSON-Antwort */ }
-
-        if (res.ok) {
-          launchPaperPlanes();
-          formStatus.style.display = 'block';
-          formStatus.style.color = '#8fce8f';
-          formStatus.textContent = 'Danke! Deine Nachricht ist abgeflogen — wir melden uns bald. ✈️';
-          contactForm.reset();
-        } else {
-          const detail = data && data.errors
-            ? data.errors.map(x => x.message).join(', ')
-            : (data && data.error) || `Status ${res.status}`;
-          console.error('Formspree-Fehler:', detail, data);
-          formStatus.style.display = 'block';
-          formStatus.style.color = '#e08a8a';
-          formStatus.textContent = 'Ups, das hat nicht geklappt (' + detail + '). Schreib uns direkt an info@aero3dp.de';
-        }
-      } catch (err) {
-        console.error('Netzwerkfehler beim Formular-Versand:', err);
-        formStatus.style.display = 'block';
-        formStatus.style.color = '#e08a8a';
-        formStatus.textContent = 'Ups, das hat nicht geklappt (Netzwerkfehler). Schreib uns direkt an info@aero3dp.de';
-      }
-      formBtn.disabled = false;
-      formBtn.textContent = 'Nachricht senden →';
+      var status = $('.form-status', kf), btn = $('button[type="submit"]', kf);
+      var d = new FormData(kf);
+      btn.disabled = true; btn.textContent = 'Wird gesendet …'; status.hidden = true;
+      anfrageSenden({
+        art: 'kontakt', name: d.get('name').trim(), email: d.get('email').trim(),
+        nachricht: '[' + d.get('thema') + '] ' + d.get('nachricht').trim(), honig: d.get('_gotcha'),
+        betreff: 'Kontakt: ' + d.get('thema') + ' – ' + d.get('name').trim(), details: { thema: d.get('thema') }
+      }).then(function () {
+        papierflieger(btn);
+        status.className = 'form-status ok'; status.textContent = 'Danke! Deine Nachricht ist abgeflogen. Wir melden uns per E-Mail bei dir.';
+        kf.reset();
+      }).catch(function (err) {
+        status.className = 'form-status fehler';
+        status.textContent = /Zu viele/.test(err.message) ? err.message : 'Das hat nicht geklappt. Schreib uns bitte direkt an info@aero3dp.de.';
+      }).then(function () { status.hidden = false; btn.disabled = false; btn.textContent = 'Nachricht senden'; });
     });
   }
 
-  // Scroll Reveal
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  /* ─── Werkstatt-Status ─── */
+  var pill = $('[data-werkstatt]');
+  if (pill && window.AeroBackend && AeroBackend.enabled) {
+    AeroBackend.werkstatt().then(function (w) {
+      if (!w || (!w.status_text && !w.lieferzeit)) return;
+      var teile = [];
+      if (w.status_text) teile.push('<span>Gerade in der Werkstatt: <strong></strong></span>');
+      if (w.lieferzeit) teile.push('<span>Lieferzeit aktuell: <strong></strong></span>');
+      pill.innerHTML = '<span class="live" aria-hidden="true"></span>' + teile.join('<span aria-hidden="true">/</span>');
+      var strongs = $$('strong', pill), i = 0;
+      if (w.status_text) strongs[i++].textContent = w.status_text;
+      if (w.lieferzeit) strongs[i].textContent = w.lieferzeit;
+      pill.hidden = false;
+      document.dispatchEvent(new CustomEvent('aero:werkstatt', { detail: w }));
+    });
+  }
+
+  /* ─── Druckbühne im Hero: Modell entsteht Schicht für Schicht ─── */
+  var buehne = $('#druckbuehne');
+  if (buehne) {
+    var objekt = $('.druck-objekt', buehne), duese = $('.druck-duese', buehne), zaehler = $('[data-schicht]', buehne);
+    var schichten = parseInt(buehne.dataset.schichten, 10) || 240, laeuft = false;
+    function setze(anteil) { // anteil 0..1 gedruckt
+      var gestuft = Math.floor(anteil * schichten) / schichten;
+      objekt.style.setProperty('--rest', ((1 - gestuft) * 100).toFixed(2) + '%');
+      duese.style.setProperty('--rest-zahl', (1 - gestuft).toFixed(4));
+      if (zaehler) zaehler.textContent = Math.round(gestuft * schichten);
+    }
+    function drucken() {
+      if (laeuft) return;
+      laeuft = true;
+      buehne.classList.remove('fertig');
+      if (reduziert) { setze(1); buehne.classList.add('fertig'); laeuft = false; return; }
+      buehne.classList.add('druckt');
+      var start = performance.now(), dauer = 3400;
+      (function schritt(t) {
+        var p = Math.min((t - start) / dauer, 1);
+        setze(p);
+        duese.style.setProperty('--x', (50 + Math.sin(t / 70) * 40).toFixed(1) + '%');
+        if (p < 1) return requestAnimationFrame(schritt);
+        buehne.classList.remove('druckt'); buehne.classList.add('fertig'); laeuft = false;
+      })(start);
+    }
+    setze(0);
+    var bio = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { drucken(); bio.disconnect(); } }, { threshold: .35 });
+    bio.observe(buehne);
+    buehne.addEventListener('click', drucken);
+    buehne.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); drucken(); } });
+  }
+})();

@@ -1,227 +1,215 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="no-js">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="FJ-4 Fury: 64mm EDF-Jet Bausatz aus PLA. Konfiguriere Farbe, Material und Antriebsset direkt online.">
-  <title>FJ-4 Fury – 64mm EDF Jet | Aero3dp</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>FJ-4 Fury – 64-mm-EDF-Jet als Bausatz | Aero3dp</title>
+  <meta name="description" content="FJ-4 Fury: 64-mm-EDF-Jet als 3D-gedruckter Bausatz aus Neuss. Farben, Material und Antriebsset online konfigurieren.">
+  <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aero3dp.de/fj4-fury.html">
-  <link rel="icon" href="bilder/AERO3DP_downscaled.png" type="image/png">
   <meta name="theme-color" content="#0a0a0a">
-
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="preload" href="fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=20261010">
+  <link rel="stylesheet" href="konfigurator.css?v=20261010">
   <meta property="og:type" content="product">
   <meta property="og:site_name" content="Aero3dp">
   <meta property="og:locale" content="de_DE">
-  <meta property="og:title" content="FJ-4 Fury – 64mm EDF Jet | Aero3dp">
-  <meta property="og:description" content="FJ-4 Fury: 64mm EDF-Jet Bausatz aus PLA. Konfiguriere Farbe, Material und Antriebsset direkt online.">
+  <meta property="og:title" content="FJ-4 Fury – 64-mm-EDF-Jet als Bausatz | Aero3dp">
+  <meta property="og:description" content="FJ-4 Fury: 64-mm-EDF-Jet als 3D-gedruckter Bausatz aus Neuss. Farben, Material und Antriebsset online konfigurieren.">
   <meta property="og:url" content="https://aero3dp.de/fj4-fury.html">
-  <meta property="og:image" content="https://aero3dp.de/bilder/FJ4.jpg">
-
+  <meta property="og:image" content="https://aero3dp.de/bilder/fj4-fury-1600.webp">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="FJ-4 Fury – 64mm EDF Jet | Aero3dp">
-  <meta name="twitter:description" content="FJ-4 Fury: 64mm EDF-Jet Bausatz aus PLA. Konfiguriere Farbe, Material und Antriebsset direkt online.">
-  <meta name="twitter:image" content="https://aero3dp.de/bilder/FJ4.jpg">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "FJ-4 Fury",
-    "description": "FJ-4 Fury: 64mm EDF-Jet Bausatz aus PLA. Kraftvolle Beschleunigung, präzise Kontrolle und gutmütiges Flugverhalten.",
-    "image": "https://aero3dp.de/bilder/FJ4.jpg",
-    "brand": { "@type": "Brand", "name": "Aero3dp" },
-    "offers": {
-      "@type": "Offer",
-      "priceCurrency": "EUR",
-      "price": "55.90",
-      "availability": "https://schema.org/InStock",
-      "url": "https://aero3dp.de/fj4-fury.html"
-    },
-    "category": "RC-Flugmodell"
-  }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"FJ-4 Fury","description":"FJ-4 Fury: 64-mm-EDF-Jet als 3D-gedruckter Bausatz aus Neuss. Farben, Material und Antriebsset online konfigurieren.","image":["https://aero3dp.de/bilder/fj4-fury-1600.webp"],"brand":{"@type":"Brand","name":"Aero3dp"},"category":"RC-Flugmodell","sku":"FJ4","offers":{"@type":"Offer","priceCurrency":"EUR","price":"55.90","availability":"https://schema.org/InStock","url":"https://aero3dp.de/fj4-fury.html","itemCondition":"https://schema.org/NewCondition"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Start","item":"https://aero3dp.de/"},{"@type":"ListItem","position":2,"name":"Modelle","item":"https://aero3dp.de/#produkte"},{"@type":"ListItem","position":3,"name":"FJ-4 Fury","item":"https://aero3dp.de/fj4-fury.html"}]}</script>
 </head>
 <body>
-
-<!-- Höhenmesser Zurück-nach-oben Button -->
-<button id="backToTop" aria-label="Nach oben scrollen">
-  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-</button>
-
-<!-- ── HÖHENMESSER SCROLL-LEISTE ── -->
-<div class="altimeter"><div class="altimeter-fill" id="altimeterFill"></div></div>
-
-<nav id="nav">
-  <a href="index.html" class="logo"><img src="bilder/AERO3DP_light.png" alt="Aero3dp Logo" class="logo-img"></a>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+<div class="altimeter" aria-hidden="true"><div class="altimeter-fill" id="altimeterFill"></div></div>
+<button id="backToTop" type="button" aria-label="Nach oben scrollen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+<nav id="nav" class="solid" aria-label="Hauptnavigation">
+  <a href="index.html" class="logo" aria-label="Aero3dp Startseite"><img src="bilder/logo-hell.webp" alt="Aero3dp" width="640" height="278"></a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="index.html#produkte">Produkte</a></li>
-    <li><a href="index.html#galerie">Galerie</a></li>
+    <li><a href="index.html#produkte" aria-current="page">Modelle</a></li>
+    <li><a href="druckservice.html">3D-Druckservice</a></li>
     <li><a href="index.html#ueber-uns">Über uns</a></li>
-    <li><a href="index.html#prozess">Prozess</a></li>
-    <li><a href="index.html#kontakt" class="cta-link">Anfragen</a></li>
+    <li><a href="index.html#faq">FAQ</a></li>
+    <li><a href="index.html#kontakt" class="btn">Kontakt</a></li>
   </ul>
-  <button class="burger" id="burger" aria-label="Menü öffnen" onclick="toggleNav()">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="burger" id="burger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- ── PRODUKT HERO ── -->
-<header class="product-hero">
-  <div class="hero-bg" data-parallax="0.18"></div>
-  <div class="reveal">
-    <a href="index.html#produkte" class="phero-back">← Zurück zu allen Produkten</a>
-    <p class="ptag">EDF-Jet · 64mm · PLA · Bausatz</p>
-    <h1 class="phero-title">FJ-4 Fury</h1>
-    <p class="phero-sub">Kraftvolle Beschleunigung, präzise Kontrolle und ein gutmütiges Flugverhalten. Die Fury bringt echte Jet-Performance in einem handlichen Format – perfekt für schnelle Vorbeiflüge und dynamische Figuren.</p>
+<main id="inhalt">
+<header class="seitenkopf produktkopf">
+  <div class="hero-raster" aria-hidden="true"></div>
+  <div class="seitenkopf-inhalt">
+    <a class="zurueck" href="index.html#produkte"><span aria-hidden="true">←</span> Alle Modelle</a>
+    <h1>FJ-4 Fury</h1>
+    <p class="lead">Echte Jet-Performance im handlichen Format: kraftvoller Durchzug, präzise Kontrolle und trotzdem gutmütig, wenn es darauf ankommt.</p>
+    <ul class="chips"><li>EDF-Jet</li><li>64 mm Impeller</li><li>Bausatz</li></ul>
   </div>
 </header>
 
-<section class="sec">
-  <div class="product-detail-grid">
-
-    <!-- ── VISUAL & SPECS ── -->
-    <div class="pd-visual reveal">
-      <div class="pd-imgbox">
-        <img id="configImg" src="bilder/FJ4.jpg" alt="FJ-4 Fury" class="cover">
+<section class="konfig" id="konfigurator" aria-label="Konfigurator">
+  <div class="konfig-buehne">
+    <div class="buehne-kopf">
+      <div class="ansicht" role="tablist" aria-label="Ansicht">
+        <button type="button" role="tab" aria-selected="true" aria-controls="ansicht-plan" id="tab-plan">Draufsicht</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="ansicht-foto" id="tab-foto" tabindex="-1">Foto</button>
       </div>
-
-      <div class="pd-quickcolor"><div class="config-group">
-        <p class="config-label">Farbe <span class="config-val" id="colorValLabel">— Rot/Weiß (Standard)</span></p>
-        <div class="color-swatches">
-          <button class="color-swatch active" style="--sw:#b30b0b" title="Rot/Weiß (Standard)"></button>
-          <button class="color-swatch" style="--sw:#1f6fb3" title="Blau/Weiß"></button>
-          <button class="color-swatch" style="--sw:#1f9950" title="Grün/Weiß"></button>
-          <button class="color-swatch" style="--sw:#e0a83b" title="Gelb/Orange"></button>
-          <button class="color-swatch" style="--sw:#888888" title="Schwarz/Grau"></button>
-        </div>
-      </div></div>
-
-      <div class="pspecs" style="border-top:none; padding-top:0;">
-        <div><div class="sk">Spannweite</div><div class="sv">810 mm</div></div>
-        <div><div class="sk">Länge</div><div class="sv">750 mm</div></div>
-        <div><div class="sk">Leergewicht</div><div class="sv">ca. 580 g</div></div>
-        <div><div class="sk">Antrieb</div><div class="sv">64 mm EDF</div></div>
-        <div><div class="sk">Akku</div><div class="sv">4S 1800 mAh</div></div>
-        <div><div class="sk">Material</div><div class="sv">PLA</div></div>
+      <span class="buehne-tipp">Bauteil antippen zum Färben</span>
+    </div>
+    <div class="buehne-flaeche">
+      <div id="ansicht-plan" role="tabpanel" aria-labelledby="tab-plan">
+        <svg class="blueprint" id="blueprint" viewBox="-20 0 860 820" role="img" aria-labelledby="bp-titel">
+          <title id="bp-titel">Draufsicht der FJ-4 Fury in den gewählten Farben</title>
+          <defs>
+            <pattern id="bp-raster" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="rgba(255,255,255,.045)"/></pattern>
+            <pattern id="bp-schicht" width="12" height="4.5" patternUnits="userSpaceOnUse"><rect width="12" height="1.1" fill="#000" opacity=".13"/></pattern>
+          </defs>
+          <rect x="-20" y="0" width="860" height="820" fill="url(#bp-raster)"/>
+          <g class="masse" aria-hidden="true"><path d="M60 772 H740 M60 764 V780 M740 764 V780"/><text x="400.0" y="800" text-anchor="middle">810 mm Spannweite</text><path d="M792 89 V712 M784 89 H800 M784 712 H800"/><text x="814" y="400.5" text-anchor="middle" transform="rotate(90 814 400.5)">750 mm Länge</text></g>
+          <g class="flugzeug"><path class="bt" data-teil="fluegel" d="M446 330 L664 481 L664 583 L446 470 Z"><title>Tragflächen</title></path><path class="bt" data-teil="fluegel" d="M354 330 L136 481 L136 583 L354 470 Z"><title>Tragflächen</title></path><path class="bt" data-teil="akzente" d="M664 481 L732 528 Q742 535 740 547 L738 609 Q736 618 728 616 L664 583 Z"><title>Nase &amp; Spitzen</title></path><path class="bt" data-teil="akzente" d="M136 481 L68 528 Q58 535 60 547 L62 609 Q64 618 72 616 L136 583 Z"><title>Nase &amp; Spitzen</title></path><path class="bt" data-teil="leitwerk" d="M424 612 L520 676 Q529 682 527 691 L525 702 L422 690 Z"><title>Leitwerk</title></path><path class="bt" data-teil="leitwerk" d="M376 612 L280 676 Q271 682 273 691 L275 702 L378 690 Z"><title>Leitwerk</title></path><path class="bt" data-teil="rumpf" d="M372 96 Q400 82 428 96 C440 124 446 166 446 214 L446 500 C446 584 432 654 420 712 L380 712 C368 654 354 584 354 500 L354 214 C354 166 360 124 372 96 Z"><title>Rumpf</title></path><path class="bt" data-teil="akzente" d="M372 96 Q400 82 428 96 C432 106 435 116 437 128 L363 128 C365 116 368 106 372 96 Z"><title>Nase &amp; Spitzen</title></path><path class="bt" data-teil="leitwerk" d="M396 588 L404 588 L405 712 L395 712 Z"><title>Leitwerk</title></path><g class="fest" aria-hidden="true"><ellipse class="glas" cx="400" cy="238" rx="17" ry="44"/><ellipse class="dunkel" cx="400" cy="95" rx="20" ry="5"/></g><g class="detail" aria-hidden="true"><path d="M560 512 L650 558"/><path d="M240 512 L150 558"/><path d="M446 500 L446 214"/><path d="M354 500 L354 214"/></g></g>
+          <g class="schichtlinien" aria-hidden="true"></g>
+          <g class="druckkopf" aria-hidden="true"><line x1="0" x2="0" y1="0" y2="0"/></g>
+        </svg>
       </div>
-
-      <div class="pmeters">
-        <div class="pmeter">
-          <div class="pmeter-top"><span class="pmeter-label">Schwierigkeitsgrad</span><span class="pmeter-val">Fortgeschritten</span></div>
-          <div class="pmeter-bar"><div class="pmeter-fill diff-fill" data-target="66"></div></div>
-        </div>
-        <div class="pmeter">
-          <div class="pmeter-top"><span class="pmeter-label">Geschwindigkeit</span><span class="pmeter-val">Rasant</span></div>
-          <div class="pmeter-bar"><div class="pmeter-fill speed-fill" data-target="90"></div></div>
-        </div>
-      </div>
-
-      <div class="pelec" style="border-bottom:none; margin-bottom:0;">
-        <p class="pelec-title">Benötigte Elektronik</p>
-        <ul class="pelec-list">
-          <li class="pelec-item"><span class="pelec-ico">M</span>64mm EDF-Motor, 2400–3200 KV</li>
-          <li class="pelec-item"><span class="pelec-ico">R</span>80A Regler</li>
-          <li class="pelec-item"><span class="pelec-ico">S</span>3–4× 9g Servos</li>
-          <li class="pelec-item"><span class="pelec-ico">A</span>4S 1800 mAh Akku</li>
-        </ul>
-        <p class="pelec-note">Nicht im Lieferumfang enthalten – im Set für 124,90 € erhältlich, oder separat nach Wunsch.</p>
+      <div id="ansicht-foto" role="tabpanel" aria-labelledby="tab-foto" hidden>
+        <img class="buehne-foto cover" src="bilder/fj4-fury-1600.webp" alt="FJ-4 Fury in Silber-Rot auf dem Aufbautisch" loading="lazy">
+        <p class="foto-hinweis">Foto in Werksfarben</p>
       </div>
     </div>
+    <ul class="legende" id="legende" aria-label="Gewählte Farben"></ul>
+  </div>
 
-    <!-- ── KONFIGURATOR ── -->
-    <div class="pd-config reveal reveal-d1">
-      <p class="eyebrow">Konfigurator</p>
-      <h2 class="sec-title" style="font-size:1.7rem; margin-bottom:1.8rem;">Konfiguriere dein Modell</h2>
-      <div class="config-group">
-        <p class="config-label">Material</p>
-        <div class="material-options">
-          <label class="material-option active">
-            <input type="radio" name="material" value="PLA" checked>
-            <span>PLA</span>
-            <small>Robuster Standard, ideal für die meisten Flugstile</small>
-          </label>
-          <label class="material-option">
-            <input type="radio" name="material" value="LW-PLA">
-            <span>LW-PLA</span>
-            <small>Deutlich leichter, bessere Flugleistung, etwas empfindlicher</small>
-          </label>
+  <div class="konfig-panel">
+    <ol class="schritte">
+      <li class="schritt" aria-labelledby="s-farbe">
+        <h2 id="s-farbe"><span class="nr">1</span>Farben</h2>
+        <p class="schritt-text">Nimm eine Vorlage oder färbe jedes Bauteil einzeln – wir drucken es genau so.</p>
+        <div class="presets" id="presets" role="group" aria-label="Farbvorlagen"></div>
+        <div class="teil-tabs" id="teilTabs" role="tablist" aria-label="Bauteil wählen"></div>
+        <div class="swatches" id="swatches" role="radiogroup"></div>
+        <p class="klein">Bildschirmfarben können vom echten Filament leicht abweichen.</p>
+      </li>
+      <li class="schritt" aria-labelledby="s-material">
+        <h2 id="s-material"><span class="nr">2</span>Material</h2>
+        <div class="material-wahl" role="radiogroup" aria-labelledby="s-material">
+          <button type="button" class="material" role="radio" aria-checked="true" data-material="PLA"><b>PLA</b><span>Robust und formstabil, verzeiht beim Bauen viel.</span><em>inklusive</em></button>
+          <button type="button" class="material" role="radio" aria-checked="false" data-material="LW-PLA"><b>LW-PLA</b><span>Aufgeschäumt und deutlich leichter: fliegt langsamer und länger.</span><em>+ 10,00 €</em></button>
         </div>
-      </div>
-
-
-      <div class="config-group">
-        <label class="antrieb-toggle">
-          <input type="checkbox" id="antriebToggle">
-          <span class="toggle-switch"></span>
-          <span class="toggle-label">Mit Antriebsset<small>Motor, Regler & Servos passend zum Modell</small></span>
+        <p class="klein">LW-PLA gibt es nicht in jeder Farbe. Falls deine Wahl nicht verfügbar ist, melden wir uns mit einer Alternative.</p>
+      </li>
+      <li class="schritt" aria-labelledby="s-antrieb">
+        <h2 id="s-antrieb"><span class="nr">3</span>Antrieb</h2>
+        <label class="antrieb">
+          <input type="checkbox" id="antrieb">
+          <span class="schalter" aria-hidden="true"></span>
+          <span class="antrieb-text"><b>Antriebsset dazu</b><span>Abgestimmt auf die FJ-4 Fury</span></span>
+          <span class="antrieb-preis">+ 69,00 €</span>
         </label>
+        <div class="antrieb-inhalt" id="antriebInhalt"><ul><li>64-mm-EDF, 3000 KV</li><li>80-A-Regler</li><li>3 × 9-g-Servos</li></ul></div>
+      </li>
+      <li class="schritt uebersicht" aria-labelledby="s-uebersicht">
+        <h2 id="s-uebersicht"><span class="nr">4</span>Übersicht</h2>
+        <div class="code-zeile"><span>Konfigurations-Code</span><code id="konfigCode">–</code></div>
+        <dl class="aufstellung" id="aufstellung"></dl>
+        <div class="summe"><span>Gesamt</span><output id="summe" aria-live="polite">–</output></div>
+        <p class="klein">Endpreis, zzgl. Versand. <span id="lieferzeit"></span></p>
+        <div class="aktionen">
+          <button type="button" class="btn magnet" id="anfrageOeffnen" aria-expanded="false" aria-controls="konfigForm">Anfrage senden</button>
+          <button type="button" class="btn btn-ghost" id="teilen">Konfiguration teilen</button>
+        </div>
+        <form class="formular konfig-form" id="konfigForm" hidden>
+          <p class="klein">Wir prüfen deine Konfiguration und schicken dir eine Bestätigung mit allen Details zur Bezahlung. Das ist noch keine verbindliche Bestellung.</p>
+          <div class="feld-reihe">
+            <div class="feld"><label for="kf-name">Name</label><input id="kf-name" name="name" autocomplete="name" required maxlength="120"></div>
+            <div class="feld"><label for="kf-email">E-Mail</label><input id="kf-email" name="email" type="email" autocomplete="email" required maxlength="200"></div>
+          </div>
+          <div class="feld"><label for="kf-nachricht">Nachricht <span style="color:var(--text-3)">(optional)</span></label><textarea id="kf-nachricht" name="nachricht" maxlength="4000" placeholder="Wünsche, Fragen oder Abholung in Neuss?"></textarea></div>
+          <div class="honig" aria-hidden="true"><label>Nicht ausfüllen <input name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+          <label class="feld-check"><input type="checkbox" required> <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage verarbeitet werden (<a class="textlink" href="datenschutz.html">Datenschutz</a>).</span></label>
+          <p class="form-status" role="status" hidden></p>
+          <button class="btn btn-block" type="submit">Konfiguration anfragen</button>
+        </form>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec sec-alt" id="details" aria-labelledby="details-titel">
+  <div class="details">
+    <div class="details-text">
+      <h2 class="h2" id="details-titel">Über die FJ-4 Fury</h2>
+      <p>Die FJ-4 Fury richtet sich an Pilotinnen und Piloten, die ein schnelles, direktes und zugleich stabiles Modell suchen. Schlanke Silhouette, effizienter 64-mm-Impeller und sauber abgestimmte Aerodynamik sorgen für beeindruckenden Durchzug und schnelle Reaktionen.</p><p>Ob tiefe Vorbeiflüge, dynamische Figuren oder lässige Platzrunden: Die Fury bleibt auch bei höherem Tempo erstaunlich stabil. Der Handstart gelingt zuverlässig, die Fluglage bleibt klar lesbar – perfekt für Fortgeschrittene und ambitionierte Einsteiger, die ihre ersten EDF-Erfahrungen sammeln wollen.</p>
+      
+      <div class="details-meter"><dl class="meter"><dt>Schwierigkeit</dt><dd>Fortgeschritten</dd><dd class="bar" aria-hidden="true"><div class="fill schwierigkeit" data-wert="66"></div></dd></dl><dl class="meter"><dt>Tempo</dt><dd>Rasant</dd><dd class="bar" aria-hidden="true"><div class="fill tempo" data-wert="92"></div></dd></dl></div>
+    </div>
+    <div class="details-daten">
+      <h3>Technische Daten</h3>
+      <dl class="specs"><div><dt>Spannweite</dt><dd>810 mm</dd></div><div><dt>Länge</dt><dd>750 mm</dd></div><div><dt>Leergewicht</dt><dd>ca. 580 g</dd></div><div><dt>Abfluggewicht</dt><dd>ca. 1000 g</dd></div><div><dt>Antrieb</dt><dd>64 mm EDF, 2400–3200 KV</dd></div><div><dt>Akku</dt><dd>4S 1800 mAh</dd></div><div><dt>Servos</dt><dd>3–4 × 9 g</dd></div><div><dt>Start</dt><dd>Handstart</dd></div></dl>
+      <div class="listen">
+        <div><h3>Im Bausatz</h3><ul class="haken"><li>Alle 3D-gedruckten Rumpf-, Tragflächen- und Leitwerksteile</li><li>Kohlefaser-Flächenholm 500 × 8 mm</li><li>CFK-Leitwerkholm 140 × 4 mm</li><li>Ruderanlenkungen</li><li>Holzdübel zur Ausrichtung</li></ul></div>
+        <div><h3>Antriebsset (optional)</h3><ul class="haken"><li>64-mm-EDF, 3000 KV</li><li>80-A-Regler</li><li>3 × 9-g-Servos</li></ul></div>
+        <div><h3>Du brauchst zusätzlich</h3><ul class="plus"><li>Sender und Empfänger</li><li>Akku 4S 1800 mAh</li></ul></div>
       </div>
-
-      <div class="config-summary" id="configSummary"></div>
-
-      <div class="config-price" id="configPrice"></div>
-
-      <a href="#" id="configCta" class="btn-order">Jetzt anfragen →</a>
-      <p style="font-size:.72rem; color:var(--muted); margin-top:.9rem; line-height:1.6;">
-        Farbvorschau dient der Veranschaulichung – die tatsächliche Filamentfarbe kann leicht abweichen. Bei Fragen zur Konfiguration melde dich einfach bei uns.
-      </p>
     </div>
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
+<section class="sec" aria-labelledby="weitere-titel">
+  <div class="sec-head"><h2 id="weitere-titel">Weitere Modelle</h2></div>
+  <div class="weitere"><a class="weitere-karte" href="aero-33x.html"><img src="bilder/aero-33x.webp" alt="" loading="lazy" class="contain"><span><b>Aero-33X</b>ab 49,90 €</span></a><a class="weitere-karte" href="fpv-flitzer.html"><img src="bilder/fpv-flitzer.webp" alt="" loading="lazy" class="contain"><span><b>FPV Flitzer</b>ab 19,90 €</span></a></div>
+</section>
+</main>
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <a href="index.html" class="logo" style="font-size:1.35rem"><img src="bilder/AERO3DP_light.png" alt="Aero3dp Logo" class="logo-img footer-logo-img"></a>
-      <p>3D-gedruckte RC-Modelle aus eigenem Druck.<br>Schülergeleitetes Startup aus Neuss – gegründet 2025.</p>
+      <a href="index.html" class="logo" aria-label="Aero3dp Startseite"><img src="bilder/logo-hell.webp" alt="Aero3dp" width="640" height="278" loading="lazy"></a>
+      <p>3D-gedruckte RC-Flugmodelle und Zubehör. Ein schülergeführtes Startup aus Neuss, gegründet 2025.</p>
     </div>
-    <div class="footer-col">
-      <h4>Seiten</h4>
+    <div>
+      <h2>Modelle</h2>
       <ul>
-        <li><a href="index.html#produkte">Produkte</a></li>
-        <li><a href="index.html#galerie">Galerie</a></li>
-        <li><a href="index.html#ueber-uns">Über uns</a></li>
+        <li><a href="fj4-fury.html">FJ-4 Fury</a></li>
+        <li><a href="aero-33x.html">Aero-33X</a></li>
+        <li><a href="fpv-flitzer.html">FPV Flitzer</a></li>
+        <li><a href="index.html#produkte">Zubehör</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Service</h2>
+      <ul>
+        <li><a href="druckservice.html">3D-Druckservice</a></li>
+        <li><a href="index.html#faq">Häufige Fragen</a></li>
+        <li><a href="index.html#links">Nützliche Links</a></li>
         <li><a href="index.html#kontakt">Kontakt</a></li>
       </ul>
     </div>
-    <div class="footer-col">
-      <h4>Rechtliches</h4>
+    <div>
+      <h2>Rechtliches</h2>
       <ul>
         <li><a href="impressum.html">Impressum</a></li>
         <li><a href="agbs.html">AGB</a></li>
         <li><a href="datenschutz.html">Datenschutz</a></li>
-        <li><a href="https://instagram.com/aero3dp" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://instagram.com/aero3dp" rel="noopener" target="_blank">Instagram</a></li>
       </ul>
     </div>
   </div>
-  <div class="footer-bottom">
-    <p>© 2025 Aero3dp – Tommy Rohn, Neuss. Alle Rechte vorbehalten.</p>
-    <p>Gedruckt mit <span style="color:var(--red)">♥</span> und PLA</p>
+  <div class="footer-unten">
+    <span>© <span data-jahr>2026</span> Aero3dp, Tommy Rohn, Neuss</span>
+    <span>Gedruckt in Neuss, geflogen auf dem Platz.</span>
   </div>
 </footer>
 
-<script>
-  window.PRODUCT = {
-    productName: 'FJ-4 Fury',
-    materialSelectable: true,
-    priceKnown: true,
-    basePrice: 55.9,
-    bundlePrice: 124.9,
-    colors: [
-      { name: 'Rot/Weiß (Standard)', hue: 0, gray: false },
-      { name: 'Blau/Weiß', hue: 205, gray: false },
-      { name: 'Grün/Weiß', hue: 150, gray: false },
-      { name: 'Gelb/Orange', hue: 45, gray: false },
-      { name: 'Schwarz/Grau', hue: 0, gray: true }
-    ]
-  };
-</script>
-<script src="script.js"></script>
-<script src="configurator.js"></script>
-
+<script>window.PRODUKT = {"name": "FJ-4 Fury", "code": "FJ4", "slug": "fj4-fury", "preis": 55.9, "preisSet": 124.9, "materialWahl": true, "lwAufpreis": 10, "teile": [{"id": "rumpf", "name": "Rumpf"}, {"id": "fluegel", "name": "Tragflächen"}, {"id": "leitwerk", "name": "Leitwerk"}, {"id": "akzente", "name": "Nase & Spitzen"}], "presets": [{"name": "Werksfarben", "farben": {"rumpf": "silber", "fluegel": "silber", "leitwerk": "rot", "akzente": "rot"}}, {"name": "Arktis", "farben": {"rumpf": "weiss", "fluegel": "weiss", "leitwerk": "orange", "akzente": "orange"}}, {"name": "Stealth", "farben": {"rumpf": "grau", "fluegel": "grau", "leitwerk": "schwarz", "akzente": "schwarz"}}, {"name": "Blue Angel", "farben": {"rumpf": "blau", "fluegel": "blau", "leitwerk": "gelb", "akzente": "gelb"}}, {"name": "Racing", "farben": {"rumpf": "weiss", "fluegel": "rot", "leitwerk": "rot", "akzente": "schwarz"}}], "farben": [{"id": "weiss", "name": "Weiß", "hex": "#ecebe6", "kz": "WE"}, {"id": "silber", "name": "Silber", "hex": "#a7acb2", "kz": "SI"}, {"id": "grau", "name": "Grau", "hex": "#5c6067", "kz": "GR"}, {"id": "schwarz", "name": "Schwarz", "hex": "#1e1f21", "kz": "SW"}, {"id": "rot", "name": "Aero-Rot", "hex": "#c4191c", "kz": "RO"}, {"id": "orange", "name": "Orange", "hex": "#ec6a1f", "kz": "OR"}, {"id": "gelb", "name": "Gelb", "hex": "#f0c02d", "kz": "GE"}, {"id": "blau", "name": "Blau", "hex": "#1f5fae", "kz": "BL"}, {"id": "gruen", "name": "Grün", "hex": "#2e9a56", "kz": "GN"}]};</script>
+<script src="config.js?v=20261010"></script>
+<script src="backend.js?v=20261010"></script>
+<script src="script.js?v=20261010"></script>
+<script src="konfigurator.js?v=20261010"></script>
 </body>
 </html>
