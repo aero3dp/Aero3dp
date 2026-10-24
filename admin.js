@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   var C = window.AERO_CONFIG || {};
-  var BASE = String(C.supabaseUrl || '').replace(/\/+$/, ''), KEY = String(C.supabaseAnonKey || '');
+  var BASE = (String(C.supabaseUrl || '').trim().match(/^https?:\/\/[^\/\s]+/) || [''])[0], KEY = String(C.supabaseAnonKey || '').trim();  // nur https://xyz.supabase.co, Pfade/Doppelungen ignorieren
   var eingerichtet = !!(BASE && KEY);
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };

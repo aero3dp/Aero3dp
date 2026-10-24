@@ -3,8 +3,8 @@
 (function () {
   'use strict';
   var C = window.AERO_CONFIG || {};
-  var base = String(C.supabaseUrl || '').replace(/\/+$/, '');
-  var key = String(C.supabaseAnonKey || '');
+  var base = (String(C.supabaseUrl || '').trim().match(/^https?:\/\/[^\/\s]+/) || [''])[0];  // nur Herkunft, z. B. versehentlich angehängtes /rest/v1/ ignorieren
+  var key = String(C.supabaseAnonKey || '').trim();
   var enabled = !!(base && key);
 
   // Neue Supabase-Schlüssel (sb_publishable_…) gehören nur in den apikey-Header,
