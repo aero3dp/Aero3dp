@@ -12,7 +12,7 @@
   var farbe = function (id) { return P.farben.filter(function (f) { return f.id === id; })[0]; };
   var teilName = function (id) { return P.teile.filter(function (t) { return t.id === id; })[0].name; };
 
-  var state = { farben: {}, material: 'PLA', antrieb: false, teil: P.teile[0].id };
+  var state = { farben: {}, material: 'PLA', antrieb: false, lack: false, teil: P.teile[0].id };
   P.teile.forEach(function (t) { state.farben[t.id] = P.presets[0].farben[t.id]; });
 
   /* ─── Zustand aus Link übernehmen (?f=SI.SI.RO.RO&m=LW&a=1) ─── */
@@ -25,12 +25,14 @@
     });
     if (P.materialWahl && p.get('m') === 'LW') state.material = 'LW-PLA';
     if (p.get('a') === '1') state.antrieb = true;
+    if (p.get('l') === '1') state.lack = true;
   })();
   function linkParameter() {
     var p = new URLSearchParams();
     p.set('f', P.teile.map(function (t) { return farbe(state.farben[t.id]).kz; }).join('.'));
     if (P.materialWahl) p.set('m', state.material === 'LW-PLA' ? 'LW' : 'PLA');
     if (state.antrieb) p.set('a', '1');
+    if (state.lack) p.set('l', '1');
     return p.toString();
   }
   function linkMerken() { try { history.replaceState(null, '', location.pathname + '?' + linkParameter() + location.hash); } catch (e) { /* egal */ } }
@@ -205,6 +207,46 @@
   var antrieb = $('#antrieb'), antriebInhalt = $('#antriebInhalt');
   antrieb.addEventListener('change', function () { nutzung(); state.antrieb = antrieb.checked; aktualisieren(true); });
 
+  /* Lackierung */
+  var lack = $('#lackierung'), lackInhalt = $('#lackInhalt'), lackWunsch = $('#lackWunsch');
+  lack.addEventListener('change', function () {
+    nutzung(); state.lack = lack.checked; aktualisieren(true);
+    if (state.lack) lackieren();
+  });
+
+  /* Lackier-Durchgang: eine Spritzpistole fährt einmal über das Modell */
+  var lackGruppe = document.createElementNS(NS, 'g'), lackClip = document.createElementNS(NS, 'clipPath');
+  lackClip.id = 'lack-clip'; defs.appendChild(lackClip);
+  $$('.bt', svg).forEach(function (el) { var k = el.cloneNode(false); k.removeAttribute('data-teil'); k.removeAttribute('class'); lackClip.appendChild(k); });
+  var grad = document.createElementNS(NS, 'linearGradient'); grad.id = 'lack-glanz';
+  grad.setAttribute('x1', '0'); grad.setAttribute('x2', '1'); grad.setAttribute('y1', '0'); grad.setAttribute('y2', '0');
+  [['0', 0], ['.42', .5], ['.5', .9], ['.58', .5], ['1', 0]].forEach(function (s) {
+    var st = document.createElementNS(NS, 'stop'); st.setAttribute('offset', s[0]); st.setAttribute('stop-color', '#fff'); st.setAttribute('stop-opacity', s[1]); grad.appendChild(st);
+  });
+  defs.appendChild(grad);
+  lackGruppe.setAttribute('class', 'lack-ebene'); lackGruppe.setAttribute('clip-path', 'url(#lack-clip)'); lackGruppe.setAttribute('aria-hidden', 'true');
+  var glanz = document.createElementNS(NS, 'rect');
+  glanz.setAttribute('y', '0'); glanz.setAttribute('height', '820'); glanz.setAttribute('width', '300'); glanz.setAttribute('x', '-340'); glanz.setAttribute('fill', 'url(#lack-glanz)');
+  lackGruppe.appendChild(glanz);
+  $('.flugzeug', svg).after(lackGruppe);
+  var duese = document.createElementNS(NS, 'line');
+  duese.setAttribute('class', 'lack-duese'); duese.setAttribute('aria-hidden', 'true');
+  duese.setAttribute('y1', '70'); duese.setAttribute('y2', '750');
+  lackGruppe.after(duese);
+  var lackRaf;
+  function lackieren() {
+    if (reduziert) return;
+    cancelAnimationFrame(lackRaf);
+    var start = performance.now();
+    svg.classList.add('spruehen');
+    (function schritt(t) {
+      var p = Math.min((t - start) / 1100, 1), e = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      var x = -340 + e * 1200;
+      glanz.setAttribute('x', x); duese.setAttribute('x1', x + 150); duese.setAttribute('x2', x + 150);
+      if (p < 1) lackRaf = requestAnimationFrame(schritt); else svg.classList.remove('spruehen');
+    })(start);
+  }
+
   /* Ansicht Draufsicht / Foto */
   $$('.ansicht [role="tab"]').forEach(function (t, i, alle) {
     t.addEventListener('click', function () {
@@ -225,11 +267,18 @@
       if (P.preisSet != null) { var d = Math.round((P.preisSet - P.preis) * 100) / 100; zeilen.push(['Antriebsset', d]); summe += d; }
       else { zeilen.push(['Antriebsset', null]); offen = true; }
     }
+    if (state.lack) { zeilen.push(['Personalisierte Lackierung', null]); offen = true; }
     return { zeilen: zeilen, summe: Math.round(summe * 100) / 100, offen: offen };
+  }
+  function offenTeile() {
+    var t = [];
+    if (state.antrieb && P.preisSet == null) t.push('Antriebsset');
+    if (state.lack) t.push('Lackierung');
+    return t.join(' und ');
   }
   function code() {
     var kz = P.teile.map(function (t) { return farbe(state.farben[t.id]).kz; }).join('.');
-    return [P.code, state.material === 'LW-PLA' ? 'LW' : 'PLA', kz, state.antrieb ? 'A' : '0'].join('-');
+    return [P.code, state.material === 'LW-PLA' ? 'LW' : 'PLA', kz, state.antrieb ? 'A' : '0'].join('-') + (state.lack ? '-L' : '');
   }
   function preisAnimieren(ziel) {
     if (angezeigt === null || reduziert) { angezeigt = ziel; summeEl.textContent = EUR.format(ziel); return; }
@@ -252,17 +301,21 @@
     legende.innerHTML = P.teile.map(function (t) {
       var f = farbe(state.farben[t.id]);
       return '<li><i style="--c:' + f.hex + '" aria-hidden="true"></i>' + t.name + ' <b>' + f.name + '</b></li>';
-    }).join('') + (P.materialWahl ? '<li>Material <b>' + state.material + '</b></li>' : '');
+    }).join('') + (P.materialWahl ? '<li>Material <b>' + state.material + '</b></li>' : '') + (state.lack ? '<li class="lack-chip">+ Lackierung <b>nach Wunsch</b></li>' : '');
     $$('.material').forEach(function (b) { b.setAttribute('aria-checked', b.dataset.material === state.material); });
     antrieb.checked = state.antrieb;
     antriebInhalt.classList.toggle('offen', state.antrieb);
+    lack.checked = state.lack;
+    lackInhalt.classList.toggle('offen', state.lack);
+    svg.classList.toggle('lackiert', state.lack);
     var pr = preise();
     aufstellung.innerHTML = pr.zeilen.map(function (z) {
       return '<div><dt>' + z[0] + '</dt><dd>' + (z[1] == null ? 'auf Anfrage' : EUR.format(z[1])) + '</dd></div>';
     }).join('');
     preisAnimieren(pr.summe);
     if (!zusatz) { zusatz = document.createElement('small'); zusatz.style.cssText = 'display:block;font-size:.8rem;color:var(--text-3);text-align:right;margin-top:.2rem'; summeEl.parentNode.after(zusatz); }
-    zusatz.textContent = pr.offen ? 'zzgl. Antriebsset, Preis auf Anfrage' : '';
+    var offen = offenTeile();
+    zusatz.textContent = offen ? 'zzgl. ' + offen + ', Preis auf Anfrage' : '';
     codeEl.textContent = code();
     if (gemerkt) linkMerken();
   }
@@ -296,19 +349,21 @@
     P.teile.forEach(function (t) { farbenText[t.name] = farbe(state.farben[t.id]).name; });
     var zeilen = ['Modell: ' + P.name, 'Code: ' + c];
     P.teile.forEach(function (t) { zeilen.push(t.name + ': ' + farbenText[t.name]); });
+    var wunsch = state.lack ? lackWunsch.value.trim() : '';
     zeilen.push('Material: ' + state.material, 'Antriebsset: ' + (state.antrieb ? 'ja' : 'nein'),
-      'Preis: ' + EUR.format(pr.summe) + (pr.offen ? ' + Antriebsset auf Anfrage' : ''),
+      'Personalisierte Lackierung: ' + (state.lack ? 'ja' + (wunsch ? ' – ' + wunsch : '') : 'nein'),
+      'Preis: ' + EUR.format(pr.summe) + (pr.offen ? ' + ' + offenTeile() + ' auf Anfrage' : ''),
       'Link: ' + location.origin + location.pathname + '?' + linkParameter());
     btn.disabled = true; btn.textContent = 'Wird gesendet …'; status.hidden = true;
     AeroAnfrage({
       art: 'konfigurator', name: d.get('name').trim(), email: d.get('email').trim(), nachricht: d.get('nachricht').trim(),
       honig: d.get('_gotcha'), betreff: 'Konfiguration ' + P.name + ': ' + c, zusammenfassung: zeilen.join('\n'),
-      details: { produkt: P.name, code: c, farben: farbenText, material: state.material, antrieb: state.antrieb, preis: pr.summe, preis_offen: pr.offen }
+      details: { produkt: P.name, code: c, farben: farbenText, material: state.material, antrieb: state.antrieb, lackierung: state.lack, lack_wunsch: wunsch || undefined, preis: pr.summe, preis_offen: pr.offen }
     }).then(function () {
       AeroPapierflieger(btn);
       status.className = 'form-status ok';
       status.textContent = 'Danke! Deine Konfiguration ' + c + ' ist bei uns angekommen. Wir melden uns per E-Mail bei dir.';
-      form.reset();
+      form.reset(); lackWunsch.value = '';
     }).catch(function (err) {
       status.className = 'form-status fehler';
       status.textContent = /Zu viele/.test(err.message) ? err.message : 'Das hat nicht geklappt. Schreib uns bitte an info@aero3dp.de und nenne den Code ' + c + '.';

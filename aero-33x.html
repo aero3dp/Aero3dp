@@ -73,14 +73,14 @@
           </defs>
           <rect x="-20" y="0" width="860" height="820" fill="url(#bp-raster)"/>
           <g class="masse" aria-hidden="true"><path d="M792 86 V712 M784 86 H800 M784 712 H800"/><text x="814" y="399.0" text-anchor="middle" transform="rotate(90 814 399.0)">770 mm Länge</text></g>
-          <g class="flugzeug"><path class="bt" data-teil="fluegel" d="M434 362 L688 392 L688 452 L434 474 Z"><title>Tragflächen</title></path><path class="bt" data-teil="fluegel" d="M366 362 L112 392 L112 452 L366 474 Z"><title>Tragflächen</title></path><path class="bt" data-teil="leitwerk" d="M416 640 L540 664 Q546 666 546 672 L545 684 Q544 690 538 690 L415 694 Z"><title>Leitwerk</title></path><path class="bt" data-teil="leitwerk" d="M384 640 L260 664 Q254 666 254 672 L255 684 Q256 690 262 690 L385 694 Z"><title>Leitwerk</title></path><path class="bt" data-teil="rumpf" d="M400 86 C411 96 419 140 423 200 L434 300 L434 470 C432 562 420 650 414 712 L386 712 C380 650 368 562 366 470 L366 300 L377 200 C381 140 389 96 400 86 Z"><title>Rumpf</title></path><path class="bt" data-teil="akzente" d="M400 86 C407 92 412 108 415 126 L385 126 C388 108 393 92 400 86 Z"><title>Nase &amp; Tanks</title></path><ellipse class="bt" data-teil="akzente" cx="694" cy="420" rx="11" ry="52"><title>Nase &amp; Tanks</title></ellipse><ellipse class="bt" data-teil="akzente" cx="106" cy="420" rx="11" ry="52"><title>Nase &amp; Tanks</title></ellipse><path class="bt" data-teil="leitwerk" d="M396 600 L404 600 L405 712 L395 712 Z"><title>Leitwerk</title></path><g class="fest" aria-hidden="true"><ellipse class="glas" cx="400" cy="252" rx="15" ry="62"/><path class="dunkel" d="M434 318 L446 326 L446 360 L434 360 Z"/><path class="dunkel" d="M366 318 L354 326 L354 360 L366 360 Z"/></g><g class="detail" aria-hidden="true"><path d="M560 449 L680 439"/><path d="M240 449 L120 439"/></g></g>
+          <g class="flugzeug"><path class="bt" data-teil="fluegel" d="M434 362 L688 392 L688 452 L434 474 Z"><title>Tragflächen</title></path><path class="bt" data-teil="fluegel" d="M366 362 L112 392 L112 452 L366 474 Z"><title>Tragflächen</title></path><path class="bt" data-teil="leitwerk" d="M416 640 L540 664 Q546 666 546 672 L545 684 Q544 690 538 690 L415 694 Z"><title>Leitwerk</title></path><path class="bt" data-teil="leitwerk" d="M384 640 L260 664 Q254 666 254 672 L255 684 Q256 690 262 690 L385 694 Z"><title>Leitwerk</title></path><path class="bt" data-teil="rumpf" d="M400 86 C411 96 419 140 423 200 L434 300 L434 470 C432 562 420 650 414 712 L386 712 C380 650 368 562 366 470 L366 300 L377 200 C381 140 389 96 400 86 Z"><title>Rumpf</title></path><path class="bt" data-teil="leitwerk" d="M396 600 L404 600 L405 712 L395 712 Z"><title>Leitwerk</title></path><g class="fest" aria-hidden="true"><ellipse class="glas" cx="400" cy="252" rx="15" ry="62"/><path class="dunkel" d="M434 318 L446 326 L446 360 L434 360 Z"/><path class="dunkel" d="M366 318 L354 326 L354 360 L366 360 Z"/></g><g class="detail" aria-hidden="true"><path d="M560 449 L680 439"/><path d="M240 449 L120 439"/></g></g>
           <g class="schichtlinien" aria-hidden="true"></g>
           <g class="druckkopf" aria-hidden="true"><line x1="0" x2="0" y1="0" y2="0"/></g>
         </svg>
       </div>
       <div id="ansicht-foto" role="tabpanel" aria-labelledby="tab-foto" hidden>
         <img class="buehne-foto contain" src="bilder/aero-33x.webp" alt="Aero-33X Impeller-Jet in Weiß-Rot" loading="lazy">
-        <p class="foto-hinweis">Foto in Werksfarben</p>
+        <p class="foto-hinweis">Foto mit personalisierter Lackierung</p>
       </div>
     </div>
     <ul class="legende" id="legende" aria-label="Gewählte Farben"></ul>
@@ -104,8 +104,21 @@
         </div>
         <p class="klein">LW-PLA gibt es nicht in jeder Farbe. Falls deine Wahl nicht verfügbar ist, melden wir uns mit einer Alternative.</p>
       </li>
+      <li class="schritt" aria-labelledby="s-lack">
+        <h2 id="s-lack"><span class="nr">3</span>Lackierung</h2>
+        <label class="antrieb lack-schalter">
+          <input type="checkbox" id="lackierung">
+          <span class="schalter" aria-hidden="true"></span>
+          <span class="antrieb-text"><b>Personalisierte Lackierung</b><span>Scale-Look, Kennungen und Details, von Hand lackiert – so wie auf unseren Fotos.</span></span>
+          <span class="antrieb-preis">auf Anfrage</span>
+        </label>
+        <div class="antrieb-inhalt" id="lackInhalt"><div class="lack-felder">
+          <div class="feld"><label for="lackWunsch">Was schwebt dir vor? <span style="color:var(--text-3)">(optional)</span></label><textarea id="lackWunsch" maxlength="600" placeholder="z. B. Navy-Look mit Kennung 116 und roten Spitzen"></textarea></div>
+          <p class="klein">Deine Druckfarben oben bleiben die Grundlage. Den Preis für die Lackierung nennen wir dir, sobald wir deinen Wunsch kennen.</p>
+        </div></div>
+      </li>
       <li class="schritt" aria-labelledby="s-antrieb">
-        <h2 id="s-antrieb"><span class="nr">3</span>Antrieb</h2>
+        <h2 id="s-antrieb"><span class="nr">4</span>Antrieb</h2>
         <label class="antrieb">
           <input type="checkbox" id="antrieb">
           <span class="schalter" aria-hidden="true"></span>
@@ -115,7 +128,7 @@
         <div class="antrieb-inhalt" id="antriebInhalt"><ul><li>50-mm-EDF</li><li>Passender Regler</li><li>Servos</li></ul></div>
       </li>
       <li class="schritt uebersicht" aria-labelledby="s-uebersicht">
-        <h2 id="s-uebersicht"><span class="nr">4</span>Übersicht</h2>
+        <h2 id="s-uebersicht"><span class="nr">5</span>Übersicht</h2>
         <div class="code-zeile"><span>Konfigurations-Code</span><code id="konfigCode">–</code></div>
         <dl class="aufstellung" id="aufstellung"></dl>
         <div class="summe"><span>Gesamt</span><output id="summe" aria-live="polite">–</output></div>
@@ -146,6 +159,7 @@
     <div class="details-text">
       <h2 class="h2" id="details-titel">Über die Aero-33X</h2>
       <p>Die Aero-33X ist unsere Sportversion der Aermacchi MB-339. Sie lässt sich sehr einfach aus der Hand starten, reißt kaum ab und landet angenehm unaufgeregt – ein Jet, der Lust aufs nächste Akku-Wechseln macht.</p><p>Gedruckt aus biobasiertem PLA hat der Bausatz eine saubere Oberfläche für gute Aerodynamik. Kabinenhaube und EDF sind leicht zugänglich, und Ausrichtungsstifte zwischen den Teilen machen das Verkleben einfach.</p>
+      <p class="lack-hinweis"><b>Lackierung nach deinem Wunsch:</b> Die Farben wählst du im Konfigurator, sie entstehen direkt beim Druck. Zusätzlich lackieren wir dein Modell auf Anfrage individuell, mit Scale-Look, Kennungen und Details wie auf unseren Fotos.</p>
       
       <div class="details-meter"><dl class="meter"><dt>Schwierigkeit</dt><dd>Einsteigerfreundlich</dd><dd class="bar" aria-hidden="true"><div class="fill schwierigkeit" data-wert="33"></div></dd></dl><dl class="meter"><dt>Tempo</dt><dd>Sportlich</dd><dd class="bar" aria-hidden="true"><div class="fill tempo" data-wert="72"></div></dd></dl></div>
     </div>
@@ -202,11 +216,11 @@
   </div>
   <div class="footer-unten">
     <span>© <span data-jahr>2026</span> Aero3dp, Tommy Rohn, Neuss</span>
-    <span>Gedruckt in Neuss, geflogen auf dem Platz.</span>
+    <span class="herz-zeile">Gedruckt mit <span class="herz" role="img" aria-label="Herz">♥</span> und PLA</span>
   </div>
 </footer>
 
-<script>window.PRODUKT = {"name": "Aero-33X", "code": "33X", "slug": "aero-33x", "preis": 49.9, "preisSet": 114.9, "materialWahl": true, "lwAufpreis": 10, "teile": [{"id": "rumpf", "name": "Rumpf"}, {"id": "fluegel", "name": "Tragflächen"}, {"id": "leitwerk", "name": "Leitwerk"}, {"id": "akzente", "name": "Nase & Tanks"}], "presets": [{"name": "Werksfarben", "farben": {"rumpf": "weiss", "fluegel": "weiss", "leitwerk": "rot", "akzente": "rot"}}, {"name": "Frecce", "farben": {"rumpf": "blau", "fluegel": "blau", "leitwerk": "weiss", "akzente": "gruen"}}, {"name": "Stealth", "farben": {"rumpf": "grau", "fluegel": "grau", "leitwerk": "schwarz", "akzente": "schwarz"}}, {"name": "Sonne", "farben": {"rumpf": "gelb", "fluegel": "gelb", "leitwerk": "schwarz", "akzente": "schwarz"}}, {"name": "Trainer", "farben": {"rumpf": "weiss", "fluegel": "orange", "leitwerk": "orange", "akzente": "weiss"}}], "farben": [{"id": "weiss", "name": "Weiß", "hex": "#ecebe6", "kz": "WE"}, {"id": "silber", "name": "Silber", "hex": "#a7acb2", "kz": "SI"}, {"id": "grau", "name": "Grau", "hex": "#5c6067", "kz": "GR"}, {"id": "schwarz", "name": "Schwarz", "hex": "#1e1f21", "kz": "SW"}, {"id": "rot", "name": "Aero-Rot", "hex": "#c4191c", "kz": "RO"}, {"id": "orange", "name": "Orange", "hex": "#ec6a1f", "kz": "OR"}, {"id": "gelb", "name": "Gelb", "hex": "#f0c02d", "kz": "GE"}, {"id": "blau", "name": "Blau", "hex": "#1f5fae", "kz": "BL"}, {"id": "gruen", "name": "Grün", "hex": "#2e9a56", "kz": "GN"}]};</script>
+<script>window.PRODUKT = {"name": "Aero-33X", "code": "33X", "slug": "aero-33x", "preis": 49.9, "preisSet": 114.9, "materialWahl": true, "lwAufpreis": 10, "teile": [{"id": "rumpf", "name": "Rumpf"}, {"id": "fluegel", "name": "Tragflächen"}, {"id": "leitwerk", "name": "Leitwerk"}], "presets": [{"name": "Werksfarben", "farben": {"rumpf": "weiss", "fluegel": "weiss", "leitwerk": "rot"}}, {"name": "Frecce", "farben": {"rumpf": "blau", "fluegel": "blau", "leitwerk": "weiss"}}, {"name": "Stealth", "farben": {"rumpf": "grau", "fluegel": "grau", "leitwerk": "schwarz"}}, {"name": "Sonne", "farben": {"rumpf": "gelb", "fluegel": "gelb", "leitwerk": "schwarz"}}, {"name": "Trainer", "farben": {"rumpf": "weiss", "fluegel": "orange", "leitwerk": "orange"}}], "farben": [{"id": "weiss", "name": "Weiß", "hex": "#ecebe6", "kz": "WE"}, {"id": "silber", "name": "Silber", "hex": "#a7acb2", "kz": "SI"}, {"id": "grau", "name": "Grau", "hex": "#5c6067", "kz": "GR"}, {"id": "schwarz", "name": "Schwarz", "hex": "#1e1f21", "kz": "SW"}, {"id": "rot", "name": "Aero-Rot", "hex": "#c4191c", "kz": "RO"}, {"id": "orange", "name": "Orange", "hex": "#ec6a1f", "kz": "OR"}, {"id": "gelb", "name": "Gelb", "hex": "#f0c02d", "kz": "GE"}, {"id": "blau", "name": "Blau", "hex": "#1f5fae", "kz": "BL"}, {"id": "gruen", "name": "Grün", "hex": "#2e9a56", "kz": "GN"}]};</script>
 <script src="config.js?v=20261010"></script>
 <script src="backend.js?v=20261010"></script>
 <script src="script.js?v=20261010"></script>

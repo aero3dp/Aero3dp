@@ -113,7 +113,7 @@
   document.addEventListener('visibilitychange', function () { document.title = document.hidden ? 'Komm zurück! ✈' : titel; });
   $$('[data-jahr]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
   if (window.console && console.log) {
-    console.log('%cAero3dp%c – gedruckt in Neuss, geflogen auf dem Platz.', 'color:#ec4a44;font:800 20px Lexend,sans-serif', 'color:#999;font:12px sans-serif');
+    console.log('%cAero3dp%c – gedruckt mit ♥ und PLA.', 'color:#ec4a44;font:800 20px Lexend,sans-serif', 'color:#999;font:12px sans-serif');
     console.log('%cDu schaust dir den Code an? Schreib uns: info@aero3dp.de', 'color:#ddd;font:12px sans-serif');
   }
 

@@ -125,6 +125,18 @@
 .antrieb-inhalt > ul { overflow: hidden; list-style: none; display: grid; gap: .4rem; }
 .antrieb-inhalt.offen { grid-template-rows: 1fr; }
 .antrieb-inhalt.offen > ul { padding-top: 1rem; }
+.lack-felder { overflow: hidden; display: grid; gap: .6rem; }
+.antrieb-inhalt.offen > .lack-felder { padding-top: 1rem; }
+.lack-felder textarea { min-height: 76px; }
+.lack-chip b { color: var(--rot-text); }
+.lack-hinweis { font-size: .92rem; color: var(--text-2); padding: .8rem 1rem; border-left: 3px solid var(--rot); background: rgba(255,255,255,.03); }
+.lack-hinweis b { color: var(--text); font-weight: 600; }
+.lack-ebene { pointer-events: none; }
+.lack-ebene rect { opacity: 0; transition: opacity .2s; }
+.blueprint.lackiert .flugzeug .bt { filter: saturate(1.15) brightness(1.04); }
+.blueprint.spruehen .lack-ebene rect { opacity: 1; }
+.lack-duese { stroke: var(--rot-text); stroke-width: 2; stroke-dasharray: 2 7; stroke-linecap: round; opacity: 0; transition: opacity .2s; filter: drop-shadow(0 0 6px rgba(236,74,68,.8)); }
+.blueprint.spruehen .lack-duese { opacity: 1; }
 .antrieb-inhalt li { font-size: .88rem; color: var(--text-2); display: flex; gap: .6rem; }
 .antrieb-inhalt li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--rot-text); margin-top: .55em; flex-shrink: 0; }
 

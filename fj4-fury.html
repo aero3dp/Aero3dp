@@ -73,14 +73,14 @@
           </defs>
           <rect x="-20" y="0" width="860" height="820" fill="url(#bp-raster)"/>
           <g class="masse" aria-hidden="true"><path d="M60 772 H740 M60 764 V780 M740 764 V780"/><text x="400.0" y="800" text-anchor="middle">810 mm Spannweite</text><path d="M792 89 V712 M784 89 H800 M784 712 H800"/><text x="814" y="400.5" text-anchor="middle" transform="rotate(90 814 400.5)">750 mm Länge</text></g>
-          <g class="flugzeug"><path class="bt" data-teil="fluegel" d="M446 330 L664 481 L664 583 L446 470 Z"><title>Tragflächen</title></path><path class="bt" data-teil="fluegel" d="M354 330 L136 481 L136 583 L354 470 Z"><title>Tragflächen</title></path><path class="bt" data-teil="akzente" d="M664 481 L732 528 Q742 535 740 547 L738 609 Q736 618 728 616 L664 583 Z"><title>Nase &amp; Spitzen</title></path><path class="bt" data-teil="akzente" d="M136 481 L68 528 Q58 535 60 547 L62 609 Q64 618 72 616 L136 583 Z"><title>Nase &amp; Spitzen</title></path><path class="bt" data-teil="leitwerk" d="M424 612 L520 676 Q529 682 527 691 L525 702 L422 690 Z"><title>Leitwerk</title></path><path class="bt" data-teil="leitwerk" d="M376 612 L280 676 Q271 682 273 691 L275 702 L378 690 Z"><title>Leitwerk</title></path><path class="bt" data-teil="rumpf" d="M372 96 Q400 82 428 96 C440 124 446 166 446 214 L446 500 C446 584 432 654 420 712 L380 712 C368 654 354 584 354 500 L354 214 C354 166 360 124 372 96 Z"><title>Rumpf</title></path><path class="bt" data-teil="akzente" d="M372 96 Q400 82 428 96 C432 106 435 116 437 128 L363 128 C365 116 368 106 372 96 Z"><title>Nase &amp; Spitzen</title></path><path class="bt" data-teil="leitwerk" d="M396 588 L404 588 L405 712 L395 712 Z"><title>Leitwerk</title></path><g class="fest" aria-hidden="true"><ellipse class="glas" cx="400" cy="238" rx="17" ry="44"/><ellipse class="dunkel" cx="400" cy="95" rx="20" ry="5"/></g><g class="detail" aria-hidden="true"><path d="M560 512 L650 558"/><path d="M240 512 L150 558"/><path d="M446 500 L446 214"/><path d="M354 500 L354 214"/></g></g>
+          <g class="flugzeug"><path class="bt" data-teil="fluegel" d="M446 330 L664 481 L664 583 L446 470 Z"><title>Tragflächen</title></path><path class="bt" data-teil="fluegel" d="M354 330 L136 481 L136 583 L354 470 Z"><title>Tragflächen</title></path><path class="bt" data-teil="fluegel" d="M664 481 L732 528 Q742 535 740 547 L738 609 Q736 618 728 616 L664 583 Z"><title>Tragflächen</title></path><path class="bt" data-teil="fluegel" d="M136 481 L68 528 Q58 535 60 547 L62 609 Q64 618 72 616 L136 583 Z"><title>Tragflächen</title></path><path class="bt" data-teil="leitwerk" d="M424 612 L520 676 Q529 682 527 691 L525 702 L422 690 Z"><title>Leitwerk</title></path><path class="bt" data-teil="leitwerk" d="M376 612 L280 676 Q271 682 273 691 L275 702 L378 690 Z"><title>Leitwerk</title></path><path class="bt" data-teil="rumpf" d="M372 96 Q400 82 428 96 C440 124 446 166 446 214 L446 500 C446 584 432 654 420 712 L380 712 C368 654 354 584 354 500 L354 214 C354 166 360 124 372 96 Z"><title>Rumpf</title></path><path class="bt" data-teil="leitwerk" d="M396 588 L404 588 L405 712 L395 712 Z"><title>Leitwerk</title></path><g class="fest" aria-hidden="true"><ellipse class="glas" cx="400" cy="238" rx="17" ry="44"/><ellipse class="dunkel" cx="400" cy="95" rx="20" ry="5"/></g><g class="detail" aria-hidden="true"><path d="M560 512 L650 558"/><path d="M240 512 L150 558"/><path d="M446 500 L446 214"/><path d="M354 500 L354 214"/></g></g>
           <g class="schichtlinien" aria-hidden="true"></g>
           <g class="druckkopf" aria-hidden="true"><line x1="0" x2="0" y1="0" y2="0"/></g>
         </svg>
       </div>
       <div id="ansicht-foto" role="tabpanel" aria-labelledby="tab-foto" hidden>
-        <img class="buehne-foto cover" src="bilder/fj4-fury-1600.webp" alt="FJ-4 Fury in Silber-Rot auf dem Aufbautisch" loading="lazy">
-        <p class="foto-hinweis">Foto in Werksfarben</p>
+        <img class="buehne-foto cover" src="bilder/fj4-fury-1600.webp" alt="FJ-4 Fury mit personalisierter Navy-Lackierung auf dem Aufbautisch" loading="lazy">
+        <p class="foto-hinweis">Foto mit personalisierter Lackierung</p>
       </div>
     </div>
     <ul class="legende" id="legende" aria-label="Gewählte Farben"></ul>
@@ -104,8 +104,21 @@
         </div>
         <p class="klein">LW-PLA gibt es nicht in jeder Farbe. Falls deine Wahl nicht verfügbar ist, melden wir uns mit einer Alternative.</p>
       </li>
+      <li class="schritt" aria-labelledby="s-lack">
+        <h2 id="s-lack"><span class="nr">3</span>Lackierung</h2>
+        <label class="antrieb lack-schalter">
+          <input type="checkbox" id="lackierung">
+          <span class="schalter" aria-hidden="true"></span>
+          <span class="antrieb-text"><b>Personalisierte Lackierung</b><span>Scale-Look, Kennungen und Details, von Hand lackiert – so wie auf unseren Fotos.</span></span>
+          <span class="antrieb-preis">auf Anfrage</span>
+        </label>
+        <div class="antrieb-inhalt" id="lackInhalt"><div class="lack-felder">
+          <div class="feld"><label for="lackWunsch">Was schwebt dir vor? <span style="color:var(--text-3)">(optional)</span></label><textarea id="lackWunsch" maxlength="600" placeholder="z. B. Navy-Look mit Kennung 116 und roten Spitzen"></textarea></div>
+          <p class="klein">Deine Druckfarben oben bleiben die Grundlage. Den Preis für die Lackierung nennen wir dir, sobald wir deinen Wunsch kennen.</p>
+        </div></div>
+      </li>
       <li class="schritt" aria-labelledby="s-antrieb">
-        <h2 id="s-antrieb"><span class="nr">3</span>Antrieb</h2>
+        <h2 id="s-antrieb"><span class="nr">4</span>Antrieb</h2>
         <label class="antrieb">
           <input type="checkbox" id="antrieb">
           <span class="schalter" aria-hidden="true"></span>
@@ -115,7 +128,7 @@
         <div class="antrieb-inhalt" id="antriebInhalt"><ul><li>64-mm-EDF, 3000 KV</li><li>80-A-Regler</li><li>3 × 9-g-Servos</li></ul></div>
       </li>
       <li class="schritt uebersicht" aria-labelledby="s-uebersicht">
-        <h2 id="s-uebersicht"><span class="nr">4</span>Übersicht</h2>
+        <h2 id="s-uebersicht"><span class="nr">5</span>Übersicht</h2>
         <div class="code-zeile"><span>Konfigurations-Code</span><code id="konfigCode">–</code></div>
         <dl class="aufstellung" id="aufstellung"></dl>
         <div class="summe"><span>Gesamt</span><output id="summe" aria-live="polite">–</output></div>
@@ -146,6 +159,7 @@
     <div class="details-text">
       <h2 class="h2" id="details-titel">Über die FJ-4 Fury</h2>
       <p>Die FJ-4 Fury richtet sich an Pilotinnen und Piloten, die ein schnelles, direktes und zugleich stabiles Modell suchen. Schlanke Silhouette, effizienter 64-mm-Impeller und sauber abgestimmte Aerodynamik sorgen für beeindruckenden Durchzug und schnelle Reaktionen.</p><p>Ob tiefe Vorbeiflüge, dynamische Figuren oder lässige Platzrunden: Die Fury bleibt auch bei höherem Tempo erstaunlich stabil. Der Handstart gelingt zuverlässig, die Fluglage bleibt klar lesbar – perfekt für Fortgeschrittene und ambitionierte Einsteiger, die ihre ersten EDF-Erfahrungen sammeln wollen.</p>
+      <p class="lack-hinweis"><b>Lackierung nach deinem Wunsch:</b> Die Farben wählst du im Konfigurator, sie entstehen direkt beim Druck. Zusätzlich lackieren wir dein Modell auf Anfrage individuell, mit Scale-Look, Kennungen und Details wie auf unseren Fotos.</p>
       
       <div class="details-meter"><dl class="meter"><dt>Schwierigkeit</dt><dd>Fortgeschritten</dd><dd class="bar" aria-hidden="true"><div class="fill schwierigkeit" data-wert="66"></div></dd></dl><dl class="meter"><dt>Tempo</dt><dd>Rasant</dd><dd class="bar" aria-hidden="true"><div class="fill tempo" data-wert="92"></div></dd></dl></div>
     </div>
@@ -202,11 +216,11 @@
   </div>
   <div class="footer-unten">
     <span>© <span data-jahr>2026</span> Aero3dp, Tommy Rohn, Neuss</span>
-    <span>Gedruckt in Neuss, geflogen auf dem Platz.</span>
+    <span class="herz-zeile">Gedruckt mit <span class="herz" role="img" aria-label="Herz">♥</span> und PLA</span>
   </div>
 </footer>
 
-<script>window.PRODUKT = {"name": "FJ-4 Fury", "code": "FJ4", "slug": "fj4-fury", "preis": 55.9, "preisSet": 124.9, "materialWahl": true, "lwAufpreis": 10, "teile": [{"id": "rumpf", "name": "Rumpf"}, {"id": "fluegel", "name": "Tragflächen"}, {"id": "leitwerk", "name": "Leitwerk"}, {"id": "akzente", "name": "Nase & Spitzen"}], "presets": [{"name": "Werksfarben", "farben": {"rumpf": "silber", "fluegel": "silber", "leitwerk": "rot", "akzente": "rot"}}, {"name": "Arktis", "farben": {"rumpf": "weiss", "fluegel": "weiss", "leitwerk": "orange", "akzente": "orange"}}, {"name": "Stealth", "farben": {"rumpf": "grau", "fluegel": "grau", "leitwerk": "schwarz", "akzente": "schwarz"}}, {"name": "Blue Angel", "farben": {"rumpf": "blau", "fluegel": "blau", "leitwerk": "gelb", "akzente": "gelb"}}, {"name": "Racing", "farben": {"rumpf": "weiss", "fluegel": "rot", "leitwerk": "rot", "akzente": "schwarz"}}], "farben": [{"id": "weiss", "name": "Weiß", "hex": "#ecebe6", "kz": "WE"}, {"id": "silber", "name": "Silber", "hex": "#a7acb2", "kz": "SI"}, {"id": "grau", "name": "Grau", "hex": "#5c6067", "kz": "GR"}, {"id": "schwarz", "name": "Schwarz", "hex": "#1e1f21", "kz": "SW"}, {"id": "rot", "name": "Aero-Rot", "hex": "#c4191c", "kz": "RO"}, {"id": "orange", "name": "Orange", "hex": "#ec6a1f", "kz": "OR"}, {"id": "gelb", "name": "Gelb", "hex": "#f0c02d", "kz": "GE"}, {"id": "blau", "name": "Blau", "hex": "#1f5fae", "kz": "BL"}, {"id": "gruen", "name": "Grün", "hex": "#2e9a56", "kz": "GN"}]};</script>
+<script>window.PRODUKT = {"name": "FJ-4 Fury", "code": "FJ4", "slug": "fj4-fury", "preis": 55.9, "preisSet": 124.9, "materialWahl": true, "lwAufpreis": 10, "teile": [{"id": "rumpf", "name": "Rumpf"}, {"id": "fluegel", "name": "Tragflächen"}, {"id": "leitwerk", "name": "Leitwerk"}], "presets": [{"name": "Werksfarben", "farben": {"rumpf": "silber", "fluegel": "silber", "leitwerk": "rot"}}, {"name": "Arktis", "farben": {"rumpf": "weiss", "fluegel": "weiss", "leitwerk": "orange"}}, {"name": "Stealth", "farben": {"rumpf": "grau", "fluegel": "grau", "leitwerk": "schwarz"}}, {"name": "Blue Angel", "farben": {"rumpf": "blau", "fluegel": "blau", "leitwerk": "gelb"}}, {"name": "Racing", "farben": {"rumpf": "weiss", "fluegel": "rot", "leitwerk": "rot"}}], "farben": [{"id": "weiss", "name": "Weiß", "hex": "#ecebe6", "kz": "WE"}, {"id": "silber", "name": "Silber", "hex": "#a7acb2", "kz": "SI"}, {"id": "grau", "name": "Grau", "hex": "#5c6067", "kz": "GR"}, {"id": "schwarz", "name": "Schwarz", "hex": "#1e1f21", "kz": "SW"}, {"id": "rot", "name": "Aero-Rot", "hex": "#c4191c", "kz": "RO"}, {"id": "orange", "name": "Orange", "hex": "#ec6a1f", "kz": "OR"}, {"id": "gelb", "name": "Gelb", "hex": "#f0c02d", "kz": "GE"}, {"id": "blau", "name": "Blau", "hex": "#1f5fae", "kz": "BL"}, {"id": "gruen", "name": "Grün", "hex": "#2e9a56", "kz": "GN"}]};</script>
 <script src="config.js?v=20261010"></script>
 <script src="backend.js?v=20261010"></script>
 <script src="script.js?v=20261010"></script>

@@ -96,18 +96,31 @@
         <div class="swatches" id="swatches" role="radiogroup"></div>
         <p class="klein">Bildschirmfarben können vom echten Filament leicht abweichen.</p>
       </li>
+      <li class="schritt" aria-labelledby="s-lack">
+        <h2 id="s-lack"><span class="nr">2</span>Lackierung</h2>
+        <label class="antrieb lack-schalter">
+          <input type="checkbox" id="lackierung">
+          <span class="schalter" aria-hidden="true"></span>
+          <span class="antrieb-text"><b>Personalisierte Lackierung</b><span>Scale-Look, Kennungen und Details, von Hand lackiert – so wie auf unseren Fotos.</span></span>
+          <span class="antrieb-preis">auf Anfrage</span>
+        </label>
+        <div class="antrieb-inhalt" id="lackInhalt"><div class="lack-felder">
+          <div class="feld"><label for="lackWunsch">Was schwebt dir vor? <span style="color:var(--text-3)">(optional)</span></label><textarea id="lackWunsch" maxlength="600" placeholder="z. B. Navy-Look mit Kennung 116 und roten Spitzen"></textarea></div>
+          <p class="klein">Deine Druckfarben oben bleiben die Grundlage. Den Preis für die Lackierung nennen wir dir, sobald wir deinen Wunsch kennen.</p>
+        </div></div>
+      </li>
       <li class="schritt" aria-labelledby="s-antrieb">
-        <h2 id="s-antrieb"><span class="nr">2</span>Antrieb</h2>
+        <h2 id="s-antrieb"><span class="nr">3</span>Antrieb</h2>
         <label class="antrieb">
           <input type="checkbox" id="antrieb">
           <span class="schalter" aria-hidden="true"></span>
           <span class="antrieb-text"><b>Antriebsset dazu</b><span>Abgestimmt auf die FPV Flitzer</span></span>
-          <span class="antrieb-preis">Preis auf Anfrage</span>
+          <span class="antrieb-preis">+ 47,00 €</span>
         </label>
         <div class="antrieb-inhalt" id="antriebInhalt"><ul><li>Motor 1103, 11000 KV</li><li>T-Motor 3D/4D Brushless-Regler</li><li>2 × Dspower 3,7-g-Servos</li><li>Gemfan 2015 2-Blatt-Propeller</li></ul></div>
       </li>
       <li class="schritt uebersicht" aria-labelledby="s-uebersicht">
-        <h2 id="s-uebersicht"><span class="nr">3</span>Übersicht</h2>
+        <h2 id="s-uebersicht"><span class="nr">4</span>Übersicht</h2>
         <div class="code-zeile"><span>Konfigurations-Code</span><code id="konfigCode">–</code></div>
         <dl class="aufstellung" id="aufstellung"></dl>
         <div class="summe"><span>Gesamt</span><output id="summe" aria-live="polite">–</output></div>
@@ -138,6 +151,7 @@
     <div class="details-text">
       <h2 class="h2" id="details-titel">Über die FPV Flitzer</h2>
       <p>Der FPV Flitzer bringt Tempo und Action in dein RC-Hobby. Der Deltaflügel ist auf Geschwindigkeit optimiert und erreicht bis zu 70 km/h bei einer Steigrate von 6 m/s.</p><p>Dank des Schraubsystems baust du ihn schnell zusammen – und genauso schnell wieder repariert. Mit 360 mm Spannweite passt er in jeden Rucksack und ist immer dabei, wenn sich ein Flugfenster ergibt.</p>
+      <p class="lack-hinweis"><b>Lackierung nach deinem Wunsch:</b> Die Farben wählst du im Konfigurator, sie entstehen direkt beim Druck. Zusätzlich lackieren wir dein Modell auf Anfrage individuell, mit Scale-Look, Kennungen und Details wie auf unseren Fotos.</p>
       <p class="produkt-hinweis">Nicht für absolute Anfänger: Grundkenntnisse im RC-Fliegen werden empfohlen. Das maximale Startgewicht von 95 g bitte nicht überschreiten.</p>
       <div class="details-meter"><dl class="meter"><dt>Schwierigkeit</dt><dd>Fortgeschritten</dd><dd class="bar" aria-hidden="true"><div class="fill schwierigkeit" data-wert="66"></div></dd></dl><dl class="meter"><dt>Tempo</dt><dd>Blitzschnell</dd><dd class="bar" aria-hidden="true"><div class="fill tempo" data-wert="80"></div></dd></dl></div>
     </div>
@@ -194,11 +208,11 @@
   </div>
   <div class="footer-unten">
     <span>© <span data-jahr>2026</span> Aero3dp, Tommy Rohn, Neuss</span>
-    <span>Gedruckt in Neuss, geflogen auf dem Platz.</span>
+    <span class="herz-zeile">Gedruckt mit <span class="herz" role="img" aria-label="Herz">♥</span> und PLA</span>
   </div>
 </footer>
 
-<script>window.PRODUKT = {"name": "FPV Flitzer", "code": "FLZ", "slug": "fpv-flitzer", "preis": 19.9, "preisSet": null, "materialWahl": false, "lwAufpreis": 10, "teile": [{"id": "fluegel", "name": "Flügel"}, {"id": "winglets", "name": "Winglets"}, {"id": "rumpf", "name": "Rumpf"}], "presets": [{"name": "Werksfarben", "farben": {"fluegel": "orange", "winglets": "schwarz", "rumpf": "orange"}}, {"name": "Gut sichtbar", "farben": {"fluegel": "gelb", "winglets": "schwarz", "rumpf": "gelb"}}, {"name": "Stealth", "farben": {"fluegel": "schwarz", "winglets": "grau", "rumpf": "schwarz"}}, {"name": "Klassik", "farben": {"fluegel": "weiss", "winglets": "rot", "rumpf": "weiss"}}], "farben": [{"id": "weiss", "name": "Weiß", "hex": "#ecebe6", "kz": "WE"}, {"id": "silber", "name": "Silber", "hex": "#a7acb2", "kz": "SI"}, {"id": "grau", "name": "Grau", "hex": "#5c6067", "kz": "GR"}, {"id": "schwarz", "name": "Schwarz", "hex": "#1e1f21", "kz": "SW"}, {"id": "rot", "name": "Aero-Rot", "hex": "#c4191c", "kz": "RO"}, {"id": "orange", "name": "Orange", "hex": "#ec6a1f", "kz": "OR"}, {"id": "gelb", "name": "Gelb", "hex": "#f0c02d", "kz": "GE"}, {"id": "blau", "name": "Blau", "hex": "#1f5fae", "kz": "BL"}, {"id": "gruen", "name": "Grün", "hex": "#2e9a56", "kz": "GN"}]};</script>
+<script>window.PRODUKT = {"name": "FPV Flitzer", "code": "FLZ", "slug": "fpv-flitzer", "preis": 19.9, "preisSet": 66.9, "materialWahl": false, "lwAufpreis": 10, "teile": [{"id": "fluegel", "name": "Flügel"}, {"id": "winglets", "name": "Winglets"}, {"id": "rumpf", "name": "Rumpf"}], "presets": [{"name": "Werksfarben", "farben": {"fluegel": "orange", "winglets": "schwarz", "rumpf": "orange"}}, {"name": "Gut sichtbar", "farben": {"fluegel": "gelb", "winglets": "schwarz", "rumpf": "gelb"}}, {"name": "Stealth", "farben": {"fluegel": "schwarz", "winglets": "grau", "rumpf": "schwarz"}}, {"name": "Klassik", "farben": {"fluegel": "weiss", "winglets": "rot", "rumpf": "weiss"}}], "farben": [{"id": "weiss", "name": "Weiß", "hex": "#ecebe6", "kz": "WE"}, {"id": "silber", "name": "Silber", "hex": "#a7acb2", "kz": "SI"}, {"id": "grau", "name": "Grau", "hex": "#5c6067", "kz": "GR"}, {"id": "schwarz", "name": "Schwarz", "hex": "#1e1f21", "kz": "SW"}, {"id": "rot", "name": "Aero-Rot", "hex": "#c4191c", "kz": "RO"}, {"id": "orange", "name": "Orange", "hex": "#ec6a1f", "kz": "OR"}, {"id": "gelb", "name": "Gelb", "hex": "#f0c02d", "kz": "GE"}, {"id": "blau", "name": "Blau", "hex": "#1f5fae", "kz": "BL"}, {"id": "gruen", "name": "Grün", "hex": "#2e9a56", "kz": "GN"}]};</script>
 <script src="config.js?v=20261010"></script>
 <script src="backend.js?v=20261010"></script>
 <script src="script.js?v=20261010"></script>

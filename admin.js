@@ -260,7 +260,9 @@
     if (a.art === 'konfigurator') {
       z.push(['Modell', d.produkt], ['Code', d.code]);
       if (d.farben) Object.keys(d.farben).forEach(function (k) { z.push([k, d.farben[k]]); });
-      z.push(['Material', d.material], ['Antriebsset', d.antrieb ? 'ja' : 'nein'], ['Preis', d.preis != null ? EUR.format(d.preis) + (d.preis_offen ? ' + Set auf Anfrage' : '') : '–']);
+      z.push(['Material', d.material], ['Antriebsset', d.antrieb ? 'ja' : 'nein']);
+      if (d.lackierung) z.push(['Lackierung', d.lack_wunsch ? 'ja: ' + d.lack_wunsch : 'ja, Wunsch per Nachricht']);
+      z.push(['Preis', d.preis != null ? EUR.format(d.preis) + (d.preis_offen ? ' + ' + (d.lackierung ? 'Lackierung' : 'Set') + ' auf Anfrage' : '') : '–']);
     } else if (a.art === 'druckservice') {
       z.push(['Datei', d.datei + (d.groesse_mb ? ' (' + String(d.groesse_mb).replace('.', ',') + ' MB)' : '')],
         ['Maße', (d.masse_mm || []).map(function (v) { return String(v).replace('.', ','); }).join(' × ') + ' mm'], ['Volumen', String(d.volumen_cm3).replace('.', ',') + ' cm³'],
@@ -418,12 +420,12 @@
     }
     var jetzt = Date.now(), h = 36e5;
     var anfragen = [
-      { id: 'd1', erstellt: new Date(jetzt - 3 * h).toISOString(), art: 'konfigurator', name: 'Beispiel: Lena M.', email: 'lena@example.com', status: 'neu', nachricht: 'Kann ich die Fury auch in Neuss abholen?', details: { produkt: 'FJ-4 Fury', code: 'FJ4-LW-BL.BL.GE.GE-A', farben: { Rumpf: 'Blau', Tragflächen: 'Blau', Leitwerk: 'Gelb', 'Nase & Spitzen': 'Gelb' }, material: 'LW-PLA', antrieb: true, preis: 134.9 } },
+      { id: 'd1', erstellt: new Date(jetzt - 3 * h).toISOString(), art: 'konfigurator', name: 'Beispiel: Lena M.', email: 'lena@example.com', status: 'neu', nachricht: 'Kann ich die Fury auch in Neuss abholen?', details: { produkt: 'FJ-4 Fury', code: 'FJ4-LW-BL.BL.GE-A-L', farben: { Rumpf: 'Blau', Tragflächen: 'Blau', Leitwerk: 'Gelb' }, material: 'LW-PLA', antrieb: true, lackierung: true, lack_wunsch: 'Blue-Angels-Look mit gelben Streifen', preis: 134.9, preis_offen: true } },
       { id: 'd2', erstellt: new Date(jetzt - 20 * h).toISOString(), art: 'druckservice', name: 'Beispiel: Jonas K.', email: 'jonas@example.com', status: 'neu', nachricht: 'Halterung für meinen Empfänger, gern bis Freitag.', datei_pfad: '2026/10/00000000-0000-4000-8000-000000000000.stl', details: { datei: 'empfaenger-halter.stl', groesse_mb: 1.2, masse_mm: [42, 28, 15.5], volumen_cm3: 6.4, material: 'PETG', qualitaet: 'standard', fuellung: 30, waende: 3, anzahl: 2, farbe: 'Schwarz', schaetzung_eur: 9.6, gewicht_g: 9.8, druckzeit_min: 74, passt: true, offene_kanten: 0 } },
       { id: 'd3', erstellt: new Date(jetzt - 50 * h).toISOString(), art: 'kontakt', name: 'Beispiel: Modellflugverein', email: 'verein@example.com', status: 'in_bearbeitung', nachricht: '[Kooperation] Hättet ihr Lust, beim Flugtag einen Stand zu machen?', details: { thema: 'Kooperation' } },
-      { id: 'd4', erstellt: new Date(jetzt - 80 * h).toISOString(), art: 'konfigurator', name: 'Beispiel: Tim S.', email: 'tim@example.com', status: 'angebot_gesendet', nachricht: '', details: { produkt: 'FPV Flitzer', code: 'FLZ-PLA-GE.SW.GE-A', farben: { Flügel: 'Gelb', Winglets: 'Schwarz', Rumpf: 'Gelb' }, material: 'PLA', antrieb: true, preis: 19.9, preis_offen: true } },
-      { id: 'd5', erstellt: new Date(jetzt - 130 * h).toISOString(), art: 'konfigurator', name: 'Beispiel: Sara B.', email: 'sara@example.com', status: 'erledigt', nachricht: 'Danke für die schnelle Antwort!', details: { produkt: 'FJ-4 Fury', code: 'FJ4-LW-BL.BL.GE.GE-0', farben: { Rumpf: 'Blau', Tragflächen: 'Blau', Leitwerk: 'Gelb', 'Nase & Spitzen': 'Gelb' }, material: 'LW-PLA', antrieb: false, preis: 65.9 } },
-      { id: 'd6', erstellt: new Date(jetzt - 190 * h).toISOString(), art: 'konfigurator', name: 'Beispiel: Ali R.', email: 'ali@example.com', status: 'erledigt', nachricht: '', details: { produkt: 'Aero-33X', code: '33X-PLA-WE.WE.RO.RO-A', farben: { Rumpf: 'Weiß', Tragflächen: 'Weiß', Leitwerk: 'Aero-Rot', 'Nase & Tanks': 'Aero-Rot' }, material: 'PLA', antrieb: true, preis: 114.9 } },
+      { id: 'd4', erstellt: new Date(jetzt - 80 * h).toISOString(), art: 'konfigurator', name: 'Beispiel: Tim S.', email: 'tim@example.com', status: 'angebot_gesendet', nachricht: '', details: { produkt: 'FPV Flitzer', code: 'FLZ-PLA-GE.SW.GE-A', farben: { Flügel: 'Gelb', Winglets: 'Schwarz', Rumpf: 'Gelb' }, material: 'PLA', antrieb: true, preis: 66.9 } },
+      { id: 'd5', erstellt: new Date(jetzt - 130 * h).toISOString(), art: 'konfigurator', name: 'Beispiel: Sara B.', email: 'sara@example.com', status: 'erledigt', nachricht: 'Danke für die schnelle Antwort!', details: { produkt: 'FJ-4 Fury', code: 'FJ4-LW-BL.BL.GE-0', farben: { Rumpf: 'Blau', Tragflächen: 'Blau', Leitwerk: 'Gelb' }, material: 'LW-PLA', antrieb: false, preis: 65.9 } },
+      { id: 'd6', erstellt: new Date(jetzt - 190 * h).toISOString(), art: 'konfigurator', name: 'Beispiel: Ali R.', email: 'ali@example.com', status: 'erledigt', nachricht: '', details: { produkt: 'Aero-33X', code: '33X-PLA-WE.WE.RO-A', farben: { Rumpf: 'Weiß', Tragflächen: 'Weiß', Leitwerk: 'Aero-Rot' }, material: 'PLA', antrieb: true, preis: 114.9 } },
     ];
     return { statistik: statistik, anfragen: anfragen, werkstatt: { status_text: 'FJ-4 Fury in Blau-Gelb', lieferzeit: '5–7 Werktage', sichtbar: true } };
   })();
