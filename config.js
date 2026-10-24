@@ -8,8 +8,8 @@ window.AERO_CONFIG = {
      Beide Werte findest du in Supabase unter Project Settings → API.
      Leer lassen = die Seite läuft trotzdem, nur ohne Statistik und Datei-Upload.
      Der "anon public" Key darf öffentlich sein – geschützt wird über die Zugriffsregeln. */
-  supabaseUrl: '',
-  supabaseAnonKey: '',
+  supabaseUrl: 'https://xsclvhtalrdjzcxtqqew.supabase.co/rest/v1/https://xsclvhtalrdjzcxtqqew.supabase.co/rest/v1/',
+  supabaseAnonKey: 'sb_publishable_fTLvj9MCrhUAzAaKXaMBIg_zFpSvVg9',
 
   /* Benachrichtigung per E-Mail bei jeder Anfrage */
   formspree: 'https://formspree.io/f/xzdnbeyn',
