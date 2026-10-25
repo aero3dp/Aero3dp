@@ -98,6 +98,14 @@
 .swatch:hover i { transform: scale(1.08); }
 .swatch[aria-checked="true"] { border-color: var(--linie-hell); background: var(--karte); color: var(--text); }
 .swatch[aria-checked="true"] i::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid var(--rot-text); }
+.swatch[aria-disabled="true"] { opacity: .28; cursor: not-allowed; }
+.swatch[aria-disabled="true"]:hover i { transform: none; }
+.presets.gesperrt { opacity: .35; pointer-events: none; }
+.lw-hinweis { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin-top: 1rem; padding: .75rem .9rem; border-left: 3px solid var(--rot); background: rgba(179,11,11,.07); font-size: .86rem; color: var(--text-2); }
+.lw-hinweis[hidden] { display: none; }
+.lw-hinweis span { flex: 1 1 220px; }
+.lw-hinweis.wackeln { animation: wackeln .4s; }
+@keyframes wackeln { 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
 
 .material-wahl { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
 .material {

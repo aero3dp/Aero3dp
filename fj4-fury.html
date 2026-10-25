@@ -14,15 +14,19 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261024">
-  <link rel="stylesheet" href="konfigurator.css?v=20261024">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="stylesheet" href="styles.css?v=20261025">
+  <link rel="stylesheet" href="konfigurator.css?v=20261025">
   <meta property="og:type" content="product">
   <meta property="og:site_name" content="Aero3dp">
   <meta property="og:locale" content="de_DE">
   <meta property="og:title" content="FJ-4 Fury – 64-mm-EDF-Jet als Bausatz | Aero3dp">
   <meta property="og:description" content="FJ-4 Fury: 64-mm-EDF-Jet als 3D-gedruckter Bausatz aus Neuss. Farben, Material und Antriebsset online konfigurieren.">
   <meta property="og:url" content="https://aero3dp.de/fj4-fury.html">
-  <meta property="og:image" content="https://aero3dp.de/bilder/fj4-fury-1600.webp">
+  <meta property="og:image" content="https://aero3dp.de/bilder/og-aero3dp.jpg?v=20261025">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Aero3dp Logo">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"FJ-4 Fury","description":"FJ-4 Fury: 64-mm-EDF-Jet als 3D-gedruckter Bausatz aus Neuss. Farben, Material und Antriebsset online konfigurieren.","image":["https://aero3dp.de/bilder/fj4-fury-1600.webp"],"brand":{"@type":"Brand","name":"Aero3dp"},"category":"RC-Flugmodell","sku":"FJ4","offers":{"@type":"Offer","priceCurrency":"EUR","price":"55.90","availability":"https://schema.org/InStock","url":"https://aero3dp.de/fj4-fury.html","itemCondition":"https://schema.org/NewCondition"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Start","item":"https://aero3dp.de/"},{"@type":"ListItem","position":2,"name":"Modelle","item":"https://aero3dp.de/#produkte"},{"@type":"ListItem","position":3,"name":"FJ-4 Fury","item":"https://aero3dp.de/fj4-fury.html"}]}</script>
@@ -94,15 +98,16 @@
         <div class="presets" id="presets" role="group" aria-label="Farbvorlagen"></div>
         <div class="teil-tabs" id="teilTabs" role="tablist" aria-label="Bauteil wählen"></div>
         <div class="swatches" id="swatches" role="radiogroup"></div>
+        <p class="lw-hinweis" id="lwHinweis" hidden><span>LW-PLA gibt es nur in Weiß. Farbe bekommst du über die personalisierte Lackierung.</span><button type="button" class="btn btn-small btn-ghost" id="lwLack">Lackierung hinzufügen</button></p>
         <p class="klein">Bildschirmfarben können vom echten Filament leicht abweichen.</p>
       </li>
       <li class="schritt" aria-labelledby="s-material">
         <h2 id="s-material"><span class="nr">2</span>Material</h2>
         <div class="material-wahl" role="radiogroup" aria-labelledby="s-material">
           <button type="button" class="material" role="radio" aria-checked="true" data-material="PLA"><b>PLA</b><span>Robust und formstabil, verzeiht beim Bauen viel.</span><em>inklusive</em></button>
-          <button type="button" class="material" role="radio" aria-checked="false" data-material="LW-PLA"><b>LW-PLA</b><span>Aufgeschäumt und deutlich leichter: fliegt langsamer und länger.</span><em>+ 10,00 €</em></button>
+          <button type="button" class="material" role="radio" aria-checked="false" data-material="LW-PLA"><b>LW-PLA</b><span>Aufgeschäumt und deutlich leichter: fliegt langsamer und länger. Nur in Weiß.</span><em>+ 10,00 €</em></button>
         </div>
-        <p class="klein">LW-PLA gibt es nicht in jeder Farbe. Falls deine Wahl nicht verfügbar ist, melden wir uns mit einer Alternative.</p>
+        <p class="klein">LW-PLA gibt es bei uns nur in Weiß. Weil das Material beim Drucken aufschäumt, fällt die Oberfläche etwas rauer und weniger detailgenau aus als bei PLA. Für die Flugleistung spielt das keine Rolle.</p>
       </li>
       <li class="schritt" aria-labelledby="s-lack">
         <h2 id="s-lack"><span class="nr">3</span>Lackierung</h2>
@@ -165,19 +170,32 @@
     </div>
     <div class="details-daten">
       <h3>Technische Daten</h3>
-      <dl class="specs"><div><dt>Spannweite</dt><dd>810 mm</dd></div><div><dt>Länge</dt><dd>750 mm</dd></div><div><dt>Leergewicht</dt><dd>ca. 580 g</dd></div><div><dt>Abfluggewicht</dt><dd>ca. 1000 g</dd></div><div><dt>Antrieb</dt><dd>64 mm EDF, 2400–3200 KV</dd></div><div><dt>Akku</dt><dd>4S 1800 mAh</dd></div><div><dt>Servos</dt><dd>3–4 × 9 g</dd></div><div><dt>Start</dt><dd>Handstart</dd></div></dl>
+      <dl class="specs"><div><dt>Spannweite</dt><dd>810 mm</dd></div><div><dt>Länge</dt><dd>750 mm</dd></div><div><dt>Leergewicht</dt><dd>ca. 580 g</dd></div><div><dt>Abfluggewicht</dt><dd>ca. 1000 g</dd></div><div><dt>Antrieb</dt><dd>64 mm EDF, 2400–3200 KV</dd></div><div><dt>Akku</dt><dd>4S 1800 mAh</dd></div><div><dt>Servos</dt><dd>3–4 × 9 g</dd></div><div><dt>Start</dt><dd>Handstart</dd></div><div><dt>Alter</dt><dd>ab 14 Jahren, kein Spielzeug</dd></div></dl>
       <div class="listen">
         <div><h3>Im Bausatz</h3><ul class="haken"><li>Alle 3D-gedruckten Rumpf-, Tragflächen- und Leitwerksteile</li><li>Kohlefaser-Flächenholm 500 × 8 mm</li><li>CFK-Leitwerkholm 140 × 4 mm</li><li>Ruderanlenkungen</li><li>Holzdübel zur Ausrichtung</li></ul></div>
         <div><h3>Antriebsset (optional)</h3><ul class="haken"><li>64-mm-EDF, 3000 KV</li><li>80-A-Regler</li><li>3 × 9-g-Servos</li></ul></div>
-        <div><h3>Du brauchst zusätzlich</h3><ul class="plus"><li>Sender und Empfänger</li><li>Akku 4S 1800 mAh</li></ul></div>
+        <div><h3>Du brauchst zusätzlich</h3><ul class="plus"><li>Sender und Empfänger</li><li>Akku 4S 1800 mAh (verkaufen wir nicht)</li></ul></div>
       </div>
     </div>
   </div>
 </section>
 
+<section class="sec" id="sicherheit" aria-labelledby="sicherheit-titel">
+  <div class="sec-head"><h2 id="sicherheit-titel">Produktsicherheit</h2>
+    <p>Gebaut für Modellbauerinnen und Modellbauer ab 14 Jahren. Bitte lies die Hinweise vor dem Bauen und dem ersten Flug.</p></div>
+  <div class="sicherheit">
+        <dl class="sicherheit-daten">
+          <div><dt>Hersteller</dt><dd>Aero3dp<br>Tommy Rohn<br>Am Bettikumer Hof 21<br>41470 Neuss<br>Deutschland<br><a class="textlink" href="mailto:info@aero3dp.de">info@aero3dp.de</a></dd></div>
+          <div><dt>Produktkennung</dt><dd>Modell FJ-4 Fury, Artikel FJ4. Dein Konfigurations-Code steht zusätzlich auf dem Etikett der Verpackung.</dd></div><div><dt>Antriebsset</dt><dd>Komponenten von Herstellern aus der EU, CE-gekennzeichnet. Herstellerangaben je Bauteil auf Anfrage an <a class="textlink" href="mailto:info@aero3dp.de">info@aero3dp.de</a>.</dd></div>
+        </dl>
+        <div class="sicherheit-warnungen"><h3>Warn- und Sicherheitshinweise</h3><ul><li>Kein Spielzeug. Nicht geeignet für Kinder unter 14 Jahren. Jugendliche unter 16 Jahren bauen und fliegen nur unter Aufsicht eines Erwachsenen.</li><li>Enthält verschluckbare Kleinteile. Von Kleinkindern fernhalten.</li><li>Drehende Propeller und Impeller können schwere Verletzungen verursachen. Akku erst anschließen, wenn der Sender eingeschaltet und das Gas auf null ist. Modell dabei festhalten und nie in den Propellerbereich greifen.</li><li>Fliegen nur mit einer Haftpflichtversicherung, die Modellflug abdeckt, und nur auf geeigneten Flächen mit Abstand zu Menschen, Straßen und Gebäuden. Geltende Regeln für Modellflug beachten (dipul.de).</li><li>LiPo-Akkus (nicht im Lieferumfang) nur mit geeignetem Ladegerät und nie unbeaufsichtigt laden. Beschädigte oder aufgeblähte Akkus nicht mehr verwenden.</li><li>PLA und LW-PLA werden ab etwa 55 °C weich. Modell nicht im heißen Auto oder in praller Sonne lagern.</li><li>Nach Abstürzen alle Teile auf Risse prüfen. Gebrochene Druckteile können scharfe Kanten haben.</li><li>Klebstoffe nach den Hinweisen ihres Herstellers verwenden und für gute Lüftung sorgen.</li><li>Vor jedem Flug Schwerpunkt, Ruderausschläge und den festen Sitz aller Teile prüfen.</li></ul></div>
+        <div class="entsorgung"><svg class="tonne" viewBox="0 0 40 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M10 12h20l-2 26H12z"/><path d="M8 12h24M16 8h8v4"/><circle cx="14" cy="41" r="2.5"/><circle cx="27" cy="41" r="2.5"/><path d="M5 6l30 36M35 6L5 42" stroke-width="2.6"/><path d="M6 46h28" stroke-width="3.2"/></svg><p>Elektrische Bauteile wie Motor, Regler und Servos gehören nicht in den Hausmüll. Das Symbol der durchgestrichenen Mülltonne bedeutet: Altgeräte getrennt sammeln. Du kannst sie kostenlos bei den Sammelstellen deiner Stadt oder Gemeinde (Wertstoffhof) abgeben. Akkus und Batterien vorher entnehmen und getrennt entsorgen.</p></div>
+      </div>
+</section>
+
 <section class="sec" aria-labelledby="weitere-titel">
   <div class="sec-head"><h2 id="weitere-titel">Weitere Modelle</h2></div>
-  <div class="weitere"><a class="weitere-karte" href="aero-33x.html"><img src="bilder/aero-33x.webp" alt="" loading="lazy" class="contain"><span><b>Aero-33X</b>ab 49,90 €</span></a><a class="weitere-karte" href="fpv-flitzer.html"><img src="bilder/fpv-flitzer.webp" alt="" loading="lazy" class="contain"><span><b>FPV Flitzer</b>ab 19,90 €</span></a></div>
+  <div class="weitere"><a class="weitere-karte" href="aero-33x.html"><img src="bilder/aero-33x-flug-800.webp" alt="" loading="lazy" class="cover"><span><b>Aero-33X</b>ab 49,90 €</span></a><a class="weitere-karte" href="fpv-flitzer.html"><img src="bilder/fpv-flitzer.webp" alt="" loading="lazy" class="contain"><span><b>FPV Flitzer</b>ab 19,90 €</span></a></div>
 </section>
 </main>
 <footer>
@@ -210,6 +228,7 @@
         <li><a href="impressum.html">Impressum</a></li>
         <li><a href="agbs.html">AGB</a></li>
         <li><a href="datenschutz.html">Datenschutz</a></li>
+        <li><a href="sicherheit.html">Produktsicherheit</a></li>
         <li><a href="https://instagram.com/aero3dp" rel="noopener" target="_blank">Instagram</a></li>
       </ul>
     </div>
@@ -221,9 +240,9 @@
 </footer>
 
 <script>window.PRODUKT = {"name": "FJ-4 Fury", "code": "FJ4", "slug": "fj4-fury", "preis": 55.9, "preisSet": 124.9, "materialWahl": true, "lwAufpreis": 10, "teile": [{"id": "rumpf", "name": "Rumpf"}, {"id": "fluegel", "name": "Tragflächen"}, {"id": "leitwerk", "name": "Leitwerk"}], "presets": [{"name": "Werksfarben", "farben": {"rumpf": "silber", "fluegel": "silber", "leitwerk": "rot"}}, {"name": "Arktis", "farben": {"rumpf": "weiss", "fluegel": "weiss", "leitwerk": "orange"}}, {"name": "Stealth", "farben": {"rumpf": "grau", "fluegel": "grau", "leitwerk": "schwarz"}}, {"name": "Blue Angel", "farben": {"rumpf": "blau", "fluegel": "blau", "leitwerk": "gelb"}}, {"name": "Racing", "farben": {"rumpf": "weiss", "fluegel": "rot", "leitwerk": "rot"}}], "farben": [{"id": "weiss", "name": "Weiß", "hex": "#ecebe6", "kz": "WE"}, {"id": "silber", "name": "Silber", "hex": "#a7acb2", "kz": "SI"}, {"id": "grau", "name": "Grau", "hex": "#5c6067", "kz": "GR"}, {"id": "schwarz", "name": "Schwarz", "hex": "#1e1f21", "kz": "SW"}, {"id": "rot", "name": "Aero-Rot", "hex": "#c4191c", "kz": "RO"}, {"id": "orange", "name": "Orange", "hex": "#ec6a1f", "kz": "OR"}, {"id": "gelb", "name": "Gelb", "hex": "#f0c02d", "kz": "GE"}, {"id": "blau", "name": "Blau", "hex": "#1f5fae", "kz": "BL"}, {"id": "gruen", "name": "Grün", "hex": "#2e9a56", "kz": "GN"}]};</script>
-<script src="config.js?v=20261024"></script>
-<script src="backend.js?v=20261024"></script>
-<script src="script.js?v=20261024"></script>
-<script src="konfigurator.js?v=20261024"></script>
+<script src="config.js?v=20261025"></script>
+<script src="backend.js?v=20261025"></script>
+<script src="script.js?v=20261025"></script>
+<script src="konfigurator.js?v=20261025"></script>
 </body>
 </html>

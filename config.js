@@ -24,10 +24,30 @@ window.AERO_CONFIG = {
     maxDateiMB: 50,
     linienbreite: 0.42,            // mm
     materialien: {
-      'PLA':    { dichte: 1.24, euroProKg: 25, aufschlag: 2.5, info: 'Der Allrounder: formstabil, fein, viele Farben.' },
-      'PETG':   { dichte: 1.27, euroProKg: 28, aufschlag: 2.5, info: 'Zäher und wärmebeständiger, gut für Funktionsteile.' },
-      'LW-PLA': { dichte: 0.60, euroProKg: 55, aufschlag: 2.5, info: 'Aufgeschäumt und sehr leicht – ideal für Flugzeugteile.' }
+      'PLA':    { dichte: 1.24, euroProKg: 25, aufschlag: 2.5, zeitfaktor: 1.0,  info: 'Der Allrounder: formstabil, fein, viele Farben.' },
+      'PETG':   { dichte: 1.27, euroProKg: 28, aufschlag: 2.5, zeitfaktor: 1.1,  info: 'Zäher und wärmebeständiger, gut für Funktionsteile.' },
+      'LW-PLA': { dichte: 0.60, euroProKg: 70, aufschlag: 2.5, zeitfaktor: 1.45, info: 'Aufgeschäumt und sehr leicht – ideal für Flugzeugteile. Nur in Weiß, und die Oberfläche fällt etwas rauer und weniger detailgenau aus als bei PLA.' }
       // dichte von LW-PLA = gedruckte (aufgeschäumte) Dichte, je nach Temperatur 0,5–0,8
+      // zeitfaktor = wie viel langsamer gedruckt wird als PLA (LW-PLA braucht langsame, heiße Bahnen)
+    },
+
+    /* Farben: was im Druckservice auswählbar ist. "lager" = was du gerade da hast, je Material.
+       Alles andere können Kunden als Sonderfarbe anfragen. */
+    farben: {
+      'weiss':   { name: 'Weiß',     hex: '#ecebe6' },
+      'schwarz': { name: 'Schwarz',  hex: '#1e1f21' },
+      'grau':    { name: 'Grau',     hex: '#5c6067' },
+      'silber':  { name: 'Silber',   hex: '#a7acb2' },
+      'rot':     { name: 'Aero-Rot', hex: '#c4191c' },
+      'orange':  { name: 'Orange',   hex: '#ec6a1f' },
+      'gelb':    { name: 'Gelb',     hex: '#f0c02d' },
+      'blau':    { name: 'Blau',     hex: '#1f5fae' },
+      'gruen':   { name: 'Grün',     hex: '#2e9a56' }
+    },
+    lager: {
+      'PLA':    ['weiss', 'schwarz', 'grau', 'silber', 'rot', 'orange', 'gelb', 'blau', 'gruen'],
+      'PETG':   ['schwarz', 'weiss', 'grau', 'blau'],
+      'LW-PLA': ['weiss']
     },
     qualitaet: {
       'fein':     { label: 'Fein',     schicht: 0.12, volumenstrom: 6  },

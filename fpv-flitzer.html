@@ -14,15 +14,19 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261024">
-  <link rel="stylesheet" href="konfigurator.css?v=20261024">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="stylesheet" href="styles.css?v=20261025">
+  <link rel="stylesheet" href="konfigurator.css?v=20261025">
   <meta property="og:type" content="product">
   <meta property="og:site_name" content="Aero3dp">
   <meta property="og:locale" content="de_DE">
   <meta property="og:title" content="FPV Flitzer – Racing-Delta für FPV | Aero3dp">
   <meta property="og:description" content="FPV Flitzer: 3D-gedruckter Racing-Delta mit 360 mm Spannweite, bis 70 km/h. Farben und Antriebsset konfigurieren.">
   <meta property="og:url" content="https://aero3dp.de/fpv-flitzer.html">
-  <meta property="og:image" content="https://aero3dp.de/bilder/og-aero3dp.jpg">
+  <meta property="og:image" content="https://aero3dp.de/bilder/og-aero3dp.jpg?v=20261025">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Aero3dp Logo">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"FPV Flitzer","description":"FPV Flitzer: 3D-gedruckter Racing-Delta mit 360 mm Spannweite, bis 70 km/h. Farben und Antriebsset konfigurieren.","image":["https://aero3dp.de/bilder/fpv-flitzer.webp"],"brand":{"@type":"Brand","name":"Aero3dp"},"category":"RC-Flugmodell","sku":"FLZ","offers":{"@type":"Offer","priceCurrency":"EUR","price":"19.90","availability":"https://schema.org/InStock","url":"https://aero3dp.de/fpv-flitzer.html","itemCondition":"https://schema.org/NewCondition"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Start","item":"https://aero3dp.de/"},{"@type":"ListItem","position":2,"name":"Modelle","item":"https://aero3dp.de/#produkte"},{"@type":"ListItem","position":3,"name":"FPV Flitzer","item":"https://aero3dp.de/fpv-flitzer.html"}]}</script>
@@ -94,6 +98,7 @@
         <div class="presets" id="presets" role="group" aria-label="Farbvorlagen"></div>
         <div class="teil-tabs" id="teilTabs" role="tablist" aria-label="Bauteil wählen"></div>
         <div class="swatches" id="swatches" role="radiogroup"></div>
+        <p class="lw-hinweis" id="lwHinweis" hidden><span>LW-PLA gibt es nur in Weiß. Farbe bekommst du über die personalisierte Lackierung.</span><button type="button" class="btn btn-small btn-ghost" id="lwLack">Lackierung hinzufügen</button></p>
         <p class="klein">Bildschirmfarben können vom echten Filament leicht abweichen.</p>
       </li>
       <li class="schritt" aria-labelledby="s-lack">
@@ -117,7 +122,7 @@
           <span class="antrieb-text"><b>Antriebsset dazu</b><span>Abgestimmt auf die FPV Flitzer</span></span>
           <span class="antrieb-preis">+ 47,00 €</span>
         </label>
-        <div class="antrieb-inhalt" id="antriebInhalt"><ul><li>Motor 1103, 11000 KV</li><li>T-Motor 3D/4D Brushless-Regler</li><li>2 × Dspower 3,7-g-Servos</li><li>Gemfan 2015 2-Blatt-Propeller</li></ul></div>
+        <div class="antrieb-inhalt" id="antriebInhalt"><ul><li>Brushless-Motor 1103, 11000 KV</li><li>Brushless-Regler</li><li>2 × 3,7-g-Mikroservos</li><li>2-Blatt-Propeller 2015</li></ul></div>
       </li>
       <li class="schritt uebersicht" aria-labelledby="s-uebersicht">
         <h2 id="s-uebersicht"><span class="nr">4</span>Übersicht</h2>
@@ -157,19 +162,32 @@
     </div>
     <div class="details-daten">
       <h3>Technische Daten</h3>
-      <dl class="specs"><div><dt>Spannweite</dt><dd>360 mm</dd></div><div><dt>Gewicht</dt><dd>ca. 85 g je nach Ausstattung</dd></div><div><dt>Max. Abfluggewicht</dt><dd>95 g</dd></div><div><dt>Höchstgeschwindigkeit</dt><dd>bis 70 km/h</dd></div><div><dt>Steigrate</dt><dd>6 m/s</dd></div><div><dt>Akku</dt><dd>300–550 mAh 2S LiPo</dd></div></dl>
+      <dl class="specs"><div><dt>Spannweite</dt><dd>360 mm</dd></div><div><dt>Gewicht</dt><dd>ca. 85 g je nach Ausstattung</dd></div><div><dt>Max. Abfluggewicht</dt><dd>95 g</dd></div><div><dt>Höchstgeschwindigkeit</dt><dd>bis 70 km/h</dd></div><div><dt>Steigrate</dt><dd>6 m/s</dd></div><div><dt>Akku</dt><dd>300–550 mAh 2S LiPo</dd></div><div><dt>Alter</dt><dd>ab 14 Jahren, kein Spielzeug</dd></div></dl>
       <div class="listen">
         <div><h3>Im Bausatz</h3><ul class="haken"><li>Alle 3D-gedruckten Teile: Flügel, Winglets und Rumpf</li><li>Schraubsystem zur Montage</li></ul></div>
-        <div><h3>Antriebsset (optional)</h3><ul class="haken"><li>Motor 1103, 11000 KV</li><li>T-Motor 3D/4D Brushless-Regler</li><li>2 × Dspower 3,7-g-Servos</li><li>Gemfan 2015 2-Blatt-Propeller</li></ul></div>
-        <div><h3>Du brauchst zusätzlich</h3><ul class="plus"><li>Sender und Empfänger mit mind. 3 Kanälen (4 für FPV)</li><li>Akku, z. B. 300 mAh 2S</li><li>Optional: FPV-System</li></ul></div>
+        <div><h3>Antriebsset (optional)</h3><ul class="haken"><li>Brushless-Motor 1103, 11000 KV</li><li>Brushless-Regler</li><li>2 × 3,7-g-Mikroservos</li><li>2-Blatt-Propeller 2015</li></ul></div>
+        <div><h3>Du brauchst zusätzlich</h3><ul class="plus"><li>Sender und Empfänger mit mind. 3 Kanälen (4 für FPV)</li><li>Akku, z. B. 300 mAh 2S (verkaufen wir nicht)</li><li>Optional: FPV-System mit max. 25 mW Sendeleistung</li></ul></div>
       </div>
     </div>
   </div>
 </section>
 
+<section class="sec" id="sicherheit" aria-labelledby="sicherheit-titel">
+  <div class="sec-head"><h2 id="sicherheit-titel">Produktsicherheit</h2>
+    <p>Gebaut für Modellbauerinnen und Modellbauer ab 14 Jahren. Bitte lies die Hinweise vor dem Bauen und dem ersten Flug.</p></div>
+  <div class="sicherheit">
+        <dl class="sicherheit-daten">
+          <div><dt>Hersteller</dt><dd>Aero3dp<br>Tommy Rohn<br>Am Bettikumer Hof 21<br>41470 Neuss<br>Deutschland<br><a class="textlink" href="mailto:info@aero3dp.de">info@aero3dp.de</a></dd></div>
+          <div><dt>Produktkennung</dt><dd>Modell FPV Flitzer, Artikel FLZ. Dein Konfigurations-Code steht zusätzlich auf dem Etikett der Verpackung.</dd></div><div><dt>Antriebsset</dt><dd>Komponenten von Herstellern aus der EU, CE-gekennzeichnet. Herstellerangaben je Bauteil auf Anfrage an <a class="textlink" href="mailto:info@aero3dp.de">info@aero3dp.de</a>.</dd></div>
+        </dl>
+        <div class="sicherheit-warnungen"><h3>Warn- und Sicherheitshinweise</h3><ul><li>Kein Spielzeug. Nicht geeignet für Kinder unter 14 Jahren. Jugendliche unter 16 Jahren bauen und fliegen nur unter Aufsicht eines Erwachsenen.</li><li>Enthält verschluckbare Kleinteile. Von Kleinkindern fernhalten.</li><li>Drehende Propeller und Impeller können schwere Verletzungen verursachen. Akku erst anschließen, wenn der Sender eingeschaltet und das Gas auf null ist. Modell dabei festhalten und nie in den Propellerbereich greifen.</li><li>Fliegen nur mit einer Haftpflichtversicherung, die Modellflug abdeckt, und nur auf geeigneten Flächen mit Abstand zu Menschen, Straßen und Gebäuden. Geltende Regeln für Modellflug beachten (dipul.de).</li><li>LiPo-Akkus (nicht im Lieferumfang) nur mit geeignetem Ladegerät und nie unbeaufsichtigt laden. Beschädigte oder aufgeblähte Akkus nicht mehr verwenden.</li><li>PLA und LW-PLA werden ab etwa 55 °C weich. Modell nicht im heißen Auto oder in praller Sonne lagern.</li><li>Nach Abstürzen alle Teile auf Risse prüfen. Gebrochene Druckteile können scharfe Kanten haben.</li><li>Klebstoffe nach den Hinweisen ihres Herstellers verwenden und für gute Lüftung sorgen.</li><li>Vor jedem Flug Schwerpunkt, Ruderausschläge und den festen Sitz aller Teile prüfen.</li><li>FPV-Videosender dürfen in Deutschland im 5,8-GHz-Band mit höchstens 25 mW betrieben werden. Stärkere Sender sind nicht zulässig.</li><li>Fliegst du mit Videobrille, brauchst du einen Beobachter, der das Modell direkt im Blick behält.</li><li>Mit Kamera an Bord musst du dich beim Luftfahrt-Bundesamt als Betreiber registrieren.</li></ul></div>
+        <div class="entsorgung"><svg class="tonne" viewBox="0 0 40 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M10 12h20l-2 26H12z"/><path d="M8 12h24M16 8h8v4"/><circle cx="14" cy="41" r="2.5"/><circle cx="27" cy="41" r="2.5"/><path d="M5 6l30 36M35 6L5 42" stroke-width="2.6"/><path d="M6 46h28" stroke-width="3.2"/></svg><p>Elektrische Bauteile wie Motor, Regler und Servos gehören nicht in den Hausmüll. Das Symbol der durchgestrichenen Mülltonne bedeutet: Altgeräte getrennt sammeln. Du kannst sie kostenlos bei den Sammelstellen deiner Stadt oder Gemeinde (Wertstoffhof) abgeben. Akkus und Batterien vorher entnehmen und getrennt entsorgen.</p></div>
+      </div>
+</section>
+
 <section class="sec" aria-labelledby="weitere-titel">
   <div class="sec-head"><h2 id="weitere-titel">Weitere Modelle</h2></div>
-  <div class="weitere"><a class="weitere-karte" href="fj4-fury.html"><img src="bilder/fj4-fury-800.webp" alt="" loading="lazy" class="cover"><span><b>FJ-4 Fury</b>ab 55,90 €</span></a><a class="weitere-karte" href="aero-33x.html"><img src="bilder/aero-33x.webp" alt="" loading="lazy" class="contain"><span><b>Aero-33X</b>ab 49,90 €</span></a></div>
+  <div class="weitere"><a class="weitere-karte" href="fj4-fury.html"><img src="bilder/fj4-fury-800.webp" alt="" loading="lazy" class="cover"><span><b>FJ-4 Fury</b>ab 55,90 €</span></a><a class="weitere-karte" href="aero-33x.html"><img src="bilder/aero-33x-flug-800.webp" alt="" loading="lazy" class="cover"><span><b>Aero-33X</b>ab 49,90 €</span></a></div>
 </section>
 </main>
 <footer>
@@ -202,6 +220,7 @@
         <li><a href="impressum.html">Impressum</a></li>
         <li><a href="agbs.html">AGB</a></li>
         <li><a href="datenschutz.html">Datenschutz</a></li>
+        <li><a href="sicherheit.html">Produktsicherheit</a></li>
         <li><a href="https://instagram.com/aero3dp" rel="noopener" target="_blank">Instagram</a></li>
       </ul>
     </div>
@@ -213,9 +232,9 @@
 </footer>
 
 <script>window.PRODUKT = {"name": "FPV Flitzer", "code": "FLZ", "slug": "fpv-flitzer", "preis": 19.9, "preisSet": 66.9, "materialWahl": false, "lwAufpreis": 10, "teile": [{"id": "fluegel", "name": "Flügel"}, {"id": "winglets", "name": "Winglets"}, {"id": "rumpf", "name": "Rumpf"}], "presets": [{"name": "Werksfarben", "farben": {"fluegel": "orange", "winglets": "schwarz", "rumpf": "orange"}}, {"name": "Gut sichtbar", "farben": {"fluegel": "gelb", "winglets": "schwarz", "rumpf": "gelb"}}, {"name": "Stealth", "farben": {"fluegel": "schwarz", "winglets": "grau", "rumpf": "schwarz"}}, {"name": "Klassik", "farben": {"fluegel": "weiss", "winglets": "rot", "rumpf": "weiss"}}], "farben": [{"id": "weiss", "name": "Weiß", "hex": "#ecebe6", "kz": "WE"}, {"id": "silber", "name": "Silber", "hex": "#a7acb2", "kz": "SI"}, {"id": "grau", "name": "Grau", "hex": "#5c6067", "kz": "GR"}, {"id": "schwarz", "name": "Schwarz", "hex": "#1e1f21", "kz": "SW"}, {"id": "rot", "name": "Aero-Rot", "hex": "#c4191c", "kz": "RO"}, {"id": "orange", "name": "Orange", "hex": "#ec6a1f", "kz": "OR"}, {"id": "gelb", "name": "Gelb", "hex": "#f0c02d", "kz": "GE"}, {"id": "blau", "name": "Blau", "hex": "#1f5fae", "kz": "BL"}, {"id": "gruen", "name": "Grün", "hex": "#2e9a56", "kz": "GN"}]};</script>
-<script src="config.js?v=20261024"></script>
-<script src="backend.js?v=20261024"></script>
-<script src="script.js?v=20261024"></script>
-<script src="konfigurator.js?v=20261024"></script>
+<script src="config.js?v=20261025"></script>
+<script src="backend.js?v=20261025"></script>
+<script src="script.js?v=20261025"></script>
+<script src="konfigurator.js?v=20261025"></script>
 </body>
 </html>

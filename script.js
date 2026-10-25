@@ -220,35 +220,52 @@
     });
   }
 
-  /* ─── Druckbühne im Hero: Modell entsteht Schicht für Schicht ─── */
+  /* ─── Druckbühne im Hero: Modell entsteht Schicht für Schicht ───
+     Die Bewegung selbst ist reine CSS-Transform-Animation (läuft auf der GPU).
+     JS startet sie erst, wenn die Seite fertig geladen ist, und zählt nur die Schichten. */
   var buehne = $('#druckbuehne');
   if (buehne) {
-    var objekt = $('.druck-objekt', buehne), duese = $('.druck-duese', buehne), zaehler = $('[data-schicht]', buehne);
-    var schichten = parseInt(buehne.dataset.schichten, 10) || 240, laeuft = false;
-    function setze(anteil) { // anteil 0..1 gedruckt
-      var gestuft = Math.floor(anteil * schichten) / schichten;
-      objekt.style.setProperty('--rest', ((1 - gestuft) * 100).toFixed(2) + '%');
-      duese.style.setProperty('--rest-zahl', (1 - gestuft).toFixed(4));
-      if (zaehler) zaehler.textContent = Math.round(gestuft * schichten);
+    var zaehler = $('[data-schicht]', buehne), fenster = $('.druck-fenster', buehne), bild = $('.druck-inhalt img', buehne);
+    var schichten = parseInt(buehne.dataset.schichten, 10) || 240, dauer = 3400, laeuft = false, notfall;
+    buehne.style.setProperty('--druckzeit', dauer + 'ms');
+    function fertig() {
+      if (!laeuft) return;
+      laeuft = false; clearTimeout(notfall);
+      buehne.classList.remove('druckt'); buehne.classList.add('fertig');
+      if (zaehler) zaehler.textContent = schichten;
     }
     function drucken() {
       if (laeuft) return;
+      if (reduziert) { buehne.classList.add('fertig'); if (zaehler) zaehler.textContent = schichten; return; }
       laeuft = true;
-      buehne.classList.remove('fertig');
-      if (reduziert) { setze(1); buehne.classList.add('fertig'); laeuft = false; return; }
+      buehne.classList.remove('fertig', 'druckt');
+      void buehne.offsetWidth;            // Animation sauber neu starten
       buehne.classList.add('druckt');
-      var start = performance.now(), dauer = 3400;
-      (function schritt(t) {
-        var p = Math.min((t - start) / dauer, 1);
-        setze(p);
-        duese.style.setProperty('--x', (50 + Math.sin(t / 70) * 40).toFixed(1) + '%');
-        if (p < 1) return requestAnimationFrame(schritt);
-        buehne.classList.remove('druckt'); buehne.classList.add('fertig'); laeuft = false;
+      var start = performance.now(), zuletzt = -1;
+      (function zaehlen(t) {
+        if (!laeuft) return;
+        var n = Math.min(schichten, Math.floor((t - start) / dauer * schichten));
+        if (n !== zuletzt && zaehler) { zaehler.textContent = n; zuletzt = n; }
+        requestAnimationFrame(zaehlen);
       })(start);
+      notfall = setTimeout(fertig, dauer + 300);
     }
-    setze(0);
-    var bio = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { drucken(); bio.disconnect(); } }, { threshold: .35 });
-    bio.observe(buehne);
+    fenster.addEventListener('animationend', fertig);
+    if (reduziert) { drucken(); }
+    else {
+      var bereit = function () {
+        var warten = [];
+        if (document.fonts && document.fonts.ready) warten.push(document.fonts.ready);
+        if (bild && bild.decode) warten.push(bild.decode().catch(function () {}));
+        Promise.all(warten).then(function () {
+          setTimeout(function () {
+            var bio = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { drucken(); bio.disconnect(); } }, { threshold: .35 });
+            bio.observe(buehne);
+          }, 250);
+        });
+      };
+      if (document.readyState === 'complete') bereit(); else window.addEventListener('load', bereit, { once: true });
+    }
     buehne.addEventListener('click', drucken);
     buehne.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); drucken(); } });
   }

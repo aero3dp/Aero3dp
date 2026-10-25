@@ -14,18 +14,22 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261024">
-  <link rel="stylesheet" href="druckservice.css?v=20261024">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="stylesheet" href="styles.css?v=20261025">
+  <link rel="stylesheet" href="druckservice.css?v=20261025">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Aero3dp">
   <meta property="og:locale" content="de_DE">
   <meta property="og:title" content="3D-Druckservice: STL hochladen &amp; Preis berechnen | Aero3dp">
   <meta property="og:description" content="Lade deine STL-Datei hoch, sieh sie in 3D und erhalte sofort eine Preisschätzung. Gedruckt in PLA, PETG oder LW-PLA bei Aero3dp in Neuss.">
   <meta property="og:url" content="https://aero3dp.de/druckservice.html">
-  <meta property="og:image" content="https://aero3dp.de/bilder/og-aero3dp.jpg">
+  <meta property="og:image" content="https://aero3dp.de/bilder/og-aero3dp.jpg?v=20261025">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Aero3dp Logo">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"3D-Druckservice","serviceType":"3D-Druck (FDM)","provider":{"@type":"Organization","name":"Aero3dp","url":"https://aero3dp.de/"},"areaServed":"DE","description":"STL-Datei hochladen, Preis sofort schätzen und bei Aero3dp in Neuss drucken lassen. PLA, PETG und LW-PLA."}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Welche Dateien kann ich hochladen?","acceptedAnswer":{"@type":"Answer","text":"STL-Dateien bis 50 MB, wie sie fast jedes CAD-Programm und Plattformen wie Printables oder Thingiverse ausgeben. Andere Formate (STEP, 3MF, OBJ) schickst du uns einfach per E-Mail."}},{"@type":"Question","name":"Wie genau ist der Preis?","acceptedAnswer":{"@type":"Answer","text":"Die Schätzung rechnet mit Volumen, Oberfläche, Füllung und Schichthöhe. Stützstrukturen und die beste Ausrichtung kennt erst der Slicer. Deshalb prüfen wir jede Datei persönlich und schicken dir dann einen festen Preis – erst danach bestellst du."}},{"@type":"Question","name":"Was passiert mit meiner Datei?","acceptedAnswer":{"@type":"Answer","text":"Die 3D-Vorschau und die Berechnung laufen nur in deinem Browser. Hochgeladen wird die Datei erst, wenn du auf „Angebot anfragen“ tippst. Wir nutzen sie ausschließlich für deinen Auftrag."}},{"@type":"Question","name":"Mein Teil ist größer als der Bauraum. Geht das trotzdem?","acceptedAnswer":{"@type":"Answer","text":"Oft ja: Wir teilen große Teile in passende Segmente mit Ausrichtungshilfen, so wie bei unseren Flugmodellen. Schick die Anfrage einfach ab, wir melden uns mit einem Vorschlag."}},{"@type":"Question","name":"Welche Farben gibt es?","acceptedAnswer":{"@type":"Answer","text":"PLA und PETG gibt es in vielen Farben, LW-PLA vor allem in hellen Tönen. Trag deine Wunschfarbe in die Anfrage ein, wir sagen dir, was verfügbar ist."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Welche Dateien kann ich hochladen?","acceptedAnswer":{"@type":"Answer","text":"STL-Dateien bis 50 MB, wie sie fast jedes CAD-Programm und Plattformen wie Printables oder Thingiverse ausgeben. Andere Formate (STEP, 3MF, OBJ) schickst du uns einfach per E-Mail."}},{"@type":"Question","name":"Wie genau ist der Preis?","acceptedAnswer":{"@type":"Answer","text":"Die Schätzung rechnet mit Volumen, Oberfläche, Füllung und Schichthöhe. Stützstrukturen und die beste Ausrichtung kennt erst der Slicer. Deshalb prüfen wir jede Datei persönlich und schicken dir dann einen festen Preis – erst danach bestellst du."}},{"@type":"Question","name":"Was passiert mit meiner Datei?","acceptedAnswer":{"@type":"Answer","text":"Die 3D-Vorschau und die Berechnung laufen nur in deinem Browser. Hochgeladen wird die Datei erst, wenn du auf „Angebot anfragen“ tippst. Wir nutzen sie ausschließlich für deinen Auftrag."}},{"@type":"Question","name":"Mein Teil ist größer als der Bauraum. Geht das trotzdem?","acceptedAnswer":{"@type":"Answer","text":"Oft ja: Wir teilen große Teile in passende Segmente mit Ausrichtungshilfen, so wie bei unseren Flugmodellen. Schick die Anfrage einfach ab, wir melden uns mit einem Vorschlag."}},{"@type":"Question","name":"Welche Farben gibt es?","acceptedAnswer":{"@type":"Answer","text":"Alle Farben, die wir gerade da haben, kannst du direkt auswählen. LW-PLA gibt es bei uns nur in Weiß. Brauchst du eine andere Farbe, wähl „Sonderfarbe“ und beschreib sie kurz. Wir besorgen das Filament und nennen dir Lieferzeit und Mehrkosten im Angebot."}},{"@type":"Question","name":"Kann ich die Größe ändern?","acceptedAnswer":{"@type":"Answer","text":"Ja. Mit dem Größen-Regler skalierst du dein Modell von 10 bis 400 Prozent, Maße, Gewicht und Preis rechnen sofort mit. Ist es zu groß für unseren Drucker, passt „In den Bauraum einpassen“ es mit einem Klick an."}}]}</script>
 </head>
 <body>
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
@@ -89,7 +93,22 @@
 
   <div class="druck-panel">
     <form class="druck-einstellungen" onsubmit="return false">
-      <fieldset><legend>Material</legend><div class="wahl-gruppe"><label class="wahl"><input type="radio" name="material" value="PLA" checked><span><b>PLA</b><small>Formstabil, fein, viele Farben</small></span></label><label class="wahl"><input type="radio" name="material" value="PETG"><span><b>PETG</b><small>Zäh und wärmebeständiger</small></span></label><label class="wahl"><input type="radio" name="material" value="LW-PLA"><span><b>LW-PLA</b><small>Aufgeschäumt und sehr leicht</small></span></label></div></fieldset>
+      <fieldset class="groesse-feld" id="groesseFeld" disabled><legend>Größe <output id="groesseWert" class="zahl">100 %</output></legend>
+        <input type="range" id="groesse" min="10" max="400" step="1" value="100" aria-label="Größe in Prozent">
+        <div class="groesse-zeile">
+          <div class="stepper"><button type="button" id="groesseMinus" aria-label="Kleiner">−</button><input id="groesseZahl" type="number" min="10" max="400" value="100" inputmode="numeric" aria-label="Größe in Prozent"><button type="button" id="groessePlus" aria-label="Größer">+</button></div>
+          <span class="groesse-masse" id="groesseMasse">Lade erst eine Datei hoch.</span>
+        </div>
+        <div class="groesse-knoepfe"><button type="button" class="btn btn-ghost btn-small" id="groesseReset">Originalgröße</button><button type="button" class="btn btn-ghost btn-small" id="einpassen" hidden>In den Bauraum einpassen</button></div>
+      </fieldset>
+      <fieldset><legend>Material</legend><div class="wahl-gruppe"><label class="wahl"><input type="radio" name="material" value="PLA" checked><span><b>PLA</b><small>Formstabil, fein, viele Farben</small></span></label><label class="wahl"><input type="radio" name="material" value="PETG"><span><b>PETG</b><small>Zäh und wärmebeständiger</small></span></label><label class="wahl"><input type="radio" name="material" value="LW-PLA"><span><b>LW-PLA</b><small>Sehr leicht, nur in Weiß</small></span></label></div>
+        <p class="material-hinweis" id="materialHinweis" hidden>LW-PLA gibt es nur in Weiß. Weil es beim Drucken aufschäumt, fällt die Oberfläche etwas rauer und weniger detailgenau aus als bei PLA.</p></fieldset>
+      <fieldset><legend>Farbe <output id="farbName">–</output></legend>
+        <div class="farben" id="farbWahl" role="radiogroup" aria-label="Farbe"></div>
+        <div class="sonderfarbe" id="sonderfarbeFeld" hidden>
+          <div class="feld"><label for="sonderfarbe">Welche Farbe brauchst du?</label><input id="sonderfarbe" maxlength="80" placeholder="z. B. Neongrün, transparent oder RAL 5015"></div>
+          <p class="klein">Diese Farbe haben wir gerade nicht da und besorgen sie für dich. Das dauert meist ein paar Tage länger, die Mehrkosten nennen wir dir im Angebot.</p>
+        </div></fieldset>
       <fieldset><legend>Qualität <span>Schichthöhe</span></legend><div class="segmente"><label class="segment"><input type="radio" name="qualitaet" value="fein"><span>Fein<small>0,12 mm</small></span></label><label class="segment"><input type="radio" name="qualitaet" value="standard" checked><span>Standard<small>0,20 mm</small></span></label><label class="segment"><input type="radio" name="qualitaet" value="schnell"><span>Schnell<small>0,28 mm</small></span></label></div></fieldset>
       <fieldset class="regler-feld"><legend>Füllung <output id="fuellungWert" class="zahl">15 %</output></legend>
         <input type="range" id="fuellung" min="5" max="100" step="5" value="15" aria-label="Füllung in Prozent">
@@ -116,7 +135,6 @@
           <div class="feld"><label for="d-name">Name</label><input id="d-name" name="name" autocomplete="name" required maxlength="120"></div>
           <div class="feld"><label for="d-email">E-Mail</label><input id="d-email" name="email" type="email" autocomplete="email" required maxlength="200"></div>
         </div>
-        <div class="feld"><label for="d-farbe">Wunschfarbe</label><input id="d-farbe" name="farbe" maxlength="60" placeholder="z. B. Schwarz, Aero-Rot"></div>
         <div class="feld"><label for="d-nachricht">Nachricht <span style="color:var(--text-3)">(optional)</span></label><textarea id="d-nachricht" name="nachricht" maxlength="4000" placeholder="Wofür ist das Teil? Gibt es eine Frist?"></textarea></div>
         <div class="honig" aria-hidden="true"><label>Nicht ausfüllen <input name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
         <label class="feld-check"><input type="checkbox" required> <span>Ich bin einverstanden, dass meine Angaben und meine Datei zur Bearbeitung der Anfrage verarbeitet werden (<a class="textlink" href="datenschutz.html">Datenschutz</a>).</span></label>
@@ -135,7 +153,8 @@
     <details><summary>Wie genau ist der Preis?<i aria-hidden="true"></i></summary><div class="antwort"><p>Die Schätzung rechnet mit Volumen, Oberfläche, Füllung und Schichthöhe. Stützstrukturen und die beste Ausrichtung kennt erst der Slicer. Deshalb prüfen wir jede Datei persönlich und schicken dir dann einen festen Preis – erst danach bestellst du.</p></div></details>
     <details><summary>Was passiert mit meiner Datei?<i aria-hidden="true"></i></summary><div class="antwort"><p>Die 3D-Vorschau und die Berechnung laufen nur in deinem Browser. Hochgeladen wird die Datei erst, wenn du auf „Angebot anfragen“ tippst. Wir nutzen sie ausschließlich für deinen Auftrag.</p></div></details>
     <details><summary>Mein Teil ist größer als der Bauraum. Geht das trotzdem?<i aria-hidden="true"></i></summary><div class="antwort"><p>Oft ja: Wir teilen große Teile in passende Segmente mit Ausrichtungshilfen, so wie bei unseren Flugmodellen. Schick die Anfrage einfach ab, wir melden uns mit einem Vorschlag.</p></div></details>
-    <details><summary>Welche Farben gibt es?<i aria-hidden="true"></i></summary><div class="antwort"><p>PLA und PETG gibt es in vielen Farben, LW-PLA vor allem in hellen Tönen. Trag deine Wunschfarbe in die Anfrage ein, wir sagen dir, was verfügbar ist.</p></div></details>
+    <details><summary>Welche Farben gibt es?<i aria-hidden="true"></i></summary><div class="antwort"><p>Alle Farben, die wir gerade da haben, kannst du direkt auswählen. LW-PLA gibt es bei uns nur in Weiß. Brauchst du eine andere Farbe, wähl „Sonderfarbe“ und beschreib sie kurz. Wir besorgen das Filament und nennen dir Lieferzeit und Mehrkosten im Angebot.</p></div></details>
+    <details><summary>Kann ich die Größe ändern?<i aria-hidden="true"></i></summary><div class="antwort"><p>Ja. Mit dem Größen-Regler skalierst du dein Modell von 10 bis 400 Prozent, Maße, Gewicht und Preis rechnen sofort mit. Ist es zu groß für unseren Drucker, passt „In den Bauraum einpassen“ es mit einem Klick an.</p></div></details>
   </div>
 </section>
 </main>
@@ -169,6 +188,7 @@
         <li><a href="impressum.html">Impressum</a></li>
         <li><a href="agbs.html">AGB</a></li>
         <li><a href="datenschutz.html">Datenschutz</a></li>
+        <li><a href="sicherheit.html">Produktsicherheit</a></li>
         <li><a href="https://instagram.com/aero3dp" rel="noopener" target="_blank">Instagram</a></li>
       </ul>
     </div>
@@ -178,9 +198,9 @@
     <span class="herz-zeile">Gedruckt mit <span class="herz" role="img" aria-label="Herz">♥</span> und PLA</span>
   </div>
 </footer>
-<script src="config.js?v=20261024"></script>
-<script src="backend.js?v=20261024"></script>
-<script src="script.js?v=20261024"></script>
-<script type="module" src="druckservice.js?v=20261024"></script>
+<script src="config.js?v=20261025"></script>
+<script src="backend.js?v=20261025"></script>
+<script src="script.js?v=20261025"></script>
+<script type="module" src="druckservice.js?v=20261025"></script>
 </body>
 </html>

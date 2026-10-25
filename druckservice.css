@@ -91,6 +91,29 @@ input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius
 .stepper input:focus { outline: none; }
 .stepper:focus-within { border-color: var(--rot-text); }
 
+/* Größe */
+.groesse-feld[disabled] { opacity: .45; }
+.groesse-zeile { display: grid; grid-template-columns: 150px 1fr; gap: .9rem; align-items: center; margin-top: .6rem; }
+.groesse-masse { font-size: .84rem; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.groesse-masse.zu-gross { color: #f0c98a; }
+.groesse-knoepfe { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .6rem; }
+.groesse-knoepfe [hidden] { display: none; }
+
+/* Farbe */
+.farben { display: flex; flex-wrap: wrap; gap: .45rem; }
+.farbe { position: relative; display: inline-flex; align-items: center; gap: .45rem; padding: .4rem .75rem .4rem .45rem; border: 1px solid var(--linie-hell); border-radius: 999px; background: var(--karte); font-size: .82rem; color: var(--text-2); cursor: pointer; transition: border-color .2s, color .2s; }
+.farbe i { width: 20px; height: 20px; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(255,255,255,.22); }
+.farbe:hover { color: var(--text); border-color: var(--text-3); }
+.farbe[aria-checked="true"] { border-color: var(--rot-text); color: var(--text); background: rgba(179,11,11,.08); }
+.farbe.sonder i { background: conic-gradient(#e53935, #fdd835, #43a047, #1e88e5, #8e24aa, #e53935); }
+.farbe:focus-visible { outline: 2px solid var(--rot-text); outline-offset: 2px; }
+.sonderfarbe { margin-top: .8rem; display: grid; gap: .4rem; }
+.sonderfarbe[hidden] { display: none; }
+.material-hinweis { margin-top: .6rem; font-size: .82rem; color: var(--text-2); padding: .55rem .75rem; border-left: 3px solid #e8a33a; background: rgba(232,163,58,.07); }
+.material-hinweis[hidden] { display: none; }
+.farben.wackeln { animation: wackeln .4s; }
+@keyframes wackeln { 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+
 /* ─── Preis ─── */
 .preisbox { margin-top: 1.5rem; padding: 1.4rem; border: 1px solid var(--linie-hell); border-radius: 10px; background: linear-gradient(180deg, var(--karte), var(--graphit)); }
 .preis-kopf { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; font-size: .9rem; color: var(--text-2); }

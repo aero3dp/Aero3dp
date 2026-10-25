@@ -265,9 +265,9 @@
       z.push(['Preis', d.preis != null ? EUR.format(d.preis) + (d.preis_offen ? ' + ' + (d.lackierung ? 'Lackierung' : 'Set') + ' auf Anfrage' : '') : '–']);
     } else if (a.art === 'druckservice') {
       z.push(['Datei', d.datei + (d.groesse_mb ? ' (' + String(d.groesse_mb).replace('.', ',') + ' MB)' : '')],
-        ['Maße', (d.masse_mm || []).map(function (v) { return String(v).replace('.', ','); }).join(' × ') + ' mm'], ['Volumen', String(d.volumen_cm3).replace('.', ',') + ' cm³'],
+        ['Maße', (d.masse_mm || []).map(function (v) { return String(v).replace('.', ','); }).join(' × ') + ' mm' + (d.skalierung_prozent && d.skalierung_prozent !== 100 ? ' (auf ' + d.skalierung_prozent + ' % skaliert)' : '')], ['Volumen', String(d.volumen_cm3).replace('.', ',') + ' cm³'],
         ['Material', d.material + ', ' + ({ fein: 'Fein', standard: 'Standard', schnell: 'Schnell' }[d.qualitaet] || d.qualitaet) + ', ' + d.fuellung + ' % Füllung, ' + d.waende + ' Wände'], ['Stückzahl', d.anzahl],
-        ['Wunschfarbe', d.farbe || '–'], ['Schätzung', d.schaetzung_eur != null ? EUR.format(d.schaetzung_eur) : '–'],
+        ['Farbe', (d.farbe || '–') + (d.sonderfarbe ? ' (muss besorgt werden)' : '')], ['Schätzung', d.schaetzung_eur != null ? EUR.format(d.schaetzung_eur) : '–'],
         ['Gewicht / Zeit', String(d.gewicht_g).replace('.', ',') + ' g, ' + Math.floor(d.druckzeit_min / 60) + ' h ' + d.druckzeit_min % 60 + ' min'],
         ['Bauraum', d.passt ? 'passt' : 'zu groß'], ['Hülle', d.offene_kanten ? d.offene_kanten + ' offene Kanten' : 'geschlossen']);
     } else if (d.thema) z.push(['Thema', d.thema]);

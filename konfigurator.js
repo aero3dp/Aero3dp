@@ -12,7 +12,9 @@
   var farbe = function (id) { return P.farben.filter(function (f) { return f.id === id; })[0]; };
   var teilName = function (id) { return P.teile.filter(function (t) { return t.id === id; })[0].name; };
 
-  var state = { farben: {}, material: 'PLA', antrieb: false, lack: false, teil: P.teile[0].id };
+  var state = { farben: {}, material: 'PLA', antrieb: false, lack: false, teil: P.teile[0].id, plaFarben: null };
+  var LW_FARBE = 'weiss';   // LW-PLA gibt es nur in Weiß
+  function istLW() { return P.materialWahl && state.material === 'LW-PLA'; }
   P.teile.forEach(function (t) { state.farben[t.id] = P.presets[0].farben[t.id]; });
 
   /* ─── Zustand aus Link übernehmen (?f=SI.SI.RO.RO&m=LW&a=1) ─── */
@@ -26,6 +28,7 @@
     if (P.materialWahl && p.get('m') === 'LW') state.material = 'LW-PLA';
     if (p.get('a') === '1') state.antrieb = true;
     if (p.get('l') === '1') state.lack = true;
+    if (istLW()) P.teile.forEach(function (t) { state.farben[t.id] = LW_FARBE; });
   })();
   function linkParameter() {
     var p = new URLSearchParams();
@@ -121,6 +124,7 @@
     b.innerHTML = '<span class="punkte" aria-hidden="true">' + punkte + '</span>' + pr.name;
     b.addEventListener('click', function () {
       nutzung();
+      if (istLW()) { lwHinweisZeigen(); return; }
       var zuordnung = [];
       P.teile.forEach(function (t) {
         if (state.farben[t.id] === pr.farben[t.id]) return;
@@ -180,6 +184,7 @@
   }
   function farbeWaehlen(id) {
     nutzung();
+    if (istLW() && id !== LW_FARBE) { lwHinweisZeigen(); return; }
     if (state.farben[state.teil] === id) return;
     state.farben[state.teil] = id;
     teilFaerben(state.teil, true);
@@ -189,6 +194,7 @@
     $$('.swatch', swEl).forEach(function (b) {
       var an = b.dataset.farbe === state.farben[state.teil];
       b.setAttribute('aria-checked', an); b.tabIndex = an ? 0 : -1;
+      if (istLW() && b.dataset.farbe !== LW_FARBE) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled');
     });
   }
 
@@ -199,10 +205,30 @@
 
   /* Material */
   $$('.material').forEach(function (b) {
-    b.addEventListener('click', function () {
-      nutzung(); state.material = b.dataset.material; aktualisieren(true);
-    });
+    b.addEventListener('click', function () { nutzung(); materialSetzen(b.dataset.material); });
   });
+  /* Wechsel zu LW-PLA druckt alles in Weiß, zurück zu PLA stellt die vorherigen Farben wieder her */
+  function materialSetzen(m) {
+    if (m === state.material) return;
+    state.material = m;
+    var zuordnung = [], ziel = {};
+    if (istLW()) { state.plaFarben = Object.assign({}, state.farben); P.teile.forEach(function (t) { ziel[t.id] = LW_FARBE; }); }
+    else if (state.plaFarben) { ziel = state.plaFarben; state.plaFarben = null; }
+    P.teile.forEach(function (t) {
+      var f = ziel[t.id];
+      if (!f || f === state.farben[t.id]) return;
+      state.farben[t.id] = f;
+      teilEls(t.id).forEach(function (el) { zuordnung.push({ el: el, farbe: farbe(f).hex }); });
+    });
+    P.teile.forEach(function (t) { if (laufend[t.id]) laufend[t.id](); });
+    if (zuordnung.length) drucken('alle', zuordnung, 900, 24);
+    aktualisieren(true);
+  }
+  var lwHinweis = $('#lwHinweis');
+  function lwHinweisZeigen() {
+    if (!lwHinweis) return;
+    lwHinweis.classList.remove('wackeln'); void lwHinweis.offsetWidth; lwHinweis.classList.add('wackeln');
+  }
   /* Antrieb */
   var antrieb = $('#antrieb'), antriebInhalt = $('#antriebInhalt');
   antrieb.addEventListener('change', function () { nutzung(); state.antrieb = antrieb.checked; aktualisieren(true); });
@@ -212,6 +238,12 @@
   lack.addEventListener('change', function () {
     nutzung(); state.lack = lack.checked; aktualisieren(true);
     if (state.lack) lackieren();
+  });
+
+  var lwLack = $('#lwLack');
+  if (lwLack) lwLack.addEventListener('click', function () {
+    if (!state.lack) { state.lack = true; aktualisieren(true); lackieren(); }
+    $('#s-lack').scrollIntoView({ behavior: reduziert ? 'auto' : 'smooth', block: 'center' });
   });
 
   /* Lackier-Durchgang: eine Spritzpistole fährt einmal über das Modell */
@@ -305,6 +337,8 @@
     $$('.material').forEach(function (b) { b.setAttribute('aria-checked', b.dataset.material === state.material); });
     antrieb.checked = state.antrieb;
     antriebInhalt.classList.toggle('offen', state.antrieb);
+    if (lwHinweis) lwHinweis.hidden = !istLW();
+    presetsEl.classList.toggle('gesperrt', istLW());
     lack.checked = state.lack;
     lackInhalt.classList.toggle('offen', state.lack);
     svg.classList.toggle('lackiert', state.lack);
