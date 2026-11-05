@@ -64,7 +64,20 @@ button, input, select, textarea { font: inherit; color: inherit; }
 #nav.scrolled, #nav.solid { background: rgba(10,10,10,.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom-color: var(--linie); }
 .logo { display: inline-flex; align-items: center; text-decoration: none; flex-shrink: 0; }
 .logo img { height: 40px; width: auto; }
-.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; margin-left: auto; }
+.nav-aktionen { display: flex; align-items: center; gap: .35rem; }
+.korb-knopf {
+  position: relative; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid transparent; border-radius: 50%;
+  background: none; cursor: pointer; color: var(--text-2); transition: color .2s, border-color .2s;
+}
+.korb-knopf:hover { color: var(--text); border-color: var(--linie-hell); }
+.korb-knopf svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.korb-zahl {
+  position: absolute; top: 3px; right: 1px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px;
+  background: var(--rot); color: #fff; font-size: .68rem; font-weight: 650; line-height: 18px; text-align: center; font-variant-numeric: tabular-nums;
+}
+.korb-zahl.huepf { animation: huepf .45s cubic-bezier(.3,1.6,.5,1); }
+@keyframes huepf { 40% { transform: scale(1.35); } }
 .nav-links a {
   position: relative; font-size: .86rem; font-weight: 400; color: var(--text-2); text-decoration: none; transition: color .2s;
 }
@@ -109,6 +122,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .btn-block { width: 100%; }
 .nav-links .btn { min-height: 38px; padding: .5rem 1.1rem; font-size: .84rem; }
 .textlink { color: var(--rot-text); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.textknopf { border: 0; background: none; padding: .2rem 0; cursor: pointer; font-size: .86rem; color: var(--text-2); text-decoration: underline; text-underline-offset: 3px; }
+.textknopf:hover { color: var(--text); }
 
 /* ─── Abschnitte ─── */
 .sec { padding: clamp(4rem, 9vw, 7rem) var(--rand); }
@@ -294,6 +309,24 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .teaser-karte b { font-size: 1.1rem; font-weight: 600; }
 .teaser-karte span { font-size: .86rem; color: var(--text-3); }
 
+/* ─── Designservice-Teaser: Bauplan einer Rekonstruktion ─── */
+.rekon-karte {
+  display: block; border: 1px solid var(--linie-hell); border-radius: 10px; overflow: hidden; text-decoration: none;
+  background: radial-gradient(ellipse at 70% 80%, rgba(179,11,11,.12), transparent 60%), var(--schwarz); transition: border-color .25s;
+}
+.rekon-karte:hover { border-color: var(--rot-text); }
+.rekon { width: 100%; height: auto; }
+.rekon-alt { fill: #2b2b2b; stroke: #9a9a9a; stroke-width: 1.5; stroke-linejoin: round; }
+.rekon-loch { fill: var(--schwarz); stroke: #9a9a9a; stroke-width: 1.5; }
+.rekon-neu { fill: rgba(179,11,11,.16); stroke: var(--rot-text); stroke-width: 2; stroke-dasharray: 7 5; stroke-linejoin: round; }
+.rekon-mass path { fill: none; stroke: #6f6f6f; stroke-width: 1; }
+.rekon-mass text, .rekon-label { fill: var(--text-3); font: 400 13px var(--f); font-variant-numeric: tabular-nums; }
+.rekon-label.rot { fill: var(--rot-text); }
+.rekon-wisch { transform: scaleX(0); transform-box: fill-box; transform-origin: left center; transition: transform 1.6s cubic-bezier(.6,0,.3,1) .35s; }
+.reveal.on .rekon-wisch, .no-js .rekon-wisch, .rekon-statisch .rekon-wisch { transform: none; }
+.pcard-knoepfe { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: flex-end; }
+.preis small .textlink { color: var(--text-3); position: relative; z-index: 1; }
+
 /* ─── Galerie ─── */
 .galerie { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 210px; gap: 4px; }
 .galerie figure { overflow: hidden; background: var(--graphit); position: relative; }
@@ -381,7 +414,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .kanal small { display: block; font-size: .78rem; color: var(--text-3); }
 .formular { display: grid; gap: 1rem; }
 .feld-reihe { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.feld { display: grid; gap: .4rem; }
+.feld { display: grid; gap: .4rem; align-content: start; }
 .feld label, .feld .label { font-size: .84rem; font-weight: 500; color: var(--text-2); }
 .feld input, .feld select, .feld textarea {
   width: 100%; min-height: 48px; padding: .75rem .95rem; background: var(--karte); border: 1px solid var(--linie-hell); border-radius: var(--r);
@@ -398,6 +431,65 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .form-status[hidden] { display: none; }
 .form-status.ok { color: #9fe0b5; border-color: rgba(63,178,107,.4); background: rgba(63,178,107,.08); }
 .form-status.fehler { color: #f3a39f; border-color: rgba(236,74,68,.4); background: rgba(236,74,68,.08); }
+
+/* ─── Warenkorb-Schublade ─── */
+html.korb-offen { overflow: hidden; }
+.korb { position: fixed; inset: 0; z-index: 500; }
+.korb-schleier { position: absolute; inset: 0; background: rgba(0,0,0,.6); opacity: 0; transition: opacity .25s; }
+.korb-panel {
+  position: absolute; top: 0; right: 0; bottom: 0; width: min(440px, 100%); display: flex; flex-direction: column;
+  background: var(--graphit); border-left: 1px solid var(--linie-hell); transform: translateX(100%); transition: transform .3s cubic-bezier(.2,.8,.2,1);
+  outline: none;
+}
+.korb.auf .korb-schleier { opacity: 1; }
+.korb.auf .korb-panel { transform: none; }
+.korb-kopf { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid var(--linie); }
+.korb-kopf h2 { font-size: 1.15rem; font-weight: 650; letter-spacing: -.02em; }
+.korb-zu { width: 40px; height: 40px; border: 0; background: none; cursor: pointer; display: grid; place-items: center; border-radius: 50%; color: var(--text-2); }
+.korb-zu:hover { background: var(--karte); color: var(--text); }
+.korb-zu svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; }
+.korb-body { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.korb-liste { list-style: none; overflow-y: auto; flex: 1; padding: .5rem 1.25rem; }
+.korb-pos { display: grid; grid-template-columns: 34px 1fr auto; gap: .85rem; padding: 1rem 0; border-bottom: 1px solid var(--linie); align-items: start; }
+.korb-pos.neu { animation: korbNeu 1.6s ease; }
+@keyframes korbNeu { 0%, 30% { background: rgba(179,11,11,.14); } 100% { background: transparent; } }
+.korb-farben { display: grid; gap: 3px; padding-top: .2rem; }
+.korb-farben i { display: block; height: 10px; border-radius: 3px; background: var(--c); box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+.korb-farben.korb-teil svg { width: 30px; height: 30px; stroke: var(--text-3); fill: none; stroke-width: 1.5; }
+.korb-info { display: grid; gap: .15rem; min-width: 0; font-size: .82rem; color: var(--text-3); }
+.korb-info a { font-size: .95rem; font-weight: 550; color: var(--text); text-decoration: none; }
+.korb-info a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.korb-zeile2 { display: flex; align-items: center; gap: .8rem; margin-top: .45rem; }
+.korb-menge { display: inline-grid; grid-template-columns: 32px 30px 32px; align-items: center; border: 1px solid var(--linie-hell); border-radius: 999px; overflow: hidden; }
+.korb-menge button { height: 30px; border: 0; background: none; cursor: pointer; color: var(--text-2); font-size: 1rem; }
+.korb-menge button:hover:not([disabled]) { background: var(--karte-hell); color: var(--text); }
+.korb-menge button[disabled] { opacity: .35; cursor: default; }
+.korb-menge output { text-align: center; font-size: .86rem; font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+.korb-weg { border: 0; background: none; cursor: pointer; font-size: .78rem; color: var(--text-3); text-decoration: underline; text-underline-offset: 3px; padding: .3rem 0; }
+.korb-weg:hover { color: var(--rot-text); }
+.korb-preis { font-size: .95rem; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.korb-fuss { padding: 1rem 1.25rem 1.25rem; border-top: 1px solid var(--linie); background: var(--schwarz); display: grid; gap: .9rem; }
+.korb-frei p { font-size: .84rem; color: var(--text-2); margin-bottom: .45rem; }
+.korb-frei b { color: var(--text); font-weight: 600; }
+.korb-frei-spur { height: 4px; border-radius: 2px; background: var(--linie); overflow: hidden; }
+.korb-frei-spur i { display: block; height: 100%; background: var(--gruen); border-radius: 2px; transition: width .5s cubic-bezier(.2,.8,.2,1); }
+.korb-summen { display: grid; gap: .35rem; font-size: .88rem; }
+.korb-summen div { display: flex; justify-content: space-between; gap: 1rem; color: var(--text-2); }
+.korb-summen dd { font-variant-numeric: tabular-nums; color: var(--text); }
+.korb-summen .korb-gesamt { padding-top: .5rem; margin-top: .2rem; border-top: 1px solid var(--linie); font-size: 1.05rem; font-weight: 600; color: var(--text); }
+.korb-info-klein, .korb-pause { font-size: .75rem; color: var(--text-3); line-height: 1.5; }
+.korb-pause { color: var(--text-2); }
+.korb-leer { padding: 2.5rem 1.25rem; display: grid; gap: .7rem; justify-items: start; color: var(--text-2); font-size: .92rem; }
+.korb-leer b { color: var(--text); font-weight: 600; }
+.korb-leer .btn { margin-top: .5rem; }
+
+/* ─── Widerrufsknopf (im Footer jeder Seite, hervorgehoben) ─── */
+.widerruf-knopf {
+  display: inline-flex !important; align-items: center; gap: .45rem; padding: .4rem .85rem .4rem .7rem; margin-bottom: .2rem;
+  border: 1px solid var(--rot-text); border-radius: 999px; color: var(--text) !important; font-weight: 500; background: rgba(179,11,11,.12);
+}
+.widerruf-knopf:hover { background: var(--rot); border-color: var(--rot); }
+.widerruf-knopf svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ─── Footer ─── */
 footer { background: var(--graphit); border-top: 1px solid var(--linie); padding: 3.5rem var(--rand) 2rem; }
@@ -475,6 +567,7 @@ footer { background: var(--graphit); border-top: 1px solid var(--linie); padding
   .nav-links li a:not(.btn) { display: block; padding: .9rem 0; font-size: 1rem; border-bottom: 1px solid var(--linie); }
   .nav-links li a:not(.btn)::after { display: none; }
   .nav-links .btn { margin-top: 1rem; width: 100%; min-height: 46px; }
+  .nav-links { margin-left: 0; }
 }
 @media (max-width: 640px) {
   :root { --nav-h: 62px; }

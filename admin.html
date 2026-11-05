@@ -10,14 +10,14 @@
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preload" href="fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261025">
-  <link rel="stylesheet" href="admin.css?v=20261025">
+  <link rel="stylesheet" href="styles.css?v=20261104">
+  <link rel="stylesheet" href="admin.css?v=20261104">
 </head>
 <body class="admin">
 
 <section class="login" id="login" hidden>
   <form class="login-karte" id="loginForm">
-    <img src="bilder/logo-hell.webp" alt="Aero3dp" width="640" height="278">
+    <img src="bilder/logo-hell-200.webp" alt="Aero3dp" width="640" height="278">
     <h1>Admin-Bereich</h1>
     <p class="hinweis-klein" id="nichtEingerichtet" hidden>Supabase ist noch nicht eingerichtet. Folge der Checkliste, um Statistiken und Anfragen zu sehen. Bis dahin kannst du dir die <a class="textlink" href="#demo">Demo mit Beispieldaten</a> ansehen.</p>
     <div class="feld"><label for="l-email">E-Mail</label><input id="l-email" type="email" autocomplete="username" required></div>
@@ -30,11 +30,14 @@
 
 <div class="app" id="app" hidden>
   <header class="leiste">
-    <a href="index.html" class="logo" aria-label="Zur Website"><img src="bilder/logo-hell.webp" alt="Aero3dp" width="640" height="278"></a>
+    <a href="index.html" class="logo" aria-label="Zur Website"><img src="bilder/logo-hell-200.webp" alt="Aero3dp" width="640" height="278"></a>
     <nav class="admin-tabs" role="tablist" aria-label="Bereiche">
       <button role="tab" aria-selected="true" aria-controls="v-uebersicht" id="t-uebersicht">Übersicht</button>
+      <button role="tab" aria-selected="false" aria-controls="v-bestellungen" id="t-bestellungen" tabindex="-1">Bestellungen <span class="zaehler" id="bestellZaehler" hidden></span></button>
       <button role="tab" aria-selected="false" aria-controls="v-anfragen" id="t-anfragen" tabindex="-1">Anfragen <span class="zaehler" id="offenZaehler" hidden></span></button>
+      <button role="tab" aria-selected="false" aria-controls="v-widerrufe" id="t-widerrufe" tabindex="-1">Widerrufe <span class="zaehler" id="widerrufZaehler" hidden></span></button>
       <button role="tab" aria-selected="false" aria-controls="v-werkstatt" id="t-werkstatt" tabindex="-1">Werkstatt</button>
+      <button role="tab" aria-selected="false" aria-controls="v-ratgeber" id="t-ratgeber" tabindex="-1">Ratgeber</button>
       <button role="tab" aria-selected="false" aria-controls="v-einstellungen" id="t-einstellungen" tabindex="-1">Einstellungen</button>
     </nav>
     <div class="leiste-rechts">
@@ -47,6 +50,7 @@
 
   <main class="admin-inhalt">
     <section id="v-uebersicht" role="tabpanel" aria-labelledby="t-uebersicht">
+      <div class="shop-hinweis" id="shopHinweis" hidden></div>
       <div class="kacheln" id="kacheln"></div>
       <article class="karte karte-breit">
         <header class="karte-kopf"><h2>Aufrufe und Besuche pro Tag</h2><ul class="legende-chart" aria-hidden="true"><li><i class="s1"></i>Aufrufe</li><li><i class="s2"></i>Besuche</li></ul></header>
@@ -57,8 +61,8 @@
         <article class="karte"><header class="karte-kopf"><h2>Beliebteste Seiten</h2></header><div class="balken" id="seiten"></div></article>
         <article class="karte"><header class="karte-kopf"><h2>Woher Besucher kommen</h2></header><div class="balken" id="quellen"></div>
           <p class="karte-fuss">Tipp: Hänge <code>?quelle=messe</code> an Links und QR-Codes, dann siehst du hier, was sie bringen.</p></article>
-        <article class="karte"><header class="karte-kopf"><h2>Vom Interesse zur Anfrage: Modelle</h2></header><div class="balken" id="funnelModelle"></div></article>
-        <article class="karte"><header class="karte-kopf"><h2>Vom Interesse zur Anfrage: Druckservice</h2></header><div class="balken" id="funnelDruck"></div></article>
+        <article class="karte"><header class="karte-kopf"><h2>Vom Interesse zur Bestellung: Modelle</h2></header><div class="balken" id="funnelModelle"></div><p class="karte-fuss" id="funnelModelleFuss"></p></article>
+        <article class="karte"><header class="karte-kopf"><h2>Druck- und Designservice</h2></header><div class="balken" id="funnelDruck"></div><p class="karte-fuss" id="funnelDruckFuss"></p></article>
         <article class="karte"><header class="karte-kopf"><h2>Geräte</h2></header><div class="balken" id="geraete"></div></article>
         <article class="karte"><header class="karte-kopf"><h2>Beliebte Konfigurationen</h2></header><div class="balken" id="konfigs"></div></article>
       </div>
@@ -72,14 +76,44 @@
       <div class="anfragen" id="anfragenListe"></div>
     </section>
 
+    <section id="v-bestellungen" role="tabpanel" aria-labelledby="t-bestellungen" hidden>
+      <div class="kacheln" id="bestellKacheln"></div>
+      <div class="filter">
+        <div class="filter-gruppe" role="group" aria-label="Status" id="filterBestellung"></div>
+        <label class="suche"><span class="vh">Suchen</span><input type="search" id="bestellSuche" placeholder="Nummer, Name oder E-Mail"></label>
+      </div>
+      <div class="bestellungen" id="bestellListe"></div>
+    </section>
+
+    <section id="v-widerrufe" role="tabpanel" aria-labelledby="t-widerrufe" hidden>
+      <p class="karte-text">Hier landen alle Widerrufe aus dem Online-Formular. Die Kundin hat automatisch eine Eingangsbestätigung bekommen. Die Erstattung muss spätestens 14 Tage nach Eingang überwiesen sein. <a class="textlink" href="#rat-widerruf" data-ratgeber="rat-widerruf">So gehst du vor</a></p>
+      <div class="widerrufe" id="widerrufListe"></div>
+    </section>
+
+    <section id="v-ratgeber" role="tabpanel" aria-labelledby="t-ratgeber" hidden>
+      <div class="ratgeber">
+        <p class="karte-text">Alles Wichtige für deinen Shop-Alltag – von der Zahlung bis zur Steuer. Das hier ist eine Orientierung, keine Rechts- oder Steuerberatung.</p>
+        <details class="ratgeber-teil" id="rat-ablauf" open><summary>So wickelst du eine Bestellung ab</summary><div class="ratgeber-inhalt"><ol><li><b>Bestellung kommt rein.</b> Du bekommst die Mail „Neue Bestellung“, die Kundin hat automatisch ihre Bestätigung mit Bankverbindung, AGB und Widerrufsbelehrung. Schau kurz drauf: Adresse plausibel? Anmerkung? Farben vorrätig?</li><li><b>Zahlung prüfen.</b> Im Online-Banking nach dem Verwendungszweck (A3D-…) und dem Betrag suchen. Erst wenn das Geld da ist: „Zahlung eingegangen“ – die Kundin bekommt automatisch Bescheid.</li><li><b>Keine Zahlung nach 7 Tagen?</b> „Zahlungserinnerung senden“ (neue Frist 7 Tage). Kommt dann immer noch nichts, stornierst du die Bestellung mit der Mail „Storno“.</li><li><b>Drucken.</b> „Fertigung starten“, Packliste drucken und die Teile genau nach dem Konfigurations-Code drucken. Die Lieferzeit läuft ab Zahlungseingang – die Bestellung zeigt dir, bis wann das Paket raus muss.</li><li><b>Prüfen und verpacken.</b> Qualitätskontrolle, verpacken, Beilagen rein (siehe unten). Rechnung über den Knopf „Rechnung“ drucken – sie bekommt automatisch die nächste Nummer.</li><li><b>Versenden.</b> DHL-Paketmarke kaufen, Sendungsnummer eintragen, „Als versendet markieren“ – die Kundin bekommt die Mail mit dem Link zur Sendungsverfolgung.</li><li><b>Abschließen.</b> Ist das Paket zugestellt und kommen keine Rückfragen mehr, setzt du die Bestellung auf „Abgeschlossen“. Ab der Zustellung läuft die 14-tägige Widerrufsfrist.</li></ol></div></details>
+<details class="ratgeber-teil" id="rat-qualitaet"><summary>Qualitätskontrolle vor dem Verpacken</summary><div class="ratgeber-inhalt"><ul><li>Alle Teile laut Packliste da? Teile zählen, Holme, Anlenkungen und Kleinteile abhaken.</li><li>Farben passen zum Konfigurations-Code – im Zweifel das Etikett danebenlegen.</li><li>Keine Risse, keine gelösten Schichten, kein Verzug an Endleisten und Flächen.</li><li>Steckungen und Passstifte einmal probestecken. Was klemmt, nacharbeiten oder neu drucken.</li><li>Stützmaterial entfernt, scharfe Kanten entgratet.</li><li>LW-PLA: Eine rauere Oberfläche ist normal, eingefallene oder spröde Stellen nicht.</li><li>Antriebsset: vollständig, Kabel und Stecker unbeschädigt. Motoren nie mit montiertem Propeller testen.</li></ul></div></details>
+<details class="ratgeber-teil" id="rat-verpacken"><summary>Richtig verpacken</summary><div class="ratgeber-inhalt"><ul><li>Stabiler Karton, für Bausätze am besten zweiwellig. Nichts darf sich bewegen – mach den Schütteltest.</li><li>Flächen und lange Teile einzeln in Packpapier oder Luftpolsterfolie. Endleisten, Winglets und Leitwerke extra schützen.</li><li>Kleinteile (Schrauben, Dübel, Anlenkungen) in beschriftete Druckverschlussbeutel.</li><li>CFK-Holme auf einem Pappstreifen fixieren, damit sie nichts durchstoßen.</li><li>Elektronik in einen eigenen Beutel (am besten antistatisch), nie lose zwischen die Druckteile.</li><li>Hohlräume mit Papier füllen. Recycelbares Polstermaterial kommt bei Kunden gut an.</li><li>Karton H-förmig mit Paketband verkleben, alte Etiketten überkleben oder entfernen.</li><li>Wiegen und messen, dann die passende DHL-Paketmarke kaufen. Bausätze immer als Paket mit Sendungsverfolgung verschicken – ein Päckchen ist nicht versichert.</li><li><b>Verpackungsgesetz:</b> Bevor das erste Paket rausgeht, musst du im Verpackungsregister LUCID registriert sein und deine Versandverpackungen bei einem dualen System lizenziert haben – auch bei kleinen Mengen.</li></ul></div></details>
+<details class="ratgeber-teil" id="rat-beilagen"><summary>Was in jedes Paket gehört</summary><div class="ratgeber-inhalt"><ul><li><b>Rechnung oder Lieferschein</b> – über den Knopf „Rechnung“ in der Bestellung. Der Hinweis zur Kleinunternehmerregelung steht schon drauf.</li><li><b>Sicherheitshinweise auf Deutsch</b> – Pflicht nach der EU-Produktsicherheitsverordnung (GPSR). Druck die Seite „Produktsicherheit“ aus oder leg die Bauanleitung mit den Warnhinweisen bei.</li><li><b>Herstellerangaben auf der Verpackung</b> – Name, Anschrift, E-Mail, Modell, Artikel und Konfigurations-Code. Dafür gibt es die Etiketten unter „Packliste &amp; Etiketten“.</li><li><b>Bei Antriebssets:</b> den Entsorgungshinweis mit der durchgestrichenen Mülltonne (steht auf dem Sicherheitsblatt) und die Unterlagen der Hersteller, falls welche mitgeliefert wurden.</li><li><b>Optional:</b> eine Danke-Karte, dein Instagram-Name, ein Rabattcode für Vereinsfreunde.</li><li><b>Nie beilegen:</b> LiPo-Akkus. Die verkaufst du nicht, und sie wären Gefahrgut.</li><li>Eine Widerrufsbelehrung auf Papier brauchst du nicht – sie war in der Bestellbestätigung. Ein kleiner Hinweis „Rücksendung? aero3dp.de/widerruf“ ist trotzdem freundlich.</li></ul></div></details>
+<details class="ratgeber-teil" id="rat-widerruf"><summary>Widerruf und Rücksendung</summary><div class="ratgeber-inhalt"><ul><li>Du bekommst eine Mail, die Kundin hat automatisch die Eingangsbestätigung mit Datum und Uhrzeit. Alle Widerrufe stehen im Tab „Widerrufe“.</li><li><b>Frist prüfen:</b> 14 Tage ab Erhalt der Ware (Zustelldatum laut Sendungsverfolgung). Es reicht, wenn die Kundin innerhalb der Frist absendet.</li><li><b>Kein Widerrufsrecht</b> gibt es für Teile nach Kundenvorgaben: Druck nach Kundendatei, Konstruktionen, personalisierte Lackierung. Shop-Bausätze in unseren Farben sind widerrufbar.</li><li><b>Erstattung:</b> Kaufpreis plus ursprüngliche Versandkosten spätestens 14 Tage nach Eingang des Widerrufs zurücküberweisen. Du darfst warten, bis die Ware zurück ist oder ein Versandnachweis vorliegt. Bei einem Teilwiderruf erstattest du nur die betroffenen Artikel.</li><li>Die Rücksendekosten trägt die Kundin – so steht es in der Widerrufsbelehrung.</li><li><b>Wertverlust:</b> Ist der Bausatz schon verklebt oder lackiert, darfst du einen angemessenen Wertersatz abziehen. Mach Fotos und sprich es freundlich an.</li><li>Danach: Bestellung auf „Widerrufen“, Widerruf auf „Erledigt“, Mail „Erstattung“ senden. Gab es schon eine Rechnung, legst du einen Erstattungsbeleg mit Bezug auf die Rechnungsnummer ab.</li></ul></div></details>
+<details class="ratgeber-teil" id="rat-gewaehrleistung"><summary>Reklamation und Gewährleistung</summary><div class="ratgeber-inhalt"><ul><li>Es gelten 2 Jahre gesetzliche Gewährleistung. Im ersten Jahr wird vermutet, dass ein Mangel schon bei der Übergabe da war.</li><li>Erst Fotos und eine kurze Beschreibung erbitten. Oft ist das Teil schnell nachgedruckt – das ist die einfachste Nacherfüllung.</li><li>Transportschaden: Fotos von Karton und Inhalt, Schadensmeldung bei DHL möglichst sofort. Der Kundin trotzdem schnell Ersatz schicken.</li><li>Kulanz kostet oft weniger als Streit – und bringt gute Bewertungen.</li></ul></div></details>
+<details class="ratgeber-teil" id="rat-buchhaltung"><summary>Buchhaltung als Kleinunternehmer</summary><div class="ratgeber-inhalt"><ul><li><b>Rechnungen:</b> Der Admin vergibt fortlaufende Nummern (R-2026-0001 …). Drauf stehen: deine Anschrift, Name und Anschrift der Kundin, Datum, Menge und Art der Ware, der Betrag, der Hinweis auf die Steuerbefreiung nach § 19 UStG und deine Steuernummer – trag sie unter „Einstellungen“ ein.</li><li><b>Einnahmen-Überschuss-Rechnung:</b> Sammle alle Einnahmen und Ausgaben mit Beleg – Filament, Elektronik, Verpackung, Porto, Domain, Druckerteile. Am einfachsten mit einem eigenen Konto fürs Geschäft und einer festen Belegablage pro Monat.</li><li><b>Aufbewahren:</b> Rechnungen und Buchungsbelege 8 Jahre, Bücher und Aufzeichnungen 10 Jahre.</li><li><b>Umsatzgrenzen:</b> Im Vorjahr höchstens 25.000 €, im laufenden Jahr höchstens 100.000 €. Wer im laufenden Jahr über 100.000 € kommt, verliert die Regelung sofort. Die Kachel unter „Bestellungen“ zeigt deinen Shop-Umsatz – Druck- und Designaufträge, die du außerhalb des Shops abrechnest, zählen mit.</li><li><b>Kein Vorsteuerabzug:</b> Auf alles, was du einkaufst, zahlst du die volle Umsatzsteuer. Kalkuliere deine Preise deshalb mit Bruttokosten.</li><li><b>E-Rechnungen:</b> Du musst E-Rechnungen von Firmen empfangen können – ein E-Mail-Postfach reicht. Selbst ausstellen musst du als Kleinunternehmer keine.</li><li><b>Steuererklärung:</b> Anlage EÜR zur Einkommensteuererklärung. Eine Umsatzsteuer-Jahreserklärung brauchst du als Kleinunternehmer in der Regel nicht. Gewerbesteuer fällt erst ab 24.500 € Gewinn im Jahr an.</li><li>Bei Unsicherheit hilft die Gründungsberatung der IHK oder eine Steuerberatung.</li></ul></div></details>
+<details class="ratgeber-teil" id="rat-pflichten"><summary>Pflichten im Überblick</summary><div class="ratgeber-inhalt"><ul><li><b>Impressum</b> aktuell halten: Anschrift, E-Mail, eine geschäftliche Telefonnummer (falls du eine hast) und die Wirtschafts-Identifikationsnummer, sobald das Finanzamt sie dir mitteilt.</li><li><b>Verpackungsregister LUCID</b> und Systembeteiligung – vor dem ersten Versand.</li><li><b>Elektronik:</b> Antriebssets nur bei Herstellern oder Händlern kaufen, die bei der stiftung ear registriert sind (WEEE-Reg.-Nr. DE…). Kaufst du direkt bei einem Hersteller im EU-Ausland ohne deutsche Registrierung, giltst du selbst als Hersteller und musst dich registrieren.</li><li><b>Produktsicherheit (GPSR):</b> Warnhinweise mitliefern, Herstellerangaben auf die Verpackung, Konfigurations-Code für die Rückverfolgbarkeit, Sicherheitsprobleme ernst nehmen und melden.</li><li><b>Lizenzen</b> der Modell-Designs: Nachweis für die gewerbliche Nutzung aufbewahren. Fremde Namen und Logos nur verwenden, wenn die Lizenz es erlaubt.</li><li><b>Versicherung:</b> Eine Betriebshaftpflicht mit Produkthaftpflicht ist bei Flugmodellen und Elektronik sehr zu empfehlen.</li><li><b>Datenschutz:</b> Bestelldaten nur für die Abwicklung nutzen, Anfragen nach Erledigung löschen (spätestens nach 12 Monaten). Verträge zur Auftragsverarbeitung mit Supabase und Brevo im jeweiligen Konto abschließen bzw. herunterladen und ablegen.</li><li><b>Rechtstexte</b> anpassen, wenn sich etwas ändert – zum Beispiel bei PayPal, Versand ins Ausland oder neuen Diensten.</li></ul></div></details>
+<details class="ratgeber-teil" id="rat-kommunikation"><summary>Kommunikation mit Kunden</summary><div class="ratgeber-inhalt"><ul><li>Innerhalb von 24 Stunden antworten – auch nur kurz: „Ist angekommen, ich melde mich bis Freitag.“</li><li>Wird es später als angegeben? Sofort Bescheid geben und einen neuen Termin nennen.</li><li>Nach der Lieferung freundlich um Feedback oder ein Foto vom fertigen Modell bitten – mit Einverständnis auch für Instagram.</li><li>Adressen und Namen nie auf Fotos zeigen – Paketaufkleber vor dem Posten schwärzen.</li></ul></div></details>
+<details class="ratgeber-teil" id="rat-probleme"><summary>Wenn etwas schiefgeht</summary><div class="ratgeber-inhalt"><ul><li><b>Bestätigung kam nicht an:</b> Spam-Ordner? Tippfehler in der Adresse? In der Bestellung „Bestätigung erneut senden“. In Brevo unter Transactional → Logs siehst du, was mit jeder Mail passiert ist.</li><li><b>Shop ist offline:</b> Unter „Einstellungen“ → Shop siehst du, was fehlt (Testmail, Bankverbindung).</li><li><b>Doppelt bestellt:</b> Die unbezahlte Bestellung stornieren und die Mail „Storno“ schicken.</li><li><b>Falscher Betrag überwiesen:</b> Differenz freundlich anfordern oder zu viel Gezahltes zurücküberweisen.</li><li><b>Brevo-Limit:</b> Im kostenlosen Tarif sind 300 Mails pro Tag drin – für den Start mehr als genug.</li></ul></div></details>
+      </div>
+    </section>
+
     <section id="v-werkstatt" role="tabpanel" aria-labelledby="t-werkstatt" hidden>
       <article class="karte schmal">
         <header class="karte-kopf"><h2>Werkstatt-Status</h2></header>
-        <p class="karte-text">Erscheint oben auf der Startseite. Die Lieferzeit wird zusätzlich im Konfigurator angezeigt.</p>
+        <p class="karte-text">Die Lieferzeit steht immer auf der Startseite, bei jedem Modell, im Warenkorb, in der Kasse und in jeder Bestellbestätigung. Sie gilt ab Zahlungseingang. Schreib sie ohne „ca.“, zum Beispiel „5–7 Werktage“. Den Satz „Gerade in der Werkstatt“ blendest du mit dem Haken ein oder aus.</p>
         <form class="formular" id="werkstattForm">
           <div class="feld"><label for="w-status">Was liegt gerade im Drucker?</label><input id="w-status" maxlength="140" placeholder="z. B. FJ-4 Fury in Blau"></div>
           <div class="feld"><label for="w-liefer">Aktuelle Lieferzeit</label><input id="w-liefer" maxlength="60" placeholder="z. B. 5–7 Werktage"></div>
-          <label class="feld-check"><input type="checkbox" id="w-sichtbar"> <span>Auf der Website anzeigen</span></label>
+          <label class="feld-check"><input type="checkbox" id="w-sichtbar"> <span>„Gerade in der Werkstatt“ auf der Startseite anzeigen</span></label>
           <div class="vorschau"><span class="klein-label">Vorschau</span><p class="werkstatt-pill" id="werkstattVorschau"></p></div>
           <p class="form-status" role="status" hidden></p>
           <button class="btn" type="submit">Speichern</button>
@@ -88,6 +122,51 @@
     </section>
 
     <section id="v-einstellungen" role="tabpanel" aria-labelledby="t-einstellungen" hidden>
+      <article class="karte schmal shop-karte" id="shopKarte">
+        <header class="karte-kopf"><h2>Shop</h2><span class="shop-status" id="shopStatus">–</span></header>
+        <ol class="shop-check" id="shopCheck"></ol>
+        <label class="schalter-zeile"><input type="checkbox" id="shopAktiv"> <span><b>Shop geöffnet</b><small>Nur möglich, wenn die Testmail geklappt hat und die Bankverbindung eingetragen ist. Ist der Shop zu, funktionieren Konfigurator und Anfragen wie bisher.</small></span></label>
+        <form class="formular" id="shopForm" novalidate>
+          <h3>Bankverbindung für Überweisungen</h3>
+          <div class="feld-reihe">
+            <div class="feld"><label for="s-inhaber">Kontoinhaber</label><input id="s-inhaber" maxlength="70" autocomplete="off"></div>
+            <div class="feld"><label for="s-bank">Bank</label><input id="s-bank" maxlength="80" autocomplete="off"></div>
+          </div>
+          <div class="feld-reihe">
+            <div class="feld"><label for="s-iban">IBAN</label><input id="s-iban" maxlength="42" autocomplete="off" spellcheck="false"></div>
+            <div class="feld"><label for="s-bic">BIC <span class="optional">(optional)</span></label><input id="s-bic" maxlength="11" autocomplete="off" spellcheck="false"></div>
+          </div>
+          <h3>Steuer</h3>
+          <div class="feld-reihe">
+            <div class="feld"><label for="s-steuernr">Steuernummer</label><input id="s-steuernr" maxlength="30" autocomplete="off"><small class="feld-tipp">Steht auf jeder Rechnung.</small></div>
+            <div class="feld"><label for="s-widnr">Wirtschafts-ID <span class="optional">(sobald zugeteilt)</span></label><input id="s-widnr" maxlength="30" autocomplete="off" placeholder="DE123456789-00001"></div>
+          </div>
+          <h3>Versand und Zahlung</h3>
+          <div class="feld-reihe drei">
+            <div class="feld"><label for="s-versand">Versandkosten (€)</label><input id="s-versand" type="number" min="0" max="100" step="0.01" inputmode="decimal"></div>
+            <div class="feld"><label for="s-frei">Versandfrei ab (€)</label><input id="s-frei" type="number" min="0" max="10000" step="0.01" inputmode="decimal"></div>
+            <div class="feld"><label for="s-frist">Zahlungsfrist (Tage)</label><input id="s-frist" type="number" min="1" max="30" step="1" inputmode="numeric"></div>
+          </div>
+          <h3>E-Mail</h3>
+          <div class="feld-reihe">
+            <div class="feld"><label for="s-absender">Absender der Kundenmails</label><input id="s-absender" type="email" autocomplete="off"><small class="feld-tipp">Muss in Brevo als Absender bestätigt sein.</small></div>
+            <div class="feld"><label for="s-benachrichtigung">Benachrichtigungen an</label><input id="s-benachrichtigung" type="email" autocomplete="off"><small class="feld-tipp">Hierhin gehen neue Bestellungen, Widerrufe und die Testmail.</small></div>
+          </div>
+          <p class="form-status" id="shopFormStatus" role="status" hidden></p>
+          <div class="knopf-zeile"><button class="btn" type="submit">Speichern</button><button class="btn btn-ghost" type="button" id="testmail">Testmail senden</button></div>
+        </form>
+      </article>
+      <article class="karte schmal">
+        <header class="karte-kopf"><h2>Rabattcodes</h2></header>
+        <p class="karte-text">Gelten auf den Warenwert. Den Vereinsrabatt (FMSV-MITGLIED, 10 %) prüfst du bei Bedarf selbst.</p>
+        <div class="rabatt-liste" id="rabattListe"></div>
+        <form class="rabatt-neu" id="rabattNeu">
+          <div class="feld"><label for="rn-code">Neuer Code</label><input id="rn-code" maxlength="40" required placeholder="FRUEHLING10"></div>
+          <div class="feld"><label for="rn-prozent">Prozent</label><input id="rn-prozent" type="number" min="1" max="50" step="1" required value="10"></div>
+          <div class="feld"><label for="rn-bis">Gültig bis <span class="optional">(optional)</span></label><input id="rn-bis" type="date"></div>
+          <button class="btn btn-ghost" type="submit">Hinzufügen</button>
+        </form>
+      </article>
       <article class="karte schmal">
         <header class="karte-kopf"><h2>Dieses Gerät</h2></header>
         <label class="feld-check"><input type="checkbox" id="eigeneAusblenden"> <span>Meine eigenen Aufrufe auf diesem Gerät nicht mitzählen</span></label>
@@ -103,7 +182,9 @@
         <header class="karte-kopf"><h2>Verknüpfte Dienste</h2></header>
         <ul class="dienste">
           <li><a class="textlink" href="https://supabase.com/dashboard" target="_blank" rel="noopener">Supabase-Dashboard</a> – Datenbank, Speicher, Benutzer</li>
-          <li><a class="textlink" href="https://formspree.io/forms" target="_blank" rel="noopener">Formspree</a> – E-Mail-Benachrichtigungen</li>
+          <li><a class="textlink" href="https://app.brevo.com/" target="_blank" rel="noopener">Brevo</a> – Versand der Bestell- und Widerrufsmails (Logs unter Transactional)</li>
+          <li><a class="textlink" href="https://formspree.io/forms" target="_blank" rel="noopener">Formspree</a> – E-Mail-Benachrichtigungen bei Anfragen</li>
+          <li><a class="textlink" href="https://www.verpackungsregister.org/" target="_blank" rel="noopener">LUCID</a> – Verpackungsregister</li>
           <li><a class="textlink" href="https://search.google.com/search-console" target="_blank" rel="noopener">Google Search Console</a> – wie du bei Google gefunden wirst</li>
         </ul>
       </article>
@@ -112,8 +193,10 @@
 </div>
 
 <div class="chart-tooltip" id="tooltip" role="status" hidden></div>
-<script src="config.js?v=20261025"></script>
-<script src="script.js?v=20261025"></script>
-<script src="admin.js?v=20261025"></script>
+<script>window.AERO_PACK = {"artikel": {"FJ4": {"name": "FJ-4 Fury", "inhalt": ["Alle 3D-gedruckten Rumpf-, Tragflächen- und Leitwerksteile", "Kohlefaser-Flächenholm 500 × 8 mm", "CFK-Leitwerkholm 140 × 4 mm", "Ruderanlenkungen", "Holzdübel zur Ausrichtung"], "antrieb": ["64-mm-EDF, 3000 KV", "80-A-Regler", "3 × 9-g-Servos"], "warnung": "Kein Spielzeug. Nicht für Kinder unter 14 Jahren. Sicherheitshinweise beachten."}, "33X": {"name": "Aero-33X", "inhalt": ["Alle 3D-gedruckten Bauteile inklusive Kabinenhaube", "Ausrichtungsstifte zwischen den Teilen"], "antrieb": ["50-mm-EDF", "Passender Regler", "Servos"], "warnung": "Kein Spielzeug. Nicht für Kinder unter 14 Jahren. Sicherheitshinweise beachten."}, "FLZ": {"name": "FPV Flitzer", "inhalt": ["Alle 3D-gedruckten Teile: Flügel, Winglets und Rumpf", "Schraubsystem zur Montage"], "antrieb": ["Brushless-Motor 1103, 11000 KV", "Brushless-Regler", "2 × 3,7-g-Mikroservos", "2-Blatt-Propeller 2015"], "warnung": "Kein Spielzeug. Nicht für Kinder unter 14 Jahren. Sicherheitshinweise beachten."}, "ANT-2212": {"name": "Brushless-Antriebsset 2212", "inhalt": ["Brushless-Motor 2212, 1400 KV", "40-A-Regler (BEC 5 V / 3 A)", "2 × 9-g-Mikroservos"], "antrieb": [], "warnung": "Kein Spielzeug. Nicht geeignet für Kinder unter 14 Jahren.", "elektro": true}, "CFK-1X500": {"name": "Carbon-Rundstab 1 × 500 mm", "inhalt": ["Carbon-Rundstab 1 × 500 mm"], "antrieb": [], "warnung": "Beim Kürzen oder Schleifen entstehen feine Kohlefaserstäube und Splitter: Handschuhe, Schutzbrille und Staubmaske tragen.", "elektro": false}, "RAEDER": {"name": "Aero3dp Leichträder", "inhalt": ["Aero3dp Leichträder"], "antrieb": [], "warnung": "Enthält verschluckbare Kleinteile. Von Kleinkindern fernhalten.", "elektro": false}}, "hersteller": ["Aero3dp", "Inhaber Tommy Rohn", "Am Bettikumer Hof 21", "41470 Neuss", "Deutschland"], "mail": "info@aero3dp.de", "web": "https://aero3dp.de"};</script>
+<script src="config.js?v=20261104"></script>
+<script src="script.js?v=20261104"></script>
+<script src="admin.js?v=20261104"></script>
+<script src="admin-shop.js?v=20261104"></script>
 </body>
 </html>

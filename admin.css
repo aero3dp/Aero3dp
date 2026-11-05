@@ -29,7 +29,7 @@
 .admin-inhalt { max-width: 1320px; margin: 0 auto; padding: 1.5rem var(--rand) 4rem; }
 
 /* Kacheln */
-.kacheln { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1rem; }
+.kacheln { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
 .kachel { padding: 1.1rem 1.2rem; border: 1px solid var(--linie); border-radius: 10px; background: var(--flaeche); }
 .kachel dt { font-size: .84rem; color: var(--text-3); }
 .kachel dd { font-size: 2rem; font-weight: 650; letter-spacing: -.03em; line-height: 1.15; margin-top: .25rem; }
@@ -117,7 +117,6 @@
 .dienste { list-style: none; display: grid; gap: .6rem; font-size: .9rem; color: var(--text-3); }
 
 @media (max-width: 1000px) {
-  .kacheln { grid-template-columns: 1fr 1fr; }
   .raster-2 { grid-template-columns: 1fr; }
   .anfrage-body { grid-template-columns: 1fr; }
 }
@@ -127,4 +126,127 @@
   .leiste-rechts { margin-left: auto; }
   .kachel dd { font-size: 1.6rem; }
   .chart { height: 220px; }
+}
+
+/* ═══ Shop: Hinweise, Bestellungen, Widerrufe, Einstellungen, Ratgeber ═══ */
+.shop-hinweis { display: grid; gap: .4rem; padding: .9rem 1.1rem; margin-bottom: 1rem; border: 1px solid rgba(224,54,47,.45); border-radius: 10px; background: rgba(179,11,11,.08); font-size: .9rem; color: var(--text-2); }
+.shop-hinweis b { color: var(--text); font-weight: 600; }
+.shop-hinweis .textknopf { font-size: .86rem; margin-left: .3rem; color: var(--text); }
+.kachel.ku dl { display: block; }
+.kachel.ku dd { font-size: 2rem; font-weight: 650; letter-spacing: -.03em; line-height: 1.15; margin-top: .25rem; }
+.ku-spur { height: 6px; border-radius: 3px; background: var(--linie); overflow: hidden; margin: .6rem 0 .45rem; }
+.ku-spur i { display: block; height: 100%; background: var(--gruen); border-radius: 3px; }
+.kachel.ku.warn .ku-spur i { background: #e8a33a; }
+.kachel.ku .delta { font-size: .78rem; color: var(--text-3); }
+.suche input { min-height: 34px; padding: .35rem .9rem; border-radius: 999px; border: 1px solid var(--linie-hell); background: var(--karte); font-size: .84rem; width: min(260px, 70vw); }
+.suche input:focus { outline: none; border-color: var(--rot-text); }
+.filter { align-items: center; }
+
+.bestellungen, .widerrufe { display: grid; gap: .6rem; }
+.bestellung { border: 1px solid var(--linie); border-radius: 10px; background: var(--flaeche); overflow: hidden; }
+.bestellung.s-offen, .bestellung.s-bezahlt { border-color: #3a3a3a; }
+.bestellung.s-storniert, .bestellung.s-widerrufen, .bestellung.s-abgeschlossen { opacity: .8; }
+.bestellung-kopf {
+  width: 100%; display: flex; align-items: center; gap: .6rem 1rem; flex-wrap: wrap; padding: .85rem 1.1rem; border: 0; background: none;
+  cursor: pointer; text-align: left; font-size: .9rem; color: var(--text-2);
+}
+.bestellung-kopf:hover { background: rgba(255,255,255,.02); }
+.bestellung-kopf .b-nummer { font-weight: 650; color: var(--text); font-variant-numeric: tabular-nums; }
+.bestellung-kopf .b-name { color: var(--text); margin-right: auto; }
+.bestellung-kopf time { font-size: .8rem; color: var(--text-3); }
+.bestellung-kopf .b-summe { font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; min-width: 6.5rem; text-align: right; }
+.bestellung-kopf::after { content: ''; width: 7px; height: 7px; border-right: 1.5px solid var(--text-3); border-bottom: 1.5px solid var(--text-3); transform: rotate(45deg); transition: transform .2s; }
+.bestellung-kopf[aria-expanded="true"]::after { transform: rotate(-135deg); }
+.status-chip { font-size: .74rem; font-weight: 600; padding: .2rem .6rem; border-radius: 999px; border: 1px solid var(--linie-hell); white-space: nowrap; }
+.status-chip.s-offen { color: #f3d39a; border-color: #5a4210; background: #2a1f08; }
+.status-chip.s-bezahlt { color: #fff; border-color: var(--rot); background: var(--rot); }
+.status-chip.s-in_fertigung { color: #9fd0f3; border-color: #1e4a6a; background: #0e2333; }
+.status-chip.s-versendet { color: #9fe0b5; border-color: rgba(63,178,107,.5); background: rgba(63,178,107,.1); }
+.status-chip.s-abgeschlossen { color: var(--text-2); }
+.status-chip.s-storniert, .status-chip.s-widerrufen { color: var(--text-3); text-decoration: line-through; }
+.marke { font-size: .72rem; padding: .15rem .5rem; border-radius: 4px; }
+.marke.warn { color: #111; background: #e8a33a; font-weight: 600; }
+.warn-text { color: #f0b860; }
+.bestellung-body { padding: 0 1.1rem 1.1rem; display: grid; gap: 1rem; border-top: 1px solid var(--linie); padding-top: 1rem; }
+.schritt-box { padding: 1rem 1.1rem; border-left: 3px solid var(--rot); background: var(--schwarz); border-radius: 0 8px 8px 0; display: grid; gap: .7rem; }
+.schritt-box.warn { border-left-color: #e8a33a; }
+.schritt-box h4 { font-size: .98rem; font-weight: 650; }
+.schritt-box p { font-size: .88rem; color: var(--text-2); max-width: 80ch; }
+.schritt-box b { color: var(--text); }
+.knopf-zeile { display: flex; flex-wrap: wrap; gap: .5rem; }
+.gefahr { color: #f3a39f !important; border-color: rgba(236,74,68,.4) !important; }
+.mail-check { font-size: .84rem; }
+.mail-notiz { min-height: 40px; height: 44px; resize: vertical; background: var(--karte); border: 1px solid var(--linie-hell); border-radius: var(--r); padding: .5rem .7rem; font-size: .86rem; width: 100%; max-width: 640px; }
+.versand-felder { display: grid; grid-template-columns: 11rem minmax(0, 18rem); gap: .8rem; }
+.versand-felder select, .versand-felder input { width: 100%; min-height: 40px; padding: .45rem .7rem; background: var(--karte); border: 1px solid var(--linie-hell); border-radius: var(--r); font-size: .9rem; }
+.hinweis-widerruf { font-size: .86rem; color: #f0b860; }
+.bestellung-raster { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, .8fr) minmax(0, .7fr); gap: 1.25rem; }
+.pos-tabelle { width: 100%; border-collapse: collapse; font-size: .86rem; }
+.pos-tabelle th { text-align: left; font-weight: 500; color: var(--text-3); font-size: .78rem; padding: 0 .4rem .4rem 0; border-bottom: 1px solid var(--linie); }
+.pos-tabelle td { padding: .55rem .4rem .55rem 0; border-bottom: 1px solid var(--linie); vertical-align: top; color: var(--text); }
+.pos-tabelle small { color: var(--text-3); }
+.pos-tabelle code { font-size: .78rem; color: var(--text-2); }
+.pos-tabelle .z { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.pos-tabelle tr.s td { border-bottom: 0; padding: .25rem .4rem .25rem 0; color: var(--text-2); }
+.pos-tabelle tr.g td { font-weight: 650; color: var(--text); font-size: .95rem; padding-top: .5rem; }
+.kunde h4, .verlauf h4 { font-size: .76rem; font-weight: 500; color: var(--text-3); margin: .6rem 0 .2rem; }
+.kunde h4:first-child, .verlauf h4:first-child { margin-top: 0; }
+.kunde p { font-size: .86rem; color: var(--text); }
+.kunde .anmerkung { white-space: pre-wrap; color: #f3d39a; }
+.verlauf dl { display: grid; grid-template-columns: auto 1fr; gap: .25rem .8rem; font-size: .8rem; }
+.verlauf dt { color: var(--text-3); } .verlauf dd { color: var(--text-2); }
+.bestellung-aktionen { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.status-wahl { display: inline-flex; align-items: center; gap: .5rem; margin-left: auto; font-size: .8rem; color: var(--text-3); }
+.status-wahl select { min-height: 34px; border-radius: 999px; border: 1px solid var(--linie-hell); background: var(--karte); padding: .25rem .8rem; font-size: .8rem; }
+.notiz-zeile { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.notiz-zeile textarea { flex: 1 1 260px; min-height: 40px; height: 40px; resize: vertical; background: var(--karte); border: 1px solid var(--linie-hell); border-radius: var(--r); padding: .5rem .7rem; font-size: .86rem; }
+.widerruf-eintrag .frist { font-size: .88rem; margin-bottom: .4rem; }
+
+/* Einstellungen: Shop */
+.shop-karte h3 { font-size: .9rem; font-weight: 600; margin-top: .6rem; color: var(--text); }
+.shop-status { font-size: .78rem; font-weight: 600; padding: .2rem .7rem; border-radius: 999px; }
+.shop-status.an { color: #9fe0b5; background: rgba(63,178,107,.12); border: 1px solid rgba(63,178,107,.45); }
+.shop-status.aus { color: var(--text-2); border: 1px solid var(--linie-hell); }
+.shop-check { list-style: none; display: grid; gap: .45rem; margin-bottom: 1rem; font-size: .86rem; color: var(--text-2); }
+.shop-check li { position: relative; padding-left: 1.6rem; }
+.shop-check li::before { position: absolute; left: 0; top: .05rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; display: grid; place-items: center; font-size: .7rem; font-weight: 700; }
+.shop-check li.ja::before { content: '✓'; background: rgba(63,178,107,.18); color: #9fe0b5; }
+.shop-check li.nein::before { content: '!'; background: rgba(224,54,47,.2); color: #f3a39f; }
+.shop-check li.offen::before { content: '·'; background: var(--karte-hell); color: var(--text-2); }
+.shop-check b { color: var(--text); font-weight: 600; }
+.schalter-zeile { display: flex; gap: .8rem; align-items: flex-start; padding: .9rem 1rem; margin-bottom: 1.1rem; border: 1px solid var(--linie-hell); border-radius: 8px; background: var(--schwarz); cursor: pointer; }
+.schalter-zeile input { width: 20px; height: 20px; accent-color: var(--gruen); margin-top: .1rem; flex-shrink: 0; }
+.schalter-zeile span { display: grid; gap: .15rem; font-size: .9rem; }
+.schalter-zeile small { font-size: .8rem; color: var(--text-3); }
+.schalter-zeile:has(input:disabled) { opacity: .6; cursor: not-allowed; }
+.feld-reihe.drei { grid-template-columns: repeat(3, 1fr); }
+.feld-tipp { font-size: .76rem; color: var(--text-3); }
+.feld-tipp.warn { color: #f0b860; }
+.optional { color: var(--text-3); font-weight: 400; }
+.rabatt-tabelle { width: 100%; border-collapse: collapse; font-size: .86rem; margin-bottom: 1rem; }
+.rabatt-tabelle th { text-align: left; color: var(--text-3); font-weight: 500; font-size: .78rem; padding: 0 .5rem .4rem 0; border-bottom: 1px solid var(--linie); }
+.rabatt-tabelle td { padding: .5rem .5rem .5rem 0; border-bottom: 1px solid var(--linie); vertical-align: top; }
+.rabatt-tabelle small { color: var(--text-3); }
+.rabatt-tabelle input { width: 18px; height: 18px; accent-color: var(--gruen); }
+.rabatt-neu { display: grid; grid-template-columns: 1.4fr .7fr 1fr auto; gap: .6rem; align-items: end; }
+.rabatt-neu input { min-height: 40px; }
+
+/* Ratgeber */
+.ratgeber { max-width: 860px; display: grid; gap: .5rem; }
+.ratgeber-teil { border: 1px solid var(--linie); border-radius: 10px; background: var(--flaeche); }
+.ratgeber-teil summary { cursor: pointer; list-style: none; padding: 1rem 1.2rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.ratgeber-teil summary::-webkit-details-marker { display: none; }
+.ratgeber-teil summary::after { content: '+'; font-weight: 400; color: var(--text-3); font-size: 1.2rem; }
+.ratgeber-teil[open] summary::after { content: '−'; }
+.ratgeber-inhalt { padding: 0 1.2rem 1.1rem; }
+.ratgeber-inhalt ol, .ratgeber-inhalt ul { display: grid; gap: .6rem; padding-left: 1.3rem; font-size: .9rem; color: var(--text-2); line-height: 1.6; }
+.ratgeber-inhalt b { color: var(--text); font-weight: 600; }
+
+@media (max-width: 1000px) {
+  .bestellung-raster { grid-template-columns: 1fr; }
+  .status-wahl { margin-left: 0; }
+}
+@media (max-width: 700px) {
+  .versand-felder, .feld-reihe.drei, .rabatt-neu { grid-template-columns: 1fr; }
+  .bestellung-kopf .b-summe { min-width: 0; }
 }

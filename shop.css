@@ -1,0 +1,250 @@
+/* ═══ Aero3dp – Kasse, Widerruf, Designservice ═══ */
+
+/* Gemeinsame Formular-Ergänzungen */
+.optional { color: var(--text-3); font-weight: 400; }
+.feld-tipp { font-size: .78rem; color: var(--text-3); line-height: 1.45; }
+.feld-fehler { font-size: .8rem; color: #f3a39f; line-height: 1.4; }
+.feld [aria-invalid="true"] { border-color: #e0605a; }
+.feld-check [aria-invalid="true"] { outline: 2px solid #e0605a; outline-offset: 2px; }
+.hinweis-box { font-size: .88rem; color: var(--text-2); padding: .8rem 1rem; border-left: 3px solid var(--rot); background: var(--graphit); }
+
+/* ─── Kasse ─── */
+.kasse-kopf { padding-bottom: 1.5rem; }
+.kasse-kopf h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+.kasse-schritte { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; margin-top: .6rem; counter-reset: k; font-size: .86rem; color: var(--text-3); }
+.kasse-schritte li { counter-increment: k; display: inline-flex; align-items: center; gap: .55rem; }
+.kasse-schritte li::before {
+  content: counter(k); width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--linie-hell);
+  display: grid; place-items: center; font-size: .75rem; font-weight: 600; color: var(--text-3);
+}
+.kasse-schritte li[aria-current="step"] { color: var(--text); }
+.kasse-schritte li[aria-current="step"]::before { background: var(--text); border-color: var(--text); color: var(--schwarz); }
+.kasse-schritte li.erledigt { color: var(--text-2); }
+.kasse-schritte li.erledigt::before { content: '✓'; border-color: var(--gruen); color: var(--gruen); }
+
+.kasse {
+  max-width: calc(var(--max) + 2 * var(--rand)); margin: 0 auto; padding: 0 var(--rand) 5rem;
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start;
+}
+.kasse-zustand, .kasse-fertig, .kasse-noscript { grid-column: 1 / -1; }
+.kasse-form { gap: 0; }
+.kasse-schritt { display: grid; gap: 1rem; }
+.kasse-schritt:focus { outline: none; }
+.kasse-schritt h2 { font-size: 1.15rem; font-weight: 650; letter-spacing: -.015em; margin-top: 1.2rem; }
+.kasse-schritt h2:first-child { margin-top: 0; }
+.plz-ort { grid-template-columns: 9rem 1fr; }
+.land { min-height: 48px; display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem .8rem; padding: .75rem 0; color: var(--text); }
+.land small { font-size: .8rem; color: var(--text-3); }
+.lieferadresse { display: grid; gap: 1rem; padding: 1.1rem; border: 1px solid var(--linie); border-radius: 8px; background: var(--graphit); }
+.lieferadresse legend { padding: 0 .4rem; font-size: .84rem; font-weight: 500; color: var(--text-2); }
+.kasse-schritt .btn-block { margin-top: .6rem; }
+
+/* Übersicht rechts */
+.kasse-uebersicht {
+  position: sticky; top: calc(var(--nav-h) + 1rem); padding: 1.25rem; border: 1px solid var(--linie); border-radius: 10px;
+  background: var(--graphit); transition: opacity .2s;
+}
+.kasse-uebersicht.laedt { opacity: .6; }
+.uebersicht-schalter {
+  width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0 0 .9rem; margin-bottom: .2rem;
+  background: none; border: 0; border-bottom: 1px solid var(--linie); font-size: 1.02rem; font-weight: 600; cursor: default; text-align: left;
+}
+.uebersicht-schalter b { font-variant-numeric: tabular-nums; }
+.kasse-positionen { list-style: none; display: grid; }
+.kasse-positionen li { display: grid; grid-template-columns: auto 1fr auto; gap: .8rem; padding: .9rem 0; border-bottom: 1px solid var(--linie); align-items: start; }
+.pos-farben { display: grid; gap: 3px; width: 26px; padding-top: .25rem; }
+.pos-farben i { display: block; height: 8px; border-radius: 2px; background: var(--c); box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+.pos-text { display: grid; gap: .15rem; min-width: 0; }
+.pos-text b { font-size: .92rem; font-weight: 550; }
+.pos-text span { font-size: .78rem; color: var(--text-3); line-height: 1.45; }
+.pos-zeile { display: flex; align-items: center; gap: .8rem; margin-top: .4rem; }
+.pos-menge { font-size: .8rem; color: var(--text-2); }
+.pos-preis { font-size: .92rem; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.kasse-positionen li:not(:has(.pos-farben)) { grid-template-columns: 1fr auto; }
+
+.rabatt { display: grid; gap: .4rem; padding: 1rem 0; border-bottom: 1px solid var(--linie); }
+.rabatt label { font-size: .8rem; color: var(--text-3); }
+.rabatt-zeile { display: flex; gap: .5rem; }
+.rabatt-zeile input {
+  flex: 1; min-width: 0; min-height: 40px; padding: .5rem .8rem; background: var(--karte); border: 1px solid var(--linie-hell); border-radius: var(--r);
+  font-size: .9rem; text-transform: uppercase;
+}
+.rabatt-zeile input:focus { outline: none; border-color: var(--rot-text); }
+.rabatt-zeile input::placeholder { text-transform: none; color: #6f6f6f; }
+.rabatt-status { font-size: .8rem; }
+.rabatt-status.ok { color: #9fe0b5; } .rabatt-status.fehler { color: #f3a39f; }
+
+.kasse-summen { display: grid; gap: .4rem; padding: 1rem 0 .4rem; font-size: .9rem; }
+.kasse-summen div { display: flex; justify-content: space-between; gap: 1rem; color: var(--text-2); }
+.kasse-summen dd { color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.kasse-summen .rabatt-zeile-summe dd { color: #9fe0b5; }
+.kasse-summen .gesamt { margin-top: .35rem; padding-top: .65rem; border-top: 1px solid var(--linie); font-size: 1.1rem; font-weight: 650; color: var(--text); }
+.kasse-summen .gesamt.gross { font-size: 1.35rem; }
+.versand-hinweis { font-size: .8rem; color: var(--text-2); padding: .3rem 0 .2rem; }
+.versand-hinweis b { color: var(--text); font-weight: 600; }
+.kasse-hinweis-klein, .pruef-klein { font-size: .76rem; color: var(--text-3); line-height: 1.55; margin-top: .6rem; }
+
+/* Schritt 2: Prüfen */
+.pruef-raster { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.pruef-block { position: relative; padding: 1rem 1.1rem; border: 1px solid var(--linie); border-radius: 8px; background: var(--graphit); font-size: .88rem; color: var(--text-2); }
+.pruef-block.breit { grid-column: 1 / -1; }
+.pruef-block h3 { font-size: .78rem; font-weight: 500; color: var(--text-3); margin-bottom: .35rem; }
+.pruef-block b { color: var(--text); font-weight: 600; }
+.pruef-block .textknopf { position: absolute; top: .8rem; right: 1rem; font-size: .8rem; }
+.pruef-bestellung { padding: 1.1rem 1.2rem; border: 1px solid var(--linie-hell); border-radius: 10px; }
+.pruef-bestellung h3 { font-size: 1rem; font-weight: 600; margin-bottom: .3rem; }
+.pruef-positionen { list-style: none; display: grid; }
+.pruef-positionen li { display: flex; justify-content: space-between; gap: 1rem; padding: .75rem 0; border-bottom: 1px solid var(--linie); font-size: .9rem; }
+.pruef-positionen li > div { display: grid; gap: .15rem; }
+.pruef-positionen span { font-size: .8rem; color: var(--text-3); }
+.pruef-positionen .pos-code { font-variant-numeric: tabular-nums; }
+.pruef-positionen li > b { white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 600; }
+.agb-check { font-size: .9rem; color: var(--text-2); margin-top: .4rem; }
+.bestellknopf { min-height: 56px; font-size: 1.02rem; font-weight: 600; }
+#zurueckAdresse { justify-self: start; }
+
+/* Leer / pausiert */
+.kasse-leer, .kasse-pause { max-width: 640px; display: grid; gap: 1rem; padding: 1rem 0 2rem; color: var(--text-2); }
+.kasse-leer h2, .kasse-pause h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 700; letter-spacing: -.02em; color: var(--text); }
+.pause-liste { list-style: none; display: grid; gap: .6rem; padding: 1rem; border: 1px solid var(--linie); border-radius: 8px; background: var(--graphit); }
+.pause-liste li { display: grid; gap: .15rem; font-size: .9rem; }
+.pause-liste span { font-size: .8rem; color: var(--text-3); }
+.pause-summe { font-size: .9rem; }
+
+/* Fertig: Überweisung + GiroCode */
+.kasse-fertig { display: grid; gap: 1.75rem; max-width: 980px; }
+.kasse-fertig:focus { outline: none; }
+.fertig-kopf h2 { font-size: clamp(1.6rem, 3.6vw, 2.5rem); font-weight: 750; letter-spacing: -.03em; line-height: 1.1; max-width: 22ch; margin-bottom: .8rem; }
+.fertig-kopf p:not(.kicker) { color: var(--text-2); max-width: 60ch; }
+.fertig-kopf b { color: var(--text); font-weight: 600; }
+.fertig-zahlung { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(220px, .7fr); gap: 1.5rem; align-items: start; }
+.ueberweisung { display: grid; border: 1px solid var(--linie-hell); border-radius: 10px; overflow: hidden; }
+.ueberweisung div { display: grid; grid-template-columns: 11rem 1fr; gap: 1rem; padding: .8rem 1.1rem; border-bottom: 1px solid var(--linie); align-items: center; }
+.ueberweisung div:last-child { border-bottom: 0; }
+.ueberweisung dt { font-size: .82rem; color: var(--text-3); }
+.ueberweisung dd { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; font-size: .98rem; overflow-wrap: anywhere; }
+.ueberweisung .betrag { font-size: 1.25rem; font-weight: 700; }
+.ueberweisung .iban { font-variant-numeric: tabular-nums; letter-spacing: .03em; }
+.kopieren { flex-shrink: 0; border: 1px solid var(--linie-hell); background: none; border-radius: 999px; padding: .25rem .7rem; font-size: .75rem; color: var(--text-2); cursor: pointer; }
+.kopieren:hover { color: var(--text); border-color: var(--text-2); }
+.kopieren.ok { color: #9fe0b5; border-color: rgba(63,178,107,.5); }
+.girocode { display: grid; gap: .7rem; justify-items: center; text-align: center; padding: 1rem; border: 1px solid var(--linie); border-radius: 10px; background: var(--graphit); }
+.girocode-bild { width: min(220px, 100%); aspect-ratio: 1; background: #fff; border-radius: 6px; padding: 4px; }
+.girocode-bild svg { width: 100%; height: 100%; }
+.girocode figcaption { font-size: .78rem; color: var(--text-3); line-height: 1.45; max-width: 26ch; }
+.fertig-ablauf { list-style: none; counter-reset: f; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--linie); border: 1px solid var(--linie); border-radius: 10px; overflow: hidden; }
+.fertig-ablauf li { counter-increment: f; background: var(--schwarz); padding: 1.1rem 1.2rem; display: grid; gap: .3rem; font-size: .86rem; color: var(--text-3); }
+.fertig-ablauf li::before { content: counter(f); font-size: .78rem; font-weight: 600; color: var(--rot-text); }
+.fertig-ablauf b { color: var(--text); font-size: .98rem; font-weight: 600; }
+.fertig-klein { font-size: .85rem; color: var(--text-3); }
+
+/* ─── Widerruf ─── */
+.widerruf { max-width: calc(var(--max) + 2 * var(--rand)); margin: 0 auto; padding: 0 var(--rand) 3.5rem; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+.widerruf-karte { padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--rot-text); border-radius: 12px; background: linear-gradient(180deg, rgba(179,11,11,.08), transparent 40%), var(--graphit); }
+.widerruf-karte h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 750; letter-spacing: -.025em; margin-bottom: .6rem; }
+.widerruf-text { color: var(--text-2); font-size: .95rem; margin-bottom: 1.4rem; max-width: 56ch; }
+.umfang { border: 0; display: grid; gap: .5rem; }
+.umfang legend { font-size: .84rem; font-weight: 500; color: var(--text-2); margin-bottom: .4rem; }
+.wahl-zeile { display: flex; gap: .65rem; align-items: center; font-size: .92rem; cursor: pointer; }
+.wahl-zeile input { width: 18px; height: 18px; accent-color: var(--rot); }
+.widerruf-klein { font-size: .78rem; color: var(--text-3); line-height: 1.5; }
+.widerruf-fertig { display: grid; gap: .9rem; }
+.widerruf-fertig:focus { outline: none; }
+.widerruf-fertig h3 { font-size: 1.4rem; font-weight: 700; letter-spacing: -.02em; }
+.widerruf-fertig .eingang { font-size: 1rem; color: var(--text-2); }
+.widerruf-fertig .eingang b { color: var(--text); }
+.widerruf-daten { display: grid; gap: .1rem; border: 1px solid var(--linie); border-radius: 8px; overflow: hidden; }
+.widerruf-daten div { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; padding: .55rem .9rem; border-bottom: 1px solid var(--linie); font-size: .88rem; }
+.widerruf-daten div:last-child { border-bottom: 0; }
+.widerruf-daten dt { color: var(--text-3); }
+.widerruf-daten dd { overflow-wrap: anywhere; }
+.widerruf-fertig .btn { justify-self: start; }
+.widerruf-info { display: grid; gap: .5rem; font-size: .9rem; color: var(--text-2); padding-top: .5rem; }
+.widerruf-info h3 { font-size: .98rem; font-weight: 600; color: var(--text); margin-top: .9rem; }
+.widerruf-info h3:first-child { margin-top: 0; }
+.legal h3 { font-size: .98rem; font-weight: 600; margin: 1.4rem 0 .4rem; color: var(--text); }
+.formular-zeilen li { margin-bottom: .2rem; }
+
+/* ─── Designservice ─── */
+.design-kopf-raster { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: center; }
+.designkopf .hero-btns { margin-top: 1.6rem; }
+.leistungen { max-width: var(--max); margin: 0 auto; list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--linie); border: 1px solid var(--linie); }
+.leistungen li { background: var(--schwarz); padding: 1.6rem 1.5rem; }
+.leistungen h3 { font-size: 1.12rem; font-weight: 650; margin-bottom: .55rem; }
+.leistungen p { font-size: .9rem; color: var(--text-3); }
+.ablauf { max-width: var(--max); margin: 0 auto; list-style: none; counter-reset: a; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.ablauf li { counter-increment: a; position: relative; padding-top: 3.1rem; }
+.ablauf li::before {
+  content: counter(a); position: absolute; top: 0; left: 0; width: 2.3rem; height: 2.3rem; border-radius: 50%;
+  border: 1px solid var(--linie-hell); display: grid; place-items: center; font-size: .86rem; font-weight: 600; background: var(--graphit);
+}
+.ablauf li:not(:last-child)::after { content: ''; position: absolute; top: 1.15rem; left: 2.9rem; right: -1rem; height: 1px; background: var(--linie-hell); }
+.ablauf h3 { font-size: 1rem; font-weight: 650; margin-bottom: .4rem; }
+.ablauf p { font-size: .88rem; color: var(--text-3); }
+.anfrage-raster { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.anfrage-tipps { position: sticky; top: calc(var(--nav-h) + 1.5rem); }
+.anfrage-tipps p { color: var(--text-2); margin: 1rem 0 1.2rem; max-width: 44ch; }
+.tipp-liste { list-style: none; display: grid; gap: .8rem; }
+.tipp-liste li { position: relative; padding-left: 1.5rem; font-size: .9rem; color: var(--text-2); }
+.tipp-liste li::before { content: ''; position: absolute; left: 0; top: .55rem; width: 8px; height: 8px; border-radius: 2px; background: var(--rot); }
+.design-form fieldset { border: 0; }
+.wahl-raster { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.wahl-karte { position: relative; cursor: pointer; }
+.wahl-karte input { position: absolute; opacity: 0; }
+.wahl-karte span { display: grid; gap: .2rem; height: 100%; padding: .85rem 1rem; border: 1px solid var(--linie-hell); border-radius: 8px; background: var(--karte); transition: border-color .2s, background .2s; }
+.wahl-karte b { font-weight: 600; font-size: .92rem; }
+.wahl-karte small { font-size: .78rem; color: var(--text-3); }
+.wahl-karte input:checked + span { border-color: var(--rot-text); background: rgba(179,11,11,.1); }
+.wahl-karte input:focus-visible + span { outline: 2px solid var(--rot-text); outline-offset: 2px; }
+.datei-zone {
+  display: grid; justify-items: center; gap: .3rem; padding: 1.4rem 1rem; text-align: center; cursor: pointer;
+  border: 1.5px dashed var(--linie-hell); border-radius: 10px; background: var(--karte); transition: border-color .2s, background .2s;
+}
+.datei-zone:hover, .datei-zone.drag { border-color: var(--rot-text); background: var(--karte-hell); }
+.datei-zone svg { width: 40px; height: 40px; stroke: var(--text-2); fill: none; stroke-width: 1.6; }
+.datei-zone b { font-weight: 600; font-size: .95rem; }
+.datei-zone span { font-size: .8rem; color: var(--text-3); }
+.datei-liste { list-style: none; display: grid; gap: .5rem; margin-top: .3rem; }
+.datei-liste:empty { display: none; }
+.datei-liste li { display: grid; grid-template-columns: 44px 1fr auto; gap: .8rem; align-items: center; padding: .45rem .6rem; border: 1px solid var(--linie); border-radius: 8px; background: var(--graphit); }
+.datei-liste img, .datei-typ { width: 44px; height: 44px; border-radius: 5px; object-fit: cover; }
+.datei-typ { display: grid; place-items: center; background: var(--karte-hell); font-size: .66rem; font-weight: 650; color: var(--text-2); }
+.datei-name { display: grid; font-size: .86rem; overflow-wrap: anywhere; }
+.datei-name small { font-size: .74rem; color: var(--text-3); }
+.design-form .fortschritt { height: 4px; border-radius: 2px; background: var(--linie); overflow: hidden; }
+.design-form .fortschritt i { display: block; height: 100%; width: 0; background: var(--rot); transition: width .3s; }
+.druck-design-link { margin-top: .8rem; font-size: .95rem; color: var(--text-2); }
+
+/* ─── Responsiv ─── */
+@media (max-width: 960px) {
+  .kasse { grid-template-columns: 1fr; }
+  .kasse-uebersicht { position: static; order: -1; padding: 1rem 1.1rem; }
+  .uebersicht-schalter { cursor: pointer; padding-bottom: 0; border-bottom: 0; }
+  .uebersicht-schalter::after { content: ''; width: 8px; height: 8px; border-right: 1.5px solid var(--text-2); border-bottom: 1.5px solid var(--text-2); transform: rotate(45deg); margin-left: .6rem; transition: transform .2s; }
+  .uebersicht-schalter[aria-expanded="true"] { padding-bottom: .9rem; border-bottom: 1px solid var(--linie); }
+  .uebersicht-schalter[aria-expanded="true"]::after { transform: rotate(-135deg); }
+  .uebersicht-schalter span { margin-right: auto; }
+  .widerruf, .design-kopf-raster, .anfrage-raster { grid-template-columns: 1fr; }
+  .anfrage-tipps { position: static; }
+  .leistungen { grid-template-columns: 1fr; }
+  .ablauf { grid-template-columns: 1fr 1fr; }
+  .ablauf li::after { display: none; }
+  .fertig-zahlung { grid-template-columns: 1fr; }
+  .girocode { justify-self: start; }
+}
+@media (max-width: 640px) {
+  .pruef-raster { grid-template-columns: 1fr; }
+  .plz-ort { grid-template-columns: 7.5rem 1fr; }
+  .ueberweisung div { grid-template-columns: 1fr; gap: .2rem; }
+  .fertig-ablauf { grid-template-columns: 1fr; }
+  .ablauf { grid-template-columns: 1fr; }
+  .wahl-raster { grid-template-columns: 1fr; }
+  .widerruf-daten div { grid-template-columns: 1fr; gap: .1rem; }
+}
+@media print {
+  #nav, footer, .altimeter, #backToTop, .kasse-kopf .zurueck, .hero-btns, .kopieren, .korb { display: none !important; }
+  body { background: #fff; color: #000; }
+  .kasse-fertig, .widerruf-fertig { color: #000; }
+  .ueberweisung, .girocode, .fertig-ablauf li { background: #fff; border-color: #999; color: #000; }
+  .ueberweisung dt, .fertig-ablauf li, .fertig-klein { color: #333; }
+}

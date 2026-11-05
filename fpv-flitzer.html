@@ -15,20 +15,20 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin>
   <script>document.documentElement.classList.add('js')</script>
-  <link rel="stylesheet" href="styles.css?v=20261025">
-  <link rel="stylesheet" href="konfigurator.css?v=20261025">
+  <link rel="stylesheet" href="styles.css?v=20261104">
+  <link rel="stylesheet" href="konfigurator.css?v=20261104">
   <meta property="og:type" content="product">
   <meta property="og:site_name" content="Aero3dp">
   <meta property="og:locale" content="de_DE">
   <meta property="og:title" content="FPV Flitzer – Racing-Delta für FPV | Aero3dp">
   <meta property="og:description" content="FPV Flitzer: 3D-gedruckter Racing-Delta mit 360 mm Spannweite, bis 70 km/h. Farben und Antriebsset konfigurieren.">
   <meta property="og:url" content="https://aero3dp.de/fpv-flitzer.html">
-  <meta property="og:image" content="https://aero3dp.de/bilder/og-aero3dp.jpg?v=20261025">
+  <meta property="og:image" content="https://aero3dp.de/bilder/og-aero3dp.jpg?v=20261104">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Aero3dp Logo">
   <meta name="twitter:card" content="summary_large_image">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"FPV Flitzer","description":"FPV Flitzer: 3D-gedruckter Racing-Delta mit 360 mm Spannweite, bis 70 km/h. Farben und Antriebsset konfigurieren.","image":["https://aero3dp.de/bilder/fpv-flitzer.webp"],"brand":{"@type":"Brand","name":"Aero3dp"},"category":"RC-Flugmodell","sku":"FLZ","offers":{"@type":"Offer","priceCurrency":"EUR","price":"19.90","availability":"https://schema.org/InStock","url":"https://aero3dp.de/fpv-flitzer.html","itemCondition":"https://schema.org/NewCondition"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"FPV Flitzer","description":"FPV Flitzer: 3D-gedruckter Racing-Delta mit 360 mm Spannweite, bis 70 km/h. Farben und Antriebsset konfigurieren.","image":["https://aero3dp.de/bilder/fpv-flitzer.webp"],"brand":{"@type":"Brand","name":"Aero3dp"},"category":"RC-Flugmodell","sku":"FLZ","offers":{"@type":"Offer","priceCurrency":"EUR","price":"19.90","availability":"https://schema.org/MadeToOrder","url":"https://aero3dp.de/fpv-flitzer.html","itemCondition":"https://schema.org/NewCondition","shippingDetails":{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"6.90","currency":"EUR"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"DE"}},"hasMerchantReturnPolicy":{"@type":"MerchantReturnPolicy","applicableCountry":"DE","returnPolicyCategory":"https://schema.org/MerchantReturnFiniteReturnWindow","merchantReturnDays":14,"returnMethod":"https://schema.org/ReturnByMail","returnFees":"https://schema.org/ReturnShippingFees"}}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Start","item":"https://aero3dp.de/"},{"@type":"ListItem","position":2,"name":"Modelle","item":"https://aero3dp.de/#produkte"},{"@type":"ListItem","position":3,"name":"FPV Flitzer","item":"https://aero3dp.de/fpv-flitzer.html"}]}</script>
 </head>
 <body>
@@ -36,15 +36,19 @@
 <div class="altimeter" aria-hidden="true"><div class="altimeter-fill" id="altimeterFill"></div></div>
 <button id="backToTop" type="button" aria-label="Nach oben scrollen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 <nav id="nav" class="solid" aria-label="Hauptnavigation">
-  <a href="index.html" class="logo" aria-label="Aero3dp Startseite"><img src="bilder/logo-hell.webp" alt="Aero3dp" width="640" height="278"></a>
+  <a href="index.html" class="logo" aria-label="Aero3dp Startseite"><img src="bilder/logo-hell-200.webp" srcset="bilder/logo-hell-200.webp 200w, bilder/logo-hell.webp 640w" sizes="100px" alt="Aero3dp" width="640" height="278"></a>
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html#produkte" aria-current="page">Modelle</a></li>
-    <li><a href="druckservice.html">3D-Druckservice</a></li>
+    <li><a href="druckservice.html">3D-Druck</a></li>
+    <li><a href="designservice.html">3D-Design</a></li>
     <li><a href="index.html#ueber-uns">Über uns</a></li>
     <li><a href="index.html#faq">FAQ</a></li>
     <li><a href="index.html#kontakt" class="btn">Kontakt</a></li>
   </ul>
-  <button class="burger" id="burger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+  <div class="nav-aktionen">
+    <button class="korb-knopf" id="korbKnopf" type="button" aria-label="Warenkorb öffnen" aria-haspopup="dialog" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 4h2.4l2.2 10.6a1.6 1.6 0 0 0 1.6 1.3h8.7a1.6 1.6 0 0 0 1.6-1.2L21 8H5.9"/><circle cx="9.6" cy="19.6" r="1.4"/><circle cx="17.2" cy="19.6" r="1.4"/></svg><span class="korb-zahl" hidden>0</span></button>
+    <button class="burger" id="burger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+  </div>
 </nav>
 
 <main id="inhalt">
@@ -129,13 +133,17 @@
         <div class="code-zeile"><span>Konfigurations-Code</span><code id="konfigCode">–</code></div>
         <dl class="aufstellung" id="aufstellung"></dl>
         <div class="summe"><span>Gesamt</span><output id="summe" aria-live="polite">–</output></div>
-        <p class="klein">Endpreis, zzgl. Versand. <span id="lieferzeit"></span></p>
+        <p class="klein preis-info">Endpreis, gemäß § 19 UStG ohne Umsatzsteuer, zzgl. <a class="textlink" href="versand.html">Versandkosten</a>.<br>
+          Lieferzeit: <span data-lieferzeit>6 Werktage</span> nach Zahlungseingang.</p>
         <div class="aktionen">
+          <button type="button" class="btn magnet" id="inWarenkorb" hidden>In den Warenkorb</button>
           <button type="button" class="btn magnet" id="anfrageOeffnen" aria-expanded="false" aria-controls="konfigForm">Anfrage senden</button>
           <button type="button" class="btn btn-ghost" id="teilen">Konfiguration teilen</button>
         </div>
+        <p class="klein lack-shop-hinweis" id="lackShopHinweis" hidden>Mit personalisierter Lackierung machen wir dir ein persönliches Angebot. Schick uns dazu einfach die Anfrage – oder nimm die Lackierung heraus, dann kannst du direkt bestellen.</p>
+        <button type="button" class="textknopf anfrage-statt" id="anfrageStattdessen" aria-expanded="false" aria-controls="konfigForm" hidden>Frage oder Sonderwunsch? Anfrage senden</button>
         <form class="formular konfig-form" id="konfigForm" hidden>
-          <p class="klein">Wir prüfen deine Konfiguration und schicken dir eine Bestätigung mit allen Details zur Bezahlung. Das ist noch keine verbindliche Bestellung.</p>
+          <p class="klein">Schick uns deine Konfiguration mit deiner Frage oder deinem Wunsch. Wir melden uns per E-Mail – das ist noch keine Bestellung.</p>
           <div class="feld-reihe">
             <div class="feld"><label for="kf-name">Name</label><input id="kf-name" name="name" autocomplete="name" required maxlength="120"></div>
             <div class="feld"><label for="kf-email">E-Mail</label><input id="kf-email" name="email" type="email" autocomplete="email" required maxlength="200"></div>
@@ -193,8 +201,8 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <a href="index.html" class="logo" aria-label="Aero3dp Startseite"><img src="bilder/logo-hell.webp" alt="Aero3dp" width="640" height="278" loading="lazy"></a>
-      <p>3D-gedruckte RC-Flugmodelle und Zubehör. Ein schülergeführtes Startup aus Neuss, gegründet 2025.</p>
+      <a href="index.html" class="logo" aria-label="Aero3dp Startseite"><img src="bilder/logo-hell-200.webp" srcset="bilder/logo-hell-200.webp 200w, bilder/logo-hell.webp 640w" sizes="100px" alt="Aero3dp" width="640" height="278" loading="lazy"></a>
+      <p>3D-gedruckte RC-Flugmodelle, Zubehör, Druck- und Designservice. Ein schülergeführtes Startup aus Neuss, gegründet 2025.</p>
     </div>
     <div>
       <h2>Modelle</h2>
@@ -209,19 +217,22 @@
       <h2>Service</h2>
       <ul>
         <li><a href="druckservice.html">3D-Druckservice</a></li>
+        <li><a href="designservice.html">3D-Designservice</a></li>
+        <li><a href="versand.html">Versand &amp; Zahlung</a></li>
         <li><a href="index.html#faq">Häufige Fragen</a></li>
-        <li><a href="index.html#links">Nützliche Links</a></li>
         <li><a href="index.html#kontakt">Kontakt</a></li>
+        <li><a href="https://instagram.com/aero3dp" rel="noopener" target="_blank">Instagram</a></li>
       </ul>
     </div>
     <div>
       <h2>Rechtliches</h2>
       <ul>
+        <li><a class="widerruf-knopf" href="widerruf.html#widerrufen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>Vertrag widerrufen</a></li>
         <li><a href="impressum.html">Impressum</a></li>
         <li><a href="agbs.html">AGB</a></li>
+        <li><a href="widerruf.html#belehrung">Widerrufsbelehrung</a></li>
         <li><a href="datenschutz.html">Datenschutz</a></li>
         <li><a href="sicherheit.html">Produktsicherheit</a></li>
-        <li><a href="https://instagram.com/aero3dp" rel="noopener" target="_blank">Instagram</a></li>
       </ul>
     </div>
   </div>
@@ -231,10 +242,12 @@
   </div>
 </footer>
 
-<script>window.PRODUKT = {"name": "FPV Flitzer", "code": "FLZ", "slug": "fpv-flitzer", "preis": 19.9, "preisSet": 66.9, "materialWahl": false, "lwAufpreis": 10, "teile": [{"id": "fluegel", "name": "Flügel"}, {"id": "winglets", "name": "Winglets"}, {"id": "rumpf", "name": "Rumpf"}], "presets": [{"name": "Werksfarben", "farben": {"fluegel": "orange", "winglets": "schwarz", "rumpf": "orange"}}, {"name": "Gut sichtbar", "farben": {"fluegel": "gelb", "winglets": "schwarz", "rumpf": "gelb"}}, {"name": "Stealth", "farben": {"fluegel": "schwarz", "winglets": "grau", "rumpf": "schwarz"}}, {"name": "Klassik", "farben": {"fluegel": "weiss", "winglets": "rot", "rumpf": "weiss"}}], "farben": [{"id": "weiss", "name": "Weiß", "hex": "#ecebe6", "kz": "WE"}, {"id": "silber", "name": "Silber", "hex": "#a7acb2", "kz": "SI"}, {"id": "grau", "name": "Grau", "hex": "#5c6067", "kz": "GR"}, {"id": "schwarz", "name": "Schwarz", "hex": "#1e1f21", "kz": "SW"}, {"id": "rot", "name": "Aero-Rot", "hex": "#c4191c", "kz": "RO"}, {"id": "orange", "name": "Orange", "hex": "#ec6a1f", "kz": "OR"}, {"id": "gelb", "name": "Gelb", "hex": "#f0c02d", "kz": "GE"}, {"id": "blau", "name": "Blau", "hex": "#1f5fae", "kz": "BL"}, {"id": "gruen", "name": "Grün", "hex": "#2e9a56", "kz": "GN"}]};</script>
-<script src="config.js?v=20261025"></script>
-<script src="backend.js?v=20261025"></script>
-<script src="script.js?v=20261025"></script>
-<script src="konfigurator.js?v=20261025"></script>
+<script>window.PRODUKT = {"name": "FPV Flitzer", "code": "FLZ", "slug": "fpv-flitzer", "preis": 19.9, "preisSet": 66.9, "materialWahl": false, "lwAufpreis": 0, "teile": [{"id": "fluegel", "name": "Flügel"}, {"id": "winglets", "name": "Winglets"}, {"id": "rumpf", "name": "Rumpf"}], "presets": [{"name": "Werksfarben", "farben": {"fluegel": "orange", "winglets": "schwarz", "rumpf": "orange"}}, {"name": "Gut sichtbar", "farben": {"fluegel": "gelb", "winglets": "schwarz", "rumpf": "gelb"}}, {"name": "Stealth", "farben": {"fluegel": "schwarz", "winglets": "grau", "rumpf": "schwarz"}}, {"name": "Klassik", "farben": {"fluegel": "weiss", "winglets": "rot", "rumpf": "weiss"}}], "farben": [{"id": "weiss", "name": "Weiß", "hex": "#ecebe6", "kz": "WE"}, {"id": "silber", "name": "Silber", "hex": "#a7acb2", "kz": "SI"}, {"id": "grau", "name": "Grau", "hex": "#5c6067", "kz": "GR"}, {"id": "schwarz", "name": "Schwarz", "hex": "#1e1f21", "kz": "SW"}, {"id": "rot", "name": "Aero-Rot", "hex": "#c4191c", "kz": "RO"}, {"id": "orange", "name": "Orange", "hex": "#ec6a1f", "kz": "OR"}, {"id": "gelb", "name": "Gelb", "hex": "#f0c02d", "kz": "GE"}, {"id": "blau", "name": "Blau", "hex": "#1f5fae", "kz": "BL"}, {"id": "gruen", "name": "Grün", "hex": "#2e9a56", "kz": "GN"}]};</script>
+<script src="config.js?v=20261104"></script>
+<script src="backend.js?v=20261104"></script>
+<script src="katalog.js?v=20261104"></script>
+<script src="script.js?v=20261104"></script>
+<script src="shop.js?v=20261104"></script>
+<script src="konfigurator.js?v=20261104"></script>
 </body>
 </html>

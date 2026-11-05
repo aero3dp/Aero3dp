@@ -13,9 +13,12 @@
   var filter = { status: 'offen', art: 'alle' };
 
   var SEITEN = { '/': 'Startseite', '/fj4-fury': 'FJ-4 Fury', '/aero-33x': 'Aero-33X', '/fpv-flitzer': 'FPV Flitzer', '/druckservice': '3D-Druckservice',
-    '/impressum': 'Impressum', '/agbs': 'AGB', '/datenschutz': 'Datenschutz', '/404': 'Nicht gefunden (404)' };
+    '/designservice': '3D-Designservice', '/kasse': 'Kasse', '/versand': 'Versand & Zahlung', '/widerruf': 'Widerruf',
+    '/impressum': 'Impressum', '/agbs': 'AGB', '/datenschutz': 'Datenschutz', '/sicherheit': 'Produktsicherheit', '/404': 'Nicht gefunden (404)' };
   var STATUS = [['neu', 'Neu'], ['in_bearbeitung', 'In Bearbeitung'], ['angebot_gesendet', 'Angebot gesendet'], ['erledigt', 'Erledigt'], ['archiviert', 'Archiviert']];
-  var ARTEN = { konfigurator: 'Konfigurator', druckservice: '3D-Druck', kontakt: 'Kontakt' };
+  var ARTEN = { konfigurator: 'Konfigurator', druckservice: '3D-Druck', designservice: '3D-Design', kontakt: 'Kontakt' };
+  var LEISTUNG = { design_druck: 'Konstruktion und Druck', design: 'Nur Konstruktion (Datei)' };
+  var DESIGN_ART = { ersatzteil: 'Ersatzteil nachkonstruieren', idee: 'Eigene Idee umsetzen', anpassen: 'Datei anpassen', sonstiges: 'Etwas anderes' };
 
   /* ═══ Anmeldung ═══ */
   function speichern(s) { sitzung = s; try { s ? sessionStorage.setItem(SK, JSON.stringify(s)) : sessionStorage.removeItem(SK); } catch (e) { /* egal */ } }
@@ -90,13 +93,16 @@
     if (demo) { var a = anfragenDaten.filter(function (x) { return x.id === id; })[0]; for (var k in felder) a[k] = felder[k]; return Promise.resolve(); }
     return api('/rest/v1/anfragen?id=eq.' + encodeURIComponent(id), { method: 'PATCH', headers: json(), body: JSON.stringify(felder) });
   }
+  function designDateien(a) { return (a.details && Array.isArray(a.details.dateien)) ? a.details.dateien.filter(function (d) { return d && /^[0-9]{4}\/[0-9]{2}\/[0-9a-f-]{36}\.[a-z0-9]{2,4}$/.test(d.pfad); }) : []; }
   function loescheAnfrage(a) {
     if (demo) { anfragenDaten = anfragenDaten.filter(function (x) { return x.id !== a.id; }); return Promise.resolve(); }
-    var datei = a.datei_pfad ? api('/storage/v1/object/druckdateien/' + a.datei_pfad, { method: 'DELETE' }).catch(function () {}) : Promise.resolve();
-    return datei.then(function () { return api('/rest/v1/anfragen?id=eq.' + encodeURIComponent(a.id), { method: 'DELETE', headers: json() }); });
+    var weg = [];
+    if (a.datei_pfad) weg.push(api('/storage/v1/object/druckdateien/' + a.datei_pfad, { method: 'DELETE' }).catch(function () {}));
+    designDateien(a).forEach(function (d) { weg.push(api('/storage/v1/object/designdateien/' + d.pfad, { method: 'DELETE' }).catch(function () {})); });
+    return Promise.all(weg).then(function () { return api('/rest/v1/anfragen?id=eq.' + encodeURIComponent(a.id), { method: 'DELETE', headers: json() }); });
   }
-  function dateiLink(pfad, name) {
-    return api('/storage/v1/object/sign/druckdateien/' + pfad, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ expiresIn: 600 }) })
+  function dateiLink(pfad, name, bucket) {
+    return api('/storage/v1/object/sign/' + (bucket || 'druckdateien') + '/' + pfad, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ expiresIn: 600 }) })
       .then(function (j) { var u = j.signedURL || j.signedUrl; return BASE + '/storage/v1' + u + (u.indexOf('?') >= 0 ? '&' : '?') + 'download=' + encodeURIComponent(name || 'datei.stl'); });
   }
 
@@ -114,7 +120,16 @@
       $('#' + x.getAttribute('aria-controls')).hidden = !an;
     });
     if (t.id === 't-uebersicht' && statistikDaten) zeichneChart();
+    document.dispatchEvent(new CustomEvent('aero:admin-tab', { detail: t.id }));
   }
+  /* Links in den Ratgeber (z. B. aus Tipps in Bestellungen) */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-ratgeber]'); if (!a) return;
+    e.preventDefault();
+    tabWaehlen($('#t-ratgeber'));
+    var ziel = document.getElementById(a.getAttribute('data-ratgeber'));
+    if (ziel) { ziel.open = true; ziel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
 
   /* ═══ Übersicht ═══ */
   function tageListe(n) {
@@ -143,8 +158,10 @@
       var g = s.geraete || {}, gs = (g.mobil || 0) + (g.tablet || 0) + (g.desktop || 0) + (g.unbekannt || 0);
       balkenListe($('#geraete'), [['Handy', g.mobil || 0], ['Computer', g.desktop || 0], ['Tablet', g.tablet || 0]].filter(function (x) { return gs; }), 'Besuche', true);
       var f = s.funnel || {};
-      trichter($('#funnelModelle'), [['Produktseite angesehen', f.produkt_aufrufe], ['Konfigurator genutzt', f.konfiguriert], ['Anfrage gesendet', f.produkt_anfragen]]);
-      trichter($('#funnelDruck'), [['Druckservice angesehen', f.druck_aufrufe], ['STL-Datei geladen', f.stl_geladen], ['Anfrage gesendet', f.druck_anfragen]]);
+      trichter($('#funnelModelle'), [['Produktseite angesehen', f.produkt_aufrufe], ['Konfigurator genutzt', f.konfiguriert], ['In den Warenkorb gelegt', f.in_warenkorb], ['Kasse geöffnet', f.kasse], ['Bestellt', f.bestellungen]]);
+      $('#funnelModelleFuss').textContent = (f.produkt_anfragen || 0) + ' Anfrage' + (f.produkt_anfragen === 1 ? '' : 'n') + ' über den Konfigurator oder den Warenkorb im selben Zeitraum.';
+      trichter($('#funnelDruck'), [['Druckservice angesehen', f.druck_aufrufe], ['STL-Datei geladen', f.stl_geladen], ['Druckanfrage gesendet', f.druck_anfragen]]);
+      $('#funnelDruckFuss').textContent = 'Designanfragen im selben Zeitraum: ' + (f.design_anfragen || 0) + '.';
       offenAnzeigen(s.offen);
     }).catch(fehlerToast);
   }
@@ -156,6 +173,8 @@
       ['Besuche', ZAHL.format(s.besuche), proBesuch + ' Seiten pro Besuch', false],
       ['Anfragen', ZAHL.format(s.anfragen), zr, false],
       ['Offene Anfragen', ZAHL.format(s.offen), s.offen ? 'neu oder in Bearbeitung' : 'alles erledigt', s.offen > 0],
+      ['Bestellungen', ZAHL.format(s.bestellungen || 0), (s.offene_bestellungen || 0) + ' offen (zahlen, drucken, versenden)', (s.offene_bestellungen || 0) > 0],
+      ['Umsatz', EUR.format(Number(s.umsatz) || 0), 'bezahlte Bestellungen, ' + zr, false],
     ];
     $('#kacheln').innerHTML = k.map(function (x) {
       return '<dl class="kachel' + (x[3] ? ' akzent' : '') + '"><dt>' + x[0] + '</dt><dd>' + x[1] + '</dd><dd class="delta">' + x[2] + '</dd></dl>';
@@ -270,7 +289,12 @@
         ['Farbe', (d.farbe || '–') + (d.sonderfarbe ? ' (muss besorgt werden)' : '')], ['Schätzung', d.schaetzung_eur != null ? EUR.format(d.schaetzung_eur) : '–'],
         ['Gewicht / Zeit', String(d.gewicht_g).replace('.', ',') + ' g, ' + Math.floor(d.druckzeit_min / 60) + ' h ' + d.druckzeit_min % 60 + ' min'],
         ['Bauraum', d.passt ? 'passt' : 'zu groß'], ['Hülle', d.offene_kanten ? d.offene_kanten + ' offene Kanten' : 'geschlossen']);
+    } else if (a.art === 'designservice') {
+      z.push(['Leistung', LEISTUNG[d.leistung] || d.leistung], ['Art', DESIGN_ART[d.art] || d.art], ['Maße', d.masse || '–'], ['Material', d.material], ['Stückzahl', d.menge], ['Bis wann', d.frist ? new Date(d.frist + 'T12:00:00').toLocaleDateString('de-DE') : '–'],
+        ['Dateien', designDateien(a).length ? designDateien(a).map(function (x) { return x.name; }).join(', ') : 'keine'] );
+      if (d.dateien_fehlgeschlagen) z.push(['Achtung', d.dateien_fehlgeschlagen + ' Datei(en) ließen sich nicht hochladen – bitte nachfordern']);
     } else if (d.thema) z.push(['Thema', d.thema]);
+    if (a.art === 'konfigurator' && d.warenkorb) { z = [['Quelle', 'Warenkorb (Shop war geschlossen)']].concat(d.warenkorb.map(function (w, i) { return ['Position ' + (i + 1), w]; })); if (d.preis != null) z.push(['Warenwert', EUR.format(d.preis)]); }
     return '<dl class="details-tabelle">' + z.map(function (x) { return '<dt>' + esc(x[0]) + '</dt><dd>' + esc(x[1] == null ? '–' : x[1]) + '</dd>'; }).join('') + '</dl>';
   }
   function anfragenZeigen() {
@@ -293,6 +317,7 @@
         '<div class="anfrage-aktionen"><textarea data-aktion="notiz" placeholder="Interne Notiz" aria-label="Interne Notiz">' + esc(a.notiz || '') + '</textarea>' +
         '<button class="btn btn-ghost btn-small" type="button" data-aktion="notiz-speichern">Notiz speichern</button>' +
         (a.datei_pfad ? '<button class="btn btn-small" type="button" data-aktion="datei">STL herunterladen</button>' : '') +
+        designDateien(a).map(function (x, i) { return '<button class="btn btn-small" type="button" data-aktion="designdatei" data-i="' + i + '">' + esc(x.name.length > 28 ? x.name.slice(0, 25) + '…' : x.name) + '</button>'; }).join('') +
         '<button class="btn btn-ghost btn-small loeschen" type="button" data-aktion="loeschen">Löschen</button></div></article>';
     }).join('');
   }
@@ -317,8 +342,12 @@
       if (demo) return hinweis('In der Demo gibt es keine echten Dateien.');
       b.disabled = true;
       dateiLink(a.datei_pfad, (a.details && a.details.datei) || 'druckdatei.stl').then(function (u) { location.href = u; }).catch(fehlerToast).then(function () { b.disabled = false; });
+    } else if (b.dataset.aktion === 'designdatei') {
+      if (demo) return hinweis('In der Demo gibt es keine echten Dateien.');
+      var dd = designDateien(a)[+b.dataset.i]; b.disabled = true;
+      dateiLink(dd.pfad, dd.name, 'designdateien').then(function (u) { location.href = u; }).catch(fehlerToast).then(function () { b.disabled = false; });
     } else if (b.dataset.aktion === 'loeschen') {
-      if (!confirm('Anfrage von ' + a.name + (a.datei_pfad ? ' samt STL-Datei' : '') + ' endgültig löschen?')) return;
+      if (!confirm('Anfrage von ' + a.name + (a.datei_pfad || designDateien(a).length ? ' samt Dateien' : '') + ' endgültig löschen?')) return;
       loescheAnfrage(a).then(function () {
         anfragenDaten = anfragenDaten.filter(function (x) { return x.id !== id; });
         hinweis('Anfrage gelöscht'); anfragenZeigen();
@@ -341,10 +370,12 @@
   function vorschau() {
     var s = $('#w-status').value.trim(), l = $('#w-liefer').value.trim(), p = $('#werkstattVorschau');
     var teile = [];
-    if (s) teile.push('<span>Gerade in der Werkstatt: <strong>' + esc(s) + '</strong></span>');
-    if (l) teile.push('<span>Lieferzeit aktuell: <strong>' + esc(l) + '</strong></span>');
-    p.innerHTML = teile.length ? '<span class="live" aria-hidden="true"></span>' + teile.join('<span aria-hidden="true">/</span>') : '<span>Noch nichts eingetragen.</span>';
-    p.style.opacity = $('#w-sichtbar').checked ? 1 : .45;
+    if (s && $('#w-sichtbar').checked) teile.push('<span>Gerade in der Werkstatt: <strong>' + esc(s) + '</strong></span>');
+    teile.push('<span>Lieferzeit aktuell: <strong>' + esc(l || '6 Werktage') + '</strong></span>');
+    p.innerHTML = '<span class="live" aria-hidden="true"></span>' + teile.join('<span aria-hidden="true">/</span>');
+    var warn = $('#lieferWarnung');
+    if (!warn) { warn = document.createElement('p'); warn.id = 'lieferWarnung'; warn.className = 'feld-tipp warn'; $('#w-liefer').after(warn); }
+    warn.textContent = /\bca\.?\b|circa|ungefähr|etwa/i.test(l) ? 'Tipp: Lass „ca.“ weg – eine feste Angabe wie „5–7 Werktage“ ist rechtlich sicherer.' : '';
   }
   ['#w-status', '#w-liefer', '#w-sichtbar'].forEach(function (s) { $(s).addEventListener('input', vorschau); $(s).addEventListener('change', vorschau); });
   function ladeWerkstatt() {
@@ -380,6 +411,22 @@
 
   function hinweis(t) { if (window.AeroToast) AeroToast(t); }
   function fehlerToast(err) { hinweis('Fehler: ' + (err && err.message ? err.message : err)); }
+  /* Für admin-shop.js */
+  function funktion(name, body) {
+    return token().then(function (t) {
+      return fetch(BASE + '/functions/v1/' + name, { method: 'POST', headers: { apikey: KEY, Authorization: 'Bearer ' + t, 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}) });
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (r.status === 404 && !j.fehler) throw new Error('Die Mail-Funktion ist noch nicht eingerichtet.');
+        if (!r.ok || j.ok === false) throw new Error(j.fehler || ('HTTP ' + r.status));
+        return j;
+      });
+    });
+  }
+  window.AeroAdmin = {
+    api: api, funktion: funktion, json: json, esc: esc, EUR: EUR, ZAHL: ZAHL, hinweis: hinweis, fehlerToast: fehlerToast,
+    istDemo: function () { return demo; }, tab: function (id) { tabWaehlen($('#' + id)); }
+  };
 
   /* ═══ Start ═══ */
   function starten() {
@@ -389,6 +436,8 @@
     ladeUebersicht();
     ladeAnfragen().then(function (r) { anfragenDaten = r || []; anfragenZeigen(); beliebteKonfigs(); }).catch(fehlerToast);
     ladeWerkstatt();
+    window.AeroAdmin.gestartet = true;
+    document.dispatchEvent(new CustomEvent('aero:admin-start', { detail: { demo: demo } }));
   }
 
   function init() {
@@ -415,13 +464,16 @@
         seiten: [{ pfad: '/', n: teil(.41) }, { pfad: '/fj4-fury', n: teil(.17) }, { pfad: '/druckservice', n: teil(.14) }, { pfad: '/aero-33x', n: teil(.12) }, { pfad: '/fpv-flitzer', n: teil(.1) }, { pfad: '/datenschutz', n: teil(.02) }],
         quellen: [{ quelle: 'direkt', n: Math.round(bes * .38) }, { quelle: 'instagram.com', n: Math.round(bes * .27) }, { quelle: 'google.com', n: Math.round(bes * .2) }, { quelle: 'messe', n: Math.round(bes * .09) }, { quelle: 'rc-network.de', n: Math.round(bes * .06) }],
         geraete: { mobil: Math.round(bes * .64), desktop: Math.round(bes * .31), tablet: Math.round(bes * .05) },
-        funnel: { produkt_aufrufe: teil(.39), konfiguriert: Math.round(teil(.39) * .34), produkt_anfragen: Math.max(1, Math.round(tage / 7)), druck_aufrufe: teil(.14), stl_geladen: Math.round(teil(.14) * .28), druck_anfragen: Math.max(1, Math.round(tage / 12)) },
+        funnel: { produkt_aufrufe: teil(.39), konfiguriert: Math.round(teil(.39) * .34), in_warenkorb: Math.round(teil(.39) * .09), kasse: Math.round(teil(.39) * .05), bestellungen: Math.max(1, Math.round(tage / 6)),
+          produkt_anfragen: Math.max(1, Math.round(tage / 9)), druck_aufrufe: teil(.14), stl_geladen: Math.round(teil(.14) * .28), druck_anfragen: Math.max(1, Math.round(tage / 12)), design_anfragen: Math.max(1, Math.round(tage / 15)) },
+        bestellungen: Math.max(1, Math.round(tage / 6)), umsatz: Math.round(Math.max(1, tage / 6) * 74.5 * 100) / 100, offene_bestellungen: 3,
       };
     }
     var jetzt = Date.now(), h = 36e5;
     var anfragen = [
       { id: 'd1', erstellt: new Date(jetzt - 3 * h).toISOString(), art: 'konfigurator', name: 'Beispiel: Lena M.', email: 'lena@example.com', status: 'neu', nachricht: 'Kann ich die Fury auch in Neuss abholen?', details: { produkt: 'FJ-4 Fury', code: 'FJ4-LW-BL.BL.GE-A-L', farben: { Rumpf: 'Blau', Tragflächen: 'Blau', Leitwerk: 'Gelb' }, material: 'LW-PLA', antrieb: true, lackierung: true, lack_wunsch: 'Blue-Angels-Look mit gelben Streifen', preis: 134.9, preis_offen: true } },
       { id: 'd2', erstellt: new Date(jetzt - 20 * h).toISOString(), art: 'druckservice', name: 'Beispiel: Jonas K.', email: 'jonas@example.com', status: 'neu', nachricht: 'Halterung für meinen Empfänger, gern bis Freitag.', datei_pfad: '2026/10/00000000-0000-4000-8000-000000000000.stl', details: { datei: 'empfaenger-halter.stl', groesse_mb: 1.2, masse_mm: [42, 28, 15.5], volumen_cm3: 6.4, material: 'PETG', qualitaet: 'standard', fuellung: 30, waende: 3, anzahl: 2, farbe: 'Schwarz', schaetzung_eur: 9.6, gewicht_g: 9.8, druckzeit_min: 74, passt: true, offene_kanten: 0 } },
+      { id: 'd7', erstellt: new Date(jetzt - 9 * h).toISOString(), art: 'designservice', name: 'Beispiel: Karin W.', email: 'karin@example.com', status: 'neu', nachricht: 'Am Halter meiner Fahrradlampe ist die Lasche abgebrochen. Gibt es den nicht mehr zu kaufen.', details: { leistung: 'design_druck', art: 'ersatzteil', masse: '42 × 18 × 12 mm, Loch Ø 6,2', material: 'PETG', menge: 2, dateien: [{ pfad: '2026/11/00000000-0000-4000-8000-000000000001.jpg', name: 'halter-oben.jpg', groesse_mb: 2.1 }, { pfad: '2026/11/00000000-0000-4000-8000-000000000002.jpg', name: 'halter-seite.jpg', groesse_mb: 1.8 }] } },
       { id: 'd3', erstellt: new Date(jetzt - 50 * h).toISOString(), art: 'kontakt', name: 'Beispiel: Modellflugverein', email: 'verein@example.com', status: 'in_bearbeitung', nachricht: '[Kooperation] Hättet ihr Lust, beim Flugtag einen Stand zu machen?', details: { thema: 'Kooperation' } },
       { id: 'd4', erstellt: new Date(jetzt - 80 * h).toISOString(), art: 'konfigurator', name: 'Beispiel: Tim S.', email: 'tim@example.com', status: 'angebot_gesendet', nachricht: '', details: { produkt: 'FPV Flitzer', code: 'FLZ-PLA-GE.SW.GE-A', farben: { Flügel: 'Gelb', Winglets: 'Schwarz', Rumpf: 'Gelb' }, material: 'PLA', antrieb: true, preis: 66.9 } },
       { id: 'd5', erstellt: new Date(jetzt - 130 * h).toISOString(), art: 'konfigurator', name: 'Beispiel: Sara B.', email: 'sara@example.com', status: 'erledigt', nachricht: 'Danke für die schnelle Antwort!', details: { produkt: 'FJ-4 Fury', code: 'FJ4-LW-BL.BL.GE-0', farben: { Rumpf: 'Blau', Tragflächen: 'Blau', Leitwerk: 'Gelb' }, material: 'LW-PLA', antrieb: false, preis: 65.9 } },

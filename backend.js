@@ -1,5 +1,6 @@
 /* Aero3dp – kleiner Supabase-Client + cookieloses Tracking.
-   Speichert nichts im Browser und erhebt keine IP-Adressen. */
+   Das Tracking speichert nichts im Browser und erhebt keine IP-Adressen.
+   (Den Warenkorb verwaltet shop.js im lokalen Speicher – nur auf diesem Gerät.) */
 (function () {
   'use strict';
   var C = window.AERO_CONFIG || {};
@@ -38,6 +39,35 @@
     return fetch(base + '/rest/v1/' + pathAndQuery, { headers: headers({}) }).then(function (res) {
       if (!res.ok) return fehlertext(res).then(function (t) { throw new Error(t); });
       return res.json();
+    });
+  }
+  /* Datenbank-Funktion aufrufen. Fehler tragen message, hint und details aus PostgREST. */
+  function rpc(name, args) {
+    if (!enabled) return Promise.reject(new Error('Kein Backend eingerichtet'));
+    return fetch(base + '/rest/v1/rpc/' + name, {
+      method: 'POST', headers: headers({ 'Content-Type': 'application/json' }), body: JSON.stringify(args || {})
+    }).then(function (res) {
+      return res.text().then(function (t) {
+        var j = null; try { j = t ? JSON.parse(t) : null; } catch (e) { /* kein JSON */ }
+        if (!res.ok) {
+          var err = new Error((j && (j.message || j.error)) || t || ('HTTP ' + res.status));
+          err.hint = j && j.hint; err.details = j && j.details; err.status = res.status;
+          throw err;
+        }
+        return j;
+      });
+    });
+  }
+  /* Edge Function aufrufen (z. B. Bestätigungsmails) */
+  function funktion(name, body) {
+    if (!enabled) return Promise.reject(new Error('Kein Backend eingerichtet'));
+    return fetch(base + '/functions/v1/' + name, {
+      method: 'POST', headers: { apikey: key, 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}), keepalive: true
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (j) {
+        if (!res.ok || j.ok === false) throw new Error(j.fehler || ('HTTP ' + res.status));
+        return j;
+      });
     });
   }
   function upload(bucket, path, file, contentType) {
@@ -95,16 +125,22 @@
       pfad: pfad(), quelle: quelle(), geraet: geraet(), neuer_besuch: neuerBesuch()
     }).catch(function () {});
   }
+  /* Öffentlicher Shop-Status: Shop offen?, Versand, Lieferzeit (immer) und Werkstatt-Text (nur wenn freigegeben).
+     Wird pro Seitenaufruf einmal geladen. */
+  var statusVersprechen = null;
+  function status() {
+    if (!statusVersprechen) {
+      statusVersprechen = enabled ? rpc('shop_status', {}).catch(function () { return null; }) : Promise.resolve(null);
+    }
+    return statusVersprechen;
+  }
   function werkstatt() {
-    return select('werkstatt?id=eq.1&select=status_text,lieferzeit,sichtbar,aktualisiert').then(function (rows) {
-      var r = rows && rows[0];
-      return r && r.sichtbar ? r : null;
-    }).catch(function () { return null; });
+    return status().then(function (s) { return s ? { status_text: s.status_text, lieferzeit: s.lieferzeit } : null; });
   }
 
   window.AeroBackend = {
-    enabled: enabled, insert: insert, select: select, upload: upload,
-    track: track, werkstatt: werkstatt, pfad: pfad, headers: headers
+    enabled: enabled, insert: insert, select: select, upload: upload, rpc: rpc, funktion: funktion,
+    track: track, status: status, werkstatt: werkstatt, pfad: pfad, headers: headers
   };
 
   if (document.readyState === 'complete') setTimeout(seitenaufruf, 300);

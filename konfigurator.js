@@ -351,6 +351,7 @@
     var offen = offenTeile();
     zusatz.textContent = offen ? 'zzgl. ' + offen + ', Preis auf Anfrage' : '';
     codeEl.textContent = code();
+    if (inKorb) knoepfe();
     if (gemerkt) linkMerken();
   }
 
@@ -404,10 +405,32 @@
     }).then(function () { status.hidden = false; btn.disabled = false; btn.textContent = 'Konfiguration anfragen'; });
   });
 
-  /* Lieferzeit aus dem Werkstatt-Status */
-  if (window.AeroBackend && AeroBackend.enabled) {
-    AeroBackend.werkstatt().then(function (w) { if (w && w.lieferzeit) $('#lieferzeit').textContent = 'Lieferzeit aktuell: ' + w.lieferzeit + '.'; });
+  /* ─── Warenkorb (sobald der Shop geöffnet ist) ─── */
+  var inKorb = $('#inWarenkorb'), anfrageStatt = $('#anfrageStattdessen'), lackShopHinweis = $('#lackShopHinweis');
+  var shopAktiv = false;
+  function knoepfe() {
+    var kaufbar = shopAktiv && !state.lack;
+    inKorb.hidden = !kaufbar;
+    oeffnen.hidden = kaufbar;
+    anfrageStatt.hidden = !kaufbar;
+    lackShopHinweis.hidden = !(shopAktiv && state.lack);
   }
+  if (window.AeroShop) AeroShop.bereit(function (aktiv) { shopAktiv = aktiv; knoepfe(); });
+  inKorb.addEventListener('click', function () {
+    nutzung();
+    try {
+      var k = AeroShop.hinzufuegen({
+        code: P.code, menge: 1, material: P.materialWahl ? state.material : 'PLA', antrieb: state.antrieb,
+        farben: P.teile.map(function (t) { return state.farben[t.id]; })
+      });
+      AeroShop.oeffnen(k);
+    } catch (e) { AeroToast(e.message); }
+  });
+  anfrageStatt.addEventListener('click', function () {
+    form.hidden = !form.hidden;
+    anfrageStatt.setAttribute('aria-expanded', !form.hidden);
+    if (!form.hidden) { $('input', form).focus({ preventScroll: true }); form.scrollIntoView({ behavior: reduziert ? 'auto' : 'smooth', block: 'nearest' }); }
+  });
 
   /* ─── Start: Umriss zeichnen, dann alles einmal drucken ─── */
   aktualisieren(false);

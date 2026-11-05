@@ -203,23 +203,6 @@
     });
   }
 
-  /* ─── Werkstatt-Status ─── */
-  var pill = $('[data-werkstatt]');
-  if (pill && window.AeroBackend && AeroBackend.enabled) {
-    AeroBackend.werkstatt().then(function (w) {
-      if (!w || (!w.status_text && !w.lieferzeit)) return;
-      var teile = [];
-      if (w.status_text) teile.push('<span>Gerade in der Werkstatt: <strong></strong></span>');
-      if (w.lieferzeit) teile.push('<span>Lieferzeit aktuell: <strong></strong></span>');
-      pill.innerHTML = '<span class="live" aria-hidden="true"></span>' + teile.join('<span aria-hidden="true">/</span>');
-      var strongs = $$('strong', pill), i = 0;
-      if (w.status_text) strongs[i++].textContent = w.status_text;
-      if (w.lieferzeit) strongs[i].textContent = w.lieferzeit;
-      pill.hidden = false;
-      document.dispatchEvent(new CustomEvent('aero:werkstatt', { detail: w }));
-    });
-  }
-
   /* ─── Druckbühne im Hero: Modell entsteht Schicht für Schicht ───
      Die Bewegung selbst ist reine CSS-Transform-Animation (läuft auf der GPU).
      JS startet sie erst, wenn die Seite fertig geladen ist, und zählt nur die Schichten. */
